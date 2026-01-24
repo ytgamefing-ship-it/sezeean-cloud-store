@@ -21,6 +21,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--dark-bg); color: #fff; overflow-x: hidden; transition: 0.5s ease; }
 
+        /* --- NIGHTMARE EFFECT --- */
         @keyframes pulseVignette { from { opacity: 0.4; } to { opacity: 0.8; } }
         body.nightmare-active { background: #000 !important; }
         body.nightmare-active::after {
@@ -43,11 +44,13 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.4) !important;
         }
 
+        /* --- AUTH --- */
         #auth-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 25px; }
         .auth-card { background: #0a0a0a; padding: 40px 30px; border-radius: 25px; border: 1px solid var(--primary); width: 100%; max-width: 380px; text-align: center; }
         .auth-input { width: 100%; padding: 14px; margin-bottom: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 12px; outline: none; }
         .auth-btn { width: 100%; padding: 14px; background: var(--primary); border: none; color: white; font-weight: bold; border-radius: 12px; cursor: pointer; letter-spacing: 2px; }
 
+        /* --- HEADER --- */
         header { background: rgba(0, 0, 0, 0.95); padding: 15px 6%; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; align-items: center; justify-content: space-between; }
         .brand-name { font-family: 'Metal Mania'; font-size: 1.3rem; letter-spacing: 2px; }
         .brand-name span { color: var(--primary); }
@@ -66,6 +69,7 @@
         .cat-icon { width: 55px; height: 55px; background: #111; border: 1px solid #222; border-radius: 18px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 20px; margin: 0 auto 8px; }
         .cat-item p { font-size: 8px; font-weight: bold; color: #666; text-align: center; }
 
+        /* --- MODALS --- */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: #000; overflow-y: auto; padding: 25px; }
         .card-luxury { background: #0d0d0d; border-radius: 20px; padding: 25px; margin-bottom: 20px; border: 1px solid #1a1a1a; border-left: 4px solid var(--gold); }
         .card-luxury h3 { font-family: 'Cinzel'; color: var(--gold); font-size: 16px; margin-bottom: 5px; }
@@ -147,12 +151,33 @@
 
     <div id="productModal" class="modal">
         <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>PRODUCTS</h2><i class="fas fa-times" onclick="closeModal('productModal')"></i></div>
-        <div class="card-luxury"><h3>Custom Skill RPG</h3><p class="desc">Pembuatan skill unik dengan efek visual tingkat tinggi khusus server RPG lu.</p><p style="color:var(--gold); font-weight:bold;">50.000 CR</p><button onclick="buyProduct('Skill RPG', 50000)" class="btn-action">BUY</button></div>
+        <div class="card-luxury">
+            <h3>Custom Skill RPG</h3>
+            <p class="desc">Pembuatan skill unik dengan efek visual tingkat tinggi khusus server RPG lu.</p>
+            <p style="color:var(--gold); font-weight:bold;">50.000 CR</p>
+            <button onclick="buyProduct('Skill RPG', 50000)" class="btn-action">BUY</button>
+        </div>
+        <div class="card-luxury">
+            <h3>Model Engine Setup</h3>
+            <p class="desc">Konfigurasi Model Engine untuk mob atau kendaraan agar lancar jaya.</p>
+            <p style="color:var(--gold); font-weight:bold;">75.000 CR</p>
+            <button onclick="buyProduct('Model Engine', 75000)" class="btn-action">BUY</button>
+        </div>
+        <div class="card-luxury">
+            <h3>Server Setup RP</h3>
+            <p class="desc">Setup lengkap server Roleplay dari nol sampai siap open member.</p>
+            <p style="color:var(--gold); font-weight:bold;">100.000 CR</p>
+            <button onclick="buyProduct('Server Setup', 100000)" class="btn-action">BUY</button>
+        </div>
     </div>
 
     <div id="echoesModal" class="modal">
         <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>ECHOES RP</h2><i class="fas fa-times" onclick="closeModal('echoesModal')"></i></div>
-        <div class="echoes-card"><h1 style="font-family:'Cinzel'; color:var(--gold);">ECHOES RP</h1><div style="color:#0f0; margin:10px 0;">ONLINE</div><h2>echoesrp.my.id</h2><button onclick="alert('IP Copied')" class="btn-action" style="background:var(--gold); color:#000;">COPY IP</button></div>
+        <div class="echoes-card">
+            <h1 style="font-family:'Cinzel'; color:var(--gold);">ECHOES RP</h1><div style="color:#0f0; margin:10px 0;">ONLINE</div>
+            <h2>echoesrp.my.id</h2>
+            <button onclick="alert('IP Copied')" class="btn-action" style="background:var(--gold); color:#000;">COPY IP</button>
+        </div>
     </div>
 
     <div id="profileModal" class="modal">
@@ -161,6 +186,11 @@
             <div style="position:absolute; top:0; left:0; width:100%; height:90px; background:linear-gradient(90deg, var(--primary), #600000);"></div>
             <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg" style="width:110px; height:110px; border-radius:50%; border:5px solid #000; position:relative; z-index:1; object-fit: cover;">
             <h2 id="user-display" style="font-family:'Cinzel'; margin-top:15px; color:var(--gold);">USER</h2>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:25px;">
+                <div style="background:#000; padding:15px; border-radius:12px;"><h5>12</h5><p style="font-size:7px;">PROJ</p></div>
+                <div style="background:#000; padding:15px; border-radius:12px;"><h5>5.0</h5><p style="font-size:7px;">RATE</p></div>
+                <div style="background:#000; padding:15px; border-radius:12px;"><h5>24</h5><p style="font-size:7px;">CLIENT</p></div>
+            </div>
             <button onclick="logout()" class="btn-action" style="background:rgba(255,0,0,0.1); color:var(--primary); margin-top:30px;">LOGOUT</button>
         </div>
     </div>
@@ -168,6 +198,7 @@
     <div id="topupModal" class="modal">
         <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
         <div class="card-luxury"><h3>Admin 1</h3><a href="https://wa.me/6289696498841" class="btn-action">089696498841</a></div>
+        <div class="card-luxury"><h3>Admin 2</h3><a href="https://wa.me/6281513681271" class="btn-action" style="background:#444;">081513681271</a></div>
     </div>
 
     <div id="portModal" class="modal">
@@ -176,6 +207,7 @@
     </div>
 
     <script>
+        // FIREBASE SETTINGS
         const firebaseConfig = {
             apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
             authDomain: "sezeean-store.firebaseapp.com",
@@ -188,9 +220,10 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // CEK AUTO LOGIN
         window.onload = function() {
-            const savedUser = localStorage.getItem('activeUser');
-            if (savedUser) { showMainContent(savedUser); }
+            const saved = localStorage.getItem('activeUser');
+            if(saved) { showMainContent(saved); }
         };
 
         function toggleAuth() {
