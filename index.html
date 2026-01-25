@@ -17,11 +17,13 @@
             --bg-dark: #050505;
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-gradient: linear-gradient(45deg, #ff1a1a, #800000);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
 
+        /* ANIMASI BACKGROUND */
         .clock-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 150vw; height: 150vw; opacity: 0.07;
@@ -30,51 +32,66 @@
         }
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* AUTH */
+        /* AUTH - NO CHANGES TO LOGIC */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
         .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
-        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
+        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; transition: 0.3s; }
+        .auth-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
+        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        .auth-btn:active { transform: scale(0.95); }
 
         /* HEADER & SEARCH */
         header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.85); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; backdrop-filter: blur(10px); }
         .logo-area { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
+        
         .container { padding: 20px 6% 120px; }
-
         .search-container { position: relative; margin-bottom: 25px; }
         .search-input { width: 100%; padding: 14px 20px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 15px; color: #fff; outline: none; font-size: 13px; }
         .search-container i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); }
 
-        /* CARDS & GRID */
-        .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 20px; }
+        /* BALANCE CARD */
+        .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(255, 26, 26, 0.1); }
+        
         .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
-        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; }
+        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; transition: 0.3s; }
+        .menu-box:hover { background: rgba(255,255,255,0.1); border-color: var(--kurumi-red); }
         .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
 
+        /* PRODUCT GRID */
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; overflow: hidden; }
-        .p-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; }
+        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; overflow: hidden; transition: 0.3s; }
+        .p-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .p-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; background: #111; }
+        .badge-cs { position: absolute; top: 10px; right: 10px; background: var(--gold); color: #000; font-size: 8px; padding: 3px 8px; border-radius: 20px; font-weight: 900; }
 
-        /* PROFILE STYLE */
-        .profile-option { display: flex; align-items: center; justify-content: space-between; background: var(--glass); padding: 18px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--glass-border); }
-        .profile-option i { color: var(--gold); margin-right: 15px; }
+        /* MODERN PROFILE STYLING */
+        .profile-header { text-align: center; margin-bottom: 30px; }
+        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--kurumi-red); margin-bottom: 15px; box-shadow: 0 0 20px var(--kurumi-red); }
+        .profile-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .stat-item { background: var(--glass); padding: 15px; border-radius: 20px; border: 1px solid var(--glass-border); text-align: center; }
+        .stat-item span { display: block; font-size: 10px; color: var(--gold); margin-bottom: 5px; }
+        .stat-item b { font-size: 16px; }
+        .profile-option { display: flex; align-items: center; justify-content: space-between; background: var(--glass); padding: 18px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--glass-border); cursor: pointer; }
+        .profile-option:hover { background: rgba(255,255,255,0.07); }
 
-        /* CONSOLE PANEL */
+        /* SECRET PANEL */
         #secretPanel { display: none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05); }
-        .cp-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(25px); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; background: #000; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; background: #000; padding: 10px 0; }
 
         /* NAV */
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; }
-        nav i { font-size: 22px; color: #444; }
-        nav i.active { color: var(--kurumi-red); }
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); }
+        nav i { font-size: 22px; color: #444; cursor: pointer; transition: 0.3s; }
+        nav i.active { color: var(--kurumi-red); text-shadow: 0 0 10px var(--kurumi-red); }
 
-        .game-item { background: var(--glass); border-radius: 15px; padding: 15px; text-align: center; border: 1px solid var(--glass-border); }
+        .game-item { background: var(--glass); border-radius: 15px; padding: 15px; text-align: center; border: 1px solid var(--glass-border); cursor: pointer; transition: 0.3s; }
+        .game-item:hover { border-color: var(--kurumi-red); }
         .game-item img { width: 50px; height: 50px; border-radius: 12px; margin-bottom: 10px; }
+        
+        .section-header { font-family: 'Cinzel Decorative'; font-size: 14px; color: var(--gold); margin: 25px 0 15px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -116,7 +133,7 @@
             </div>
 
             <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for items, skins, or server..." onkeyup="filterItems()">
+                <input type="text" class="search-input" placeholder="Search product..." onkeyup="filterItems()">
                 <i class="fas fa-search"></i>
             </div>
 
@@ -124,7 +141,7 @@
                 <p style="color:var(--gold); font-size:11px; margin-bottom:12px; font-weight: 800;"><i class="fas fa-crown"></i> SEZEAN CONSOLE</p>
                 <input type="text" id="s-target" class="auth-input" placeholder="Target Username">
                 <input type="number" id="s-amount" class="auth-input" placeholder="CR Amount">
-                <div class="cp-btns">
+                <div class="cp-btns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <button onclick="adjustCredit('grant')" class="auth-btn" style="background:#fff; color:#000; padding:10px;">GRANT</button>
                     <button onclick="adjustCredit('revoke')" class="auth-btn" style="background:transparent; border:1px solid #fff; padding:10px;">REVOKE</button>
                 </div>
@@ -138,15 +155,13 @@
                 <div class="menu-box" onclick="location.reload()"><i class="fas fa-sync"></i>Sync</div>
             </div>
 
-            <div class="section-header">FEATURED</div>
-            <div class="p-grid" id="featured-list">
-                <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="font-size:10px; padding:10px;">Exclusive Skill Pack</p></div>
-                <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="font-size:10px; padding:10px;">Ultimate Engine Mob</p></div>
-            </div>
+            <div class="section-header">LATEST PRODUCTS</div>
+            <div class="p-grid" id="product-list-container">
+                </div>
         </div>
 
         <nav>
-            <i class="fas fa-home active"></i>
+            <i class="fas fa-home active" onclick="closeAllModals()"></i>
             <i class="fas fa-store" onclick="openModal('shopModal')"></i>
             <i class="fas fa-user" onclick="openModal('profileModal')"></i>
         </nav>
@@ -155,47 +170,58 @@
     <div id="gameModal" class="modal">
         <div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
         <div id="game-list-gui">
+            <p style="font-size:11px; margin-bottom:15px; opacity:0.6;">Pilih game untuk topup...</p>
             <div class="p-grid">
-                <div class="game-item" onclick="selectGame('MLBB')"><img src="https://i.imgur.com/1kFNSpI.jpeg"><p style="font-size:10px;">MLBB</p></div>
-                <div class="game-item" onclick="selectGame('Free Fire')"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="font-size:10px;">Free Fire</p></div>
-                <div class="game-item" onclick="selectGame('HOK')"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="font-size:10px;">HOK</p></div>
-                <div class="game-item" onclick="selectGame('PUBGM')"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="font-size:10px;">PUBGM</p></div>
+                <div class="game-item" onclick="selectGame('MLBB')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">MLBB</p></div>
+                <div class="game-item" onclick="selectGame('Free Fire')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">Free Fire</p></div>
+                <div class="game-item" onclick="selectGame('HOK')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">HOK</p></div>
+                <div class="game-item" onclick="selectGame('PUBGM')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">PUBGM</p></div>
             </div>
         </div>
         <div id="game-id-gui" style="display:none; margin-top:20px;">
-            <h3 id="selected-game-title">GAME</h3>
-            <input type="text" id="player-id" class="auth-input" placeholder="Player ID">
-            <input type="text" id="zone-id" class="auth-input" placeholder="Zone ID (Optional)">
-            <button onclick="confirmOrder()" class="auth-btn">PROCESS ORDER</button>
+            <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); font-size:12px; margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <h3 id="selected-game-title" style="color:var(--kurumi-red);">GAME</h3>
+            <input type="text" id="player-id" class="auth-input" placeholder="Player ID" style="margin-top:15px;">
+            <input type="text" id="zone-id" class="auth-input" placeholder="Server/Zone ID">
+            <button onclick="confirmOrder()" class="auth-btn">BELI SEKARANG</button>
         </div>
     </div>
 
     <div id="profileModal" class="modal">
-        <div class="modal-header"><h2>PROFILE</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div style="text-align:center;">
-            <h2 id="p-user">USER</h2>
-            <p id="p-bal" style="color:var(--gold);">0 CR</p>
-            <button class="auth-btn" style="margin-top:20px; background:var(--kurumi-red);" onclick="logout()">LOGOUT</button>
+        <div class="modal-header"><h2>YOUR SOUL</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
+        <div class="profile-header">
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
+            <h2 id="p-user" style="font-family:'Cinzel Decorative'; letter-spacing:3px;">USER</h2>
+            <p style="font-size:10px; color:var(--kurumi-red); font-weight:800;">ELITE MEMBER</p>
         </div>
+        
+        <div class="profile-stat-grid">
+            <div class="stat-item"><span>SALDO</span><b id="p-bal">0 CR</b></div>
+            <div class="stat-item"><span>RANK</span><b>NIGHTMARE</b></div>
+        </div>
+
+        <div class="profile-option"><div><i class="fas fa-history"></i> Riwayat Pesanan</div><i class="fas fa-chevron-right"></i></div>
+        <div class="profile-option"><div><i class="fas fa-shield-alt"></i> Keamanan Akun</div><i class="fas fa-chevron-right"></i></div>
+        <div class="profile-option" onclick="openModal('topupModal')"><div><i class="fas fa-plus-circle"></i> Isi Saldo (CR)</div><i class="fas fa-chevron-right"></i></div>
+        
+        <button class="auth-btn" style="margin-top:30px; background:linear-gradient(to right, transparent, var(--kurumi-red), transparent); border:1px solid var(--kurumi-red);" onclick="logout()">LOGOUT SYSTEM</button>
     </div>
 
     <div id="shopModal" class="modal">
-        <div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
-        <div class="p-grid">
-            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">RPG UI <br><b>25k CR</b></p></div>
-        </div>
+        <div class="modal-header"><h2>THE MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
+        <div class="p-grid" id="market-list-container">
+            </div>
     </div>
 
     <div id="portModal" class="modal">
         <div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <p>Daftar project Sezean.</p>
+        <p>Project List by Sezean.</p>
     </div>
-
     <div id="topupModal" class="modal">
-        <div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
+        <div class="modal-header"><h2>TOPUP CR</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
         <div style="text-align:center;">
-             <p>Hubungi WhatsApp Sezean.</p>
-             <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none; display:inline-block; margin-top:10px;">CHAT SEZEAN</a>
+             <p style="margin-bottom:20px;">Hubungi Admin untuk pengisian CR.</p>
+             <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none;">HUBUNGI SEZEAN</a>
         </div>
     </div>
 
@@ -214,23 +240,56 @@
         const db = firebase.database();
         let logoClicks = 0;
 
+        // PRODUK DATA (10 PRODUK)
+        const products = [
+            { name: "Premium UI Kit", price: "50k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Bot WhatsApp", price: "35k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Web Portfolio", price: "100k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Script Auto Buy", price: "25k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Cloud Server 1GB", price: "15k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Logo Design", price: "20k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Encrypted DB", price: "45k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Special Effect v2", price: "30k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Admin Panel v1", price: "75k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
+            { name: "Kurumi Theme", price: "10k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" }
+        ];
+
         window.onload = () => { 
             const savedUser = localStorage.getItem('activeUser');
             if(savedUser) showMain(savedUser); 
+            renderProducts();
         };
 
+        function renderProducts() {
+            const containers = [document.getElementById('product-list-container'), document.getElementById('market-list-container')];
+            containers.forEach(container => {
+                if(!container) return;
+                container.innerHTML = "";
+                products.forEach(p => {
+                    container.innerHTML += `
+                        <div class="p-card">
+                            <span class="badge-cs">COMING SOON</span>
+                            <img src="${p.img}">
+                            <div style="padding:10px 5px;">
+                                <p style="font-size:11px; font-weight:600;">${p.name}</p>
+                                <p style="font-size:10px; color:var(--gold);">${p.price} CR</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        // --- AUTH LOGIC (DO NOT CHANGE) ---
         function handleLogin() {
             const u = document.getElementById('log-user').value.toLowerCase().trim();
             const p = document.getElementById('log-pass').value;
             if(!u || !p) return alert("Masukan data!");
-
             db.ref('accounts/' + u).once('value').then(snap => {
                 if(snap.exists() && snap.val() === p) { 
                     localStorage.setItem('activeUser', u); 
                     showMain(u); 
-                } else {
-                    alert("Wrong Credentials!");
-                }
+                } else { alert("Wrong Credentials!"); }
             });
         }
 
@@ -238,16 +297,12 @@
             const u = document.getElementById('reg-user').value.toLowerCase().trim();
             const p = document.getElementById('reg-pass').value;
             if(!u || !p) return alert("Isi form!");
-
             db.ref('accounts/' + u).once('value').then(snap => {
-                if(snap.exists()) {
-                    alert("User ada!");
-                } else {
-                    // Pakai .set() spesifik ke path user, bukan ke root
+                if(snap.exists()) { alert("User ada!"); }
+                else {
                     db.ref('accounts/' + u).set(p);
                     db.ref('users/' + u).set({credits: 0}).then(() => { 
-                        alert("Berhasil!"); 
-                        toggleAuth('log'); 
+                        alert("Berhasil!"); toggleAuth('log'); 
                     });
                 }
             });
@@ -258,7 +313,6 @@
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
             document.getElementById('p-user').innerText = u.toUpperCase();
-            
             db.ref('users/' + u + '/credits').on('value', snap => {
                 const val = snap.val() || 0;
                 document.getElementById('user-balance').innerText = val.toLocaleString() + " CR";
@@ -266,24 +320,55 @@
             });
         }
 
+        // --- GAME CENTER FIX ---
+        function selectGame(name) {
+            document.getElementById('game-list-gui').style.display = 'none';
+            document.getElementById('game-id-gui').style.display = 'block';
+            document.getElementById('selected-game-title').innerText = name;
+        }
+
+        function backToGames() {
+            document.getElementById('game-list-gui').style.display = 'block';
+            document.getElementById('game-id-gui').style.display = 'none';
+        }
+
+        function confirmOrder() {
+            const id = document.getElementById('player-id').value;
+            if(!id) return alert("Isi ID Player!");
+            alert("Pesanan " + document.getElementById('selected-game-title').innerText + " sedang diproses!");
+            closeModal('gameModal');
+        }
+
+        // --- UI HELPERS ---
         function triggerSecret() {
             if(localStorage.getItem('activeUser') !== 'sezean') return;
             logoClicks++;
-            if(logoClicks >= 5) { document.getElementById('secretPanel').style.display = 'block'; logoClicks = 0; }
+            if(logoClicks >= 5) { 
+                document.getElementById('secretPanel').style.display = 'block'; 
+                alert("Welcome Admin Sezean!");
+                logoClicks = 0; 
+            }
         }
 
         function adjustCredit(type) {
             const t = document.getElementById('s-target').value.toLowerCase().trim();
             const a = parseInt(document.getElementById('s-amount').value);
+            if(!t || isNaN(a)) return alert("Data tidak valid!");
             db.ref('users/' + t + '/credits').get().then(s => {
                 let current = s.val() || 0;
                 db.ref('users/' + t + '/credits').set(type === 'grant' ? current + a : current - a);
-                alert("Updated!");
+                alert("Credit Updated!");
             });
         }
 
-        function openModal(id) { document.getElementById(id).style.display = 'block'; }
+        function openModal(id) { 
+            closeAllModals();
+            document.getElementById(id).style.display = 'block'; 
+        }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+        }
         function toggleAuth(m) {
             document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
