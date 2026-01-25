@@ -162,62 +162,40 @@
                 <div class="game-item" onclick="selectGame('PUBGM')"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="font-size:10px;">PUBGM</p></div>
             </div>
         </div>
-        <div id="game-id-gui" style="display:none; margin-top:20px; background:var(--glass); padding:20px; border-radius:20px; border:1px solid var(--gold);">
-            <h3 id="selected-game-title" style="margin-bottom:15px; color:var(--gold);">GAME</h3>
+        <div id="game-id-gui" style="display:none; margin-top:20px;">
+            <h3 id="selected-game-title">GAME</h3>
             <input type="text" id="player-id" class="auth-input" placeholder="Player ID">
             <input type="text" id="zone-id" class="auth-input" placeholder="Zone ID (Optional)">
             <button onclick="confirmOrder()" class="auth-btn">PROCESS ORDER</button>
-            <button onclick="backToGames()" style="background:none; border:none; color:#555; font-size:12px; margin-top:15px;">Back to list</button>
         </div>
     </div>
 
     <div id="profileModal" class="modal">
         <div class="modal-header"><h2>PROFILE</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div style="text-align:center; margin-bottom:30px;">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:80px; height:80px; border-radius:50%; border:2px solid var(--gold); margin-bottom:10px;">
+        <div style="text-align:center;">
             <h2 id="p-user">USER</h2>
             <p id="p-bal" style="color:var(--gold);">0 CR</p>
+            <button class="auth-btn" style="margin-top:20px; background:var(--kurumi-red);" onclick="logout()">LOGOUT</button>
         </div>
-        <div class="profile-option"><div><i class="fas fa-globe"></i>Language</div><span>English</span></div>
-        <div class="profile-option"><div><i class="fas fa-bell"></i>Notifications</div><span>On</span></div>
-        <div class="profile-option"><div><i class="fas fa-shield-alt"></i>Security</div><span>Active</span></div>
-        <div class="profile-option" style="border-color:var(--kurumi-red);" onclick="logout()"><div><i class="fas fa-sign-out-alt" style="color:var(--kurumi-red);"></i>Logout</div></div>
     </div>
 
     <div id="shopModal" class="modal">
         <div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
         <div class="p-grid">
-            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">RPG Skill UI <br><b>25k CR</b></p></div>
-            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">Boss Mob Pack <br><b>50k CR</b></p></div>
-            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">Custom Script V2 <br><b>15k CR</b></p></div>
-            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">Lobby Map Elite <br><b>100k CR</b></p></div>
-            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">VFX Aura Pack <br><b>30k CR</b></p></div>
-            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">Admin Tool Tool <br><b>Free</b></p></div>
+            <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="padding:10px;">RPG UI <br><b>25k CR</b></p></div>
         </div>
     </div>
 
     <div id="portModal" class="modal">
         <div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-            <div style="background:var(--glass); padding:20px; border-radius:15px; border:1px solid var(--glass-border); display: flex; align-items: center; gap: 15px;">
-                <img src="https://i.imgur.com/jPIDTKm.jpeg" style="width:50px; border-radius:10px;">
-                <div><h3 style="color:var(--gold);">Cloud MC Server</h3><p style="font-size:12px; opacity:0.7;">Custom Survival Project.</p></div>
-            </div>
-            <div style="background:var(--glass); padding:20px; border-radius:15px; border:1px solid var(--glass-border); display: flex; align-items: center; gap: 15px;">
-                <img src="https://i.imgur.com/jPIDTKm.jpeg" style="width:50px; border-radius:10px;">
-                <div><h3 style="color:var(--gold);">Kurumi UI Design</h3><p style="font-size:12px; opacity:0.7;">Modern dark web interface.</p></div>
-            </div>
-            <div style="background:var(--glass); padding:20px; border-radius:15px; border:1px solid var(--glass-border); display: flex; align-items: center; gap: 15px;">
-                <img src="https://i.imgur.com/jPIDTKm.jpeg" style="width:50px; border-radius:10px;">
-                <div><h3 style="color:var(--gold);">Scripting Bot</h3><p style="font-size:12px; opacity:0.7;">Automation for Discord/Store.</p></div>
-            </div>
-        </div>
+        <p>Daftar project Sezean.</p>
     </div>
 
     <div id="topupModal" class="modal">
-        <div class="modal-header"><h2>TOPUP CR</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
+        <div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
         <div style="text-align:center;">
-            <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none; display:block;">CHAT SEZEAN</a>
+             <p>Hubungi WhatsApp Sezean.</p>
+             <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none; display:inline-block; margin-top:10px;">CHAT SEZEAN</a>
         </div>
     </div>
 
@@ -235,7 +213,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         let logoClicks = 0;
-        let activeGame = '';
 
         window.onload = () => { 
             const savedUser = localStorage.getItem('activeUser');
@@ -245,7 +222,7 @@
         function handleLogin() {
             const u = document.getElementById('log-user').value.toLowerCase().trim();
             const p = document.getElementById('log-pass').value;
-            if(!u || !p) return alert("Isi semua bidang!");
+            if(!u || !p) return alert("Masukan data!");
 
             db.ref('accounts/' + u).once('value').then(snap => {
                 if(snap.exists() && snap.val() === p) { 
@@ -254,21 +231,22 @@
                 } else {
                     alert("Wrong Credentials!");
                 }
-            }).catch(e => alert("Error Koneksi: " + e.message));
+            });
         }
 
         function handleRegister() {
             const u = document.getElementById('reg-user').value.toLowerCase().trim();
             const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Isi semua bidang!");
+            if(!u || !p) return alert("Isi form!");
 
             db.ref('accounts/' + u).once('value').then(snap => {
                 if(snap.exists()) {
-                    alert("Username sudah ada!");
+                    alert("User ada!");
                 } else {
+                    // Pakai .set() spesifik ke path user, bukan ke root
                     db.ref('accounts/' + u).set(p);
                     db.ref('users/' + u).set({credits: 0}).then(() => { 
-                        alert("Account Created!"); 
+                        alert("Berhasil!"); 
                         toggleAuth('log'); 
                     });
                 }
@@ -291,67 +269,30 @@
         function triggerSecret() {
             if(localStorage.getItem('activeUser') !== 'sezean') return;
             logoClicks++;
-            if(logoClicks >= 5) { 
-                document.getElementById('secretPanel').style.display = 'block'; 
-                alert("Master Console Active."); 
-                logoClicks = 0; 
-            }
+            if(logoClicks >= 5) { document.getElementById('secretPanel').style.display = 'block'; logoClicks = 0; }
         }
 
         function adjustCredit(type) {
             const t = document.getElementById('s-target').value.toLowerCase().trim();
             const a = parseInt(document.getElementById('s-amount').value);
-            if(!t || isNaN(a)) return alert("Data tidak valid!");
-
             db.ref('users/' + t + '/credits').get().then(s => {
                 let current = s.val() || 0;
-                let newVal = type === 'grant' ? current + a : current - a;
-                db.ref('users/' + t + '/credits').set(newVal);
-                alert("Done! User " + t + " Balance: " + newVal);
+                db.ref('users/' + t + '/credits').set(type === 'grant' ? current + a : current - a);
+                alert("Updated!");
             });
-        }
-
-        function filterItems() {
-            let input = document.querySelector('.search-input').value.toLowerCase();
-            let cards = document.querySelectorAll('.p-card');
-            cards.forEach(card => {
-                let txt = card.innerText.toLowerCase();
-                card.style.display = txt.includes(input) ? "block" : "none";
-            });
-        }
-
-        function selectGame(game) {
-            activeGame = game;
-            document.getElementById('game-list-gui').style.display = 'none';
-            document.getElementById('game-id-gui').style.display = 'block';
-            document.getElementById('selected-game-title').innerText = "TOPUP " + game;
-        }
-
-        function backToGames() {
-            document.getElementById('game-list-gui').style.display = 'block';
-            document.getElementById('game-id-gui').style.display = 'none';
-        }
-
-        function confirmOrder() {
-            const pid = document.getElementById('player-id').value;
-            const zid = document.getElementById('zone-id').value;
-            window.open(`https://wa.me/6289696498841?text=Order ${activeGame}%0AID: ${pid} (${zid})`);
         }
 
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { 
-            document.getElementById(id).style.display = 'none'; 
-            if(id==='gameModal') backToGames(); 
-        }
-        
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function toggleAuth(m) {
             document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
         }
-        
-        function logout() { 
-            localStorage.clear(); 
-            location.reload(); 
+        function logout() { localStorage.clear(); location.reload(); }
+        function filterItems() {
+            let input = document.querySelector('.search-input').value.toLowerCase();
+            let cards = document.querySelectorAll('.p-card');
+            cards.forEach(card => card.style.display = card.innerText.toLowerCase().includes(input) ? "block" : "none");
         }
     </script>
 </body>
