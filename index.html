@@ -60,7 +60,11 @@
         .wallet-container { padding: 0 6%; margin-top: -60px; position: relative; z-index: 10; }
         .wallet-card { background: linear-gradient(135deg, #111, #000); border: 1px solid #222; border-radius: 20px; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
 
-        #adminPanel { background: #0d0d0d; border: 1px dashed var(--gold); padding: 20px; border-radius: 20px; margin: 20px 6% 0; display: none; }
+        /* --- TAMBAHAN: SECRET OWNER PANEL STYLE --- */
+        #adminPanel { background: #0d0d0d; border: 2px solid var(--gold); padding: 20px; border-radius: 20px; margin: 20px 6% 0; display: none; box-shadow: 0 0 15px rgba(255, 204, 0, 0.1); }
+        .order-monitor { margin-top: 20px; max-height: 200px; overflow-y: auto; background: #000; border-radius: 10px; padding: 10px; border: 1px solid #222; }
+        .order-card { font-size: 10px; border-bottom: 1px solid #222; padding: 8px 0; color: #ccc; }
+        .order-card span { color: var(--gold); }
 
         .dashboard-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px 6% 10px; }
         .info-box { background: rgba(255,255,255,0.03); border: 1px solid #111; padding: 15px; border-radius: 15px; display: flex; align-items: center; gap: 10px; }
@@ -109,7 +113,10 @@
                 <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:35px; border-radius:50%; border:1px solid var(--gold);">
                 <div class="brand-name">CLOUD<span>STORE</span></div>
             </div>
-            <input type="checkbox" onchange="toggleNightmare()">
+            <div style="display:flex; gap:15px; align-items:center;">
+                <input type="checkbox" onchange="toggleNightmare()">
+                <i class="fas fa-sign-out-alt" onclick="logout()" style="color:var(--primary); cursor:pointer;"></i>
+            </div>
         </header>
 
         <div class="hero">
@@ -124,10 +131,20 @@
         </div>
 
         <div id="adminPanel">
-            <h3 style="font-family:'Cinzel'; color:var(--gold); font-size:10px; margin-bottom:15px;">OWNER CONTROL PANEL</h3>
+            <h3 style="font-family:'Cinzel'; color:var(--gold); font-size:12px; margin-bottom:15px;"><i class="fas fa-user-shield"></i> GOD MODE PANEL</h3>
             <input type="text" id="targetUser" class="auth-input" placeholder="Nama User" style="font-size:12px; padding:10px;">
             <input type="number" id="targetAmount" class="auth-input" placeholder="Jumlah" style="font-size:12px; padding:10px;">
-            <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000; padding:10px;">KIRIM SALDO</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000; padding:10px; font-size:10px;">TAMBAH CR</button>
+                <button onclick="reduceCreditAction()" class="auth-btn" style="background:var(--primary); color:#fff; padding:10px; font-size:10px;">KURANGI CR</button>
+            </div>
+            
+            <div class="order-monitor">
+                <p style="font-size:9px; color:var(--gold); margin-bottom:10px;">ORDER MONITORING:</p>
+                <div id="liveOrderList">
+                    <p style="font-size:8px; color:#444;">Menunggu pesanan masuk...</p>
+                </div>
+            </div>
         </div>
 
         <div class="dashboard-info">
@@ -258,7 +275,13 @@
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('hero-user').innerText = u.toUpperCase();
             document.getElementById('user-display').innerText = u.toUpperCase();
-            if(u === 'owner') { document.getElementById('adminPanel').style.display = 'block'; }
+            
+            // TAMPILKAN PANEL JIKA OWNER
+            if(u === 'owner') { 
+                document.getElementById('adminPanel').style.display = 'block'; 
+                listenToOrders(); // Aktifkan monitoring order
+            }
+            
             db.ref('users/' + u + '/credits').on('value', (s) => {
                 document.getElementById('user-balance').innerText = (s.val() || 0).toLocaleString() + " CR";
             });
@@ -266,13 +289,38 @@
 
         function logout() { localStorage.removeItem('activeUser'); location.reload(); }
 
+        // --- OWNER ACTIONS ---
         function addCreditAction() {
             const target = document.getElementById('targetUser').value.toLowerCase();
             const amount = parseInt(document.getElementById('targetAmount').value);
             if(target && amount) {
                 const ref = db.ref('users/' + target + '/credits');
-                ref.get().then((s) => { ref.set((s.val() || 0) + amount); alert("Berhasil!"); });
+                ref.get().then((s) => { ref.set((s.val() || 0) + amount); alert("Berhasil Tambah Saldo!"); });
             }
+        }
+
+        function reduceCreditAction() {
+            const target = document.getElementById('targetUser').value.toLowerCase();
+            const amount = parseInt(document.getElementById('targetAmount').value);
+            if(target && amount) {
+                const ref = db.ref('users/' + target + '/credits');
+                ref.get().then((s) => { 
+                    let cur = s.val() || 0;
+                    ref.set(cur - amount < 0 ? 0 : cur - amount); 
+                    alert("Berhasil Kurangi Saldo!"); 
+                });
+            }
+        }
+
+        function listenToOrders() {
+            db.ref('orders').limitToLast(10).on('value', (snapshot) => {
+                const list = document.getElementById('liveOrderList');
+                list.innerHTML = "";
+                snapshot.forEach((child) => {
+                    const data = child.val();
+                    list.innerHTML += `<div class="order-card"><span>[${data.time}]</span> ${data.user} BUY ${data.item}</div>`;
+                });
+            });
         }
 
         function buyProduct(name, price) {
@@ -280,7 +328,16 @@
             const ref = db.ref('users/' + u + '/credits');
             ref.get().then((s) => {
                 let bal = s.val() || 0;
-                if(bal >= price) { ref.set(bal - price); window.location.href = `https://wa.me/6289696498841?text=BUY:${name}`; }
+                if(bal >= price) { 
+                    ref.set(bal - price); 
+                    // CATAT KE DATABASE ORDER
+                    db.ref('orders').push({
+                        user: u,
+                        item: name,
+                        time: new Date().toLocaleTimeString()
+                    });
+                    window.location.href = `https://wa.me/6289696498841?text=BUY:${name}`; 
+                }
                 else { alert("Saldo Tipis!"); }
             });
         }
