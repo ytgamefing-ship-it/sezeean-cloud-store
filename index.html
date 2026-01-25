@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Store | Sezean Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -22,7 +22,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
 
-        /* --- BACKGROUND --- */
         .clock-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 150vw; height: 150vw; opacity: 0.07;
@@ -31,21 +30,19 @@
         }
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* --- AUTH PAGE --- */
+        /* AUTH SECTION */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
-        .auth-card { background: rgba(10,10,10,0.9); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; box-shadow: 0 0 30px rgba(255,0,0,0.2); }
-        .store-logo-main { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--kurumi-red); margin-bottom: 20px; box-shadow: 0 0 15px var(--kurumi-red); }
+        .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; box-shadow: 0 0 30px rgba(255,0,0,0.3); }
         .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
-        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
+        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        .auth-btn:active { transform: scale(0.95); }
 
-        /* --- HEADER --- */
+        /* MAIN APP */
         header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
         .logo-area { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; }
-        .logo-img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); }
-
+        .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
         .container { padding: 20px 6% 120px; }
 
-        /* --- BALANCE CARD --- */
         .balance-card { 
             background: linear-gradient(135deg, #1a0000, #000); padding: 25px; border-radius: 25px; 
             border: 1px solid var(--gold); margin-bottom: 25px; position: relative; overflow: hidden;
@@ -53,44 +50,27 @@
         .xp-bar { width: 100%; height: 5px; background: #222; border-radius: 10px; margin-top: 15px; }
         .xp-fill { width: 70%; height: 100%; background: var(--gold); box-shadow: 0 0 10px var(--gold); border-radius: 10px; }
 
-        /* --- QUICK MENU --- */
         .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
-        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 5px; border-radius: 15px; text-align: center; font-size: 10px; transition: 0.3s; }
+        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 5px; border-radius: 15px; text-align: center; font-size: 10px; }
         .menu-box i { font-size: 20px; color: var(--kurumi-red); display: block; margin-bottom: 8px; }
 
-        /* --- PRODUCT GRID --- */
-        .section-header { font-family: 'Cinzel Decorative'; font-size: 16px; color: var(--gold); margin: 25px 0 15px; display: flex; justify-content: space-between; align-items: center; }
+        .section-header { font-family: 'Cinzel Decorative'; font-size: 16px; color: var(--gold); margin: 25px 0 15px; }
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; text-align: left; position: relative; }
-        .p-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
-        .p-tag { position: absolute; top: 15px; left: 15px; font-size: 8px; padding: 2px 6px; border-radius: 4px; color: #fff; font-weight: 800; }
-        .buy-btn-small { width: 100%; padding: 10px; background: #fff; color: #000; border: none; border-radius: 10px; font-weight: 800; font-size: 11px; margin-top: 10px; }
+        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; }
+        .p-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; border: 1px solid #222; }
+        .p-tag { position: absolute; top: 18px; left: 18px; font-size: 7px; padding: 2px 5px; border-radius: 3px; color: #fff; font-weight: 900; }
 
-        /* --- TERMINAL --- */
         .term-container { background: #000; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; font-family: monospace; margin-top: 25px; }
-        .term-input { background: transparent; border: none; color: #0f0; width: 80%; outline: none; }
+        .term-input { background: transparent; border: none; color: #0f0; width: 80%; outline: none; font-family: monospace; }
 
-        /* --- OWNER PANEL --- */
         #ownerPanel { display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--gold); border-radius: 25px; padding: 25px; margin-top: 25px; }
 
-        /* --- MODAL --- */
+        /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; padding: 30px 6%; overflow-y: auto; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .modal-title { font-family: 'Cinzel Decorative'; color: var(--gold); font-size: 20px; }
+        .profile-avatar { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--kurumi-red); margin-bottom: 15px; }
+        .info-item { background: var(--glass); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid var(--glass-border); }
 
-        /* --- PROFILE --- */
-        .profile-header { text-align: center; margin-bottom: 30px; }
-        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--kurumi-red); padding: 5px; margin-bottom: 15px; }
-        .profile-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .info-item { background: var(--glass); padding: 15px; border-radius: 15px; border: 1px solid var(--glass-border); text-align: center; }
-        .info-item span { display: block; font-size: 10px; color: #555; text-transform: uppercase; margin-bottom: 5px; }
-
-        /* --- PORTFOLIO --- */
-        .port-item { background: var(--glass); border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--glass-border); }
-        .port-img { width: 100%; height: 180px; object-fit: cover; }
-        .port-desc { padding: 15px; }
-
-        /* --- NAV --- */
         nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); backdrop-filter: blur(20px); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; }
         nav i { font-size: 22px; color: #444; }
         nav i.active { color: var(--kurumi-red); }
@@ -102,18 +82,19 @@
 
     <div id="auth-page">
         <div class="auth-card" id="login-box">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="store-logo-main">
-            <h1 style="font-family:'Cinzel Decorative'; color:#fff; margin-bottom:25px;">Cloud Store</h1>
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:70px; border-radius:50%; margin-bottom:20px; border:2px solid var(--kurumi-red);">
+            <h2 style="font-family:'Cinzel Decorative'; margin-bottom:20px;">Cloud Store</h2>
             <input type="text" id="log-user" class="auth-input" placeholder="Username">
             <input type="password" id="log-pass" class="auth-input" placeholder="Password">
-            <button onclick="handleLogin()" class="auth-btn">LOGIN SYSTEM</button>
-            <p onclick="toggleAuth()" style="margin-top:20px; font-size:11px; color:#444; cursor:pointer;">New Identity? Register</p>
+            <button onclick="handleLogin()" class="auth-btn">LOGIN</button>
+            <p onclick="toggleAuth()" style="margin-top:20px; font-size:11px; color:#555; cursor:pointer;">New Soul? Register</p>
         </div>
         <div class="auth-card" id="register-box" style="display:none;">
-            <h1 style="font-family:'Cinzel Decorative'; color:var(--gold); margin-bottom:25px;">Register</h1>
-            <input type="text" id="reg-user" class="auth-input" placeholder="New Username">
-            <input type="password" id="reg-pass" class="auth-input" placeholder="New Password">
-            <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE SOUL</button>
+            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold); margin-bottom:20px;">Join Us</h2>
+            <input type="text" id="reg-user" class="auth-input" placeholder="Username">
+            <input type="password" id="reg-pass" class="auth-input" placeholder="Password">
+            <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">REGISTER</button>
+            <p onclick="toggleAuth()" style="margin-top:20px; font-size:11px; color:var(--kurumi-red); cursor:pointer;">Back to Login</p>
         </div>
     </div>
 
@@ -121,7 +102,7 @@
         <header>
             <div class="logo-area">
                 <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="logo-img">
-                Cloud Store
+                <span>Cloud Store</span>
             </div>
             <i class="fas fa-power-off" onclick="logout()" style="color:var(--kurumi-red);"></i>
         </header>
@@ -130,7 +111,7 @@
             <div class="balance-card">
                 <p style="font-size:10px; color:var(--gold); letter-spacing:2px;">TIME ENERGY</p>
                 <h1 id="user-balance" style="font-family:'Cinzel Decorative'; font-size:32px; margin:5px 0;">0 CR</h1>
-                <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--kurumi-red); font-weight:800;">
+                <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--kurumi-red);">
                     <span id="hero-user">@USER</span>
                     <span>RANK: NIGHTMARE</span>
                 </div>
@@ -144,96 +125,65 @@
                 <div class="menu-box" onclick="window.open('https://minecraft.wiki/w/Villager_News', '_blank')"><i class="fas fa-bullhorn"></i>News</div>
             </div>
 
-            <div class="section-header"><span>MINECRAFT SPECIALS</span></div>
+            <div class="section-header">MINECRAFT SHOP</div>
             <div class="p-grid">
                 <div class="p-card">
-                    <span class="p-tag" style="background:var(--kurumi-red);">MYTHIC MOBS</span>
+                    <span class="p-tag" style="background:#ff1a1a;">MYTHIC MOBS</span>
                     <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg">
-                    <p style="font-size:11px; font-weight:600;">Custom Skill Pack</p>
-                    <p style="color:var(--gold); font-weight:800;">45k CR</p>
-                    <button class="buy-btn-small" onclick="buyProduct('Mythic Skill', 45000)">PURCHASE</button>
+                    <p style="font-size:10px; font-weight:600;">Custom Skill Pack</p>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Skill Pack', 45000)">45k CR</button>
                 </div>
                 <div class="p-card">
-                    <span class="p-tag" style="background:#25d366;">MODEL ENGINE</span>
+                    <span class="p-tag" style="background:#25d366;">ENGINE</span>
                     <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg">
-                    <p style="font-size:11px; font-weight:600;">Model Engine Entity</p>
-                    <p style="color:var(--gold); font-weight:800;">85k CR</p>
-                    <button class="buy-btn-small" onclick="buyProduct('Model Engine', 85000)">PURCHASE</button>
+                    <p style="font-size:10px; font-weight:600;">Model Engine Mob</p>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Model Engine', 85000)">85k CR</button>
                 </div>
             </div>
 
             <div class="term-container">
-                <p style="font-size:9px; color:#333; margin-bottom:5px;">CONSOLE_SYSTEM [v4.0.0]</p>
+                <p style="font-size:9px; color:#333; margin-bottom:5px;">SYSTEM_TERMINAL</p>
                 <div style="display:flex; gap:10px;">
                     <span style="color:var(--kurumi-red);">></span>
-                    <input type="text" id="reqInput" class="term-input" placeholder="type: topup [amount]" onkeydown="handleConsole(event)">
+                    <input type="text" id="reqInput" class="term-input" placeholder="topup [jumlah]" onkeydown="handleConsole(event)">
                 </div>
-                <div id="termLog" style="font-size:9px; color:#444; margin-top:5px;">Waiting...</div>
             </div>
 
             <div id="ownerPanel">
-                <h3 style="font-family:'Cinzel Decorative'; font-size:14px; color:var(--gold); margin-bottom:20px;">SEZEAN MASTER CONTROL</h3>
-                <input type="text" id="targetUser" class="auth-input" placeholder="Target Username">
+                <h3 style="font-size:12px; color:var(--gold); margin-bottom:15px;">SEZEAN MASTER CONTROL</h3>
+                <input type="text" id="targetUser" class="auth-input" placeholder="Username">
                 <input type="number" id="targetAmount" class="auth-input" placeholder="Amount">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000;">GRANT</button>
-                    <button onclick="reduceCreditAction()" class="auth-btn">DRAIN</button>
-                </div>
+                <button onclick="addCredit()" class="auth-btn" style="background:#fff; color:#000; margin-bottom:10px;">GRANT</button>
+                <button onclick="reduceCredit()" class="auth-btn">DRAIN</button>
             </div>
         </div>
 
         <nav>
             <i class="fas fa-home active" onclick="location.reload()"></i>
-            <i class="fas fa-shopping-bag" onclick="openModal('shopModal')"></i>
-            <i class="fas fa-wallet" onclick="openModal('topupModal')"></i>
-            <i class="fas fa-user-circle" onclick="openModal('profileModal')"></i>
+            <i class="fas fa-store" onclick="openModal('shopModal')"></i>
+            <i class="fas fa-wallet" onclick="openModal('topModal')"></i>
+            <i class="fas fa-user" onclick="openModal('profileModal')"></i>
         </nav>
     </div>
 
-    <div id="portModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <div class="port-item">
-            <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg" class="port-img">
-            <div class="port-desc"><h4 style="color:var(--gold);">RPG UI Project</h4><p style="font-size:12px; color:#777;">Advanced visual interface system.</p></div>
-        </div>
-    </div>
-
     <div id="profileModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div class="profile-header">
+        <div class="modal-header">
+            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">PROFILE</h2>
+            <i class="fas fa-times" onclick="closeModal('profileModal')"></i>
+        </div>
+        <div style="text-align:center;">
             <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
-            <h2 id="prof-name">SEZEAN</h2>
-            <p style="color:var(--kurumi-red); font-size:12px; font-weight:800;">NIGHTMARE CLASS</p>
-        </div>
-        <div class="profile-info-grid">
-            <div class="info-item"><span>Balance</span><b id="prof-bal">0 CR</b></div>
-            <div class="info-item"><span>Status</span><b style="color:#0f0;">ONLINE</b></div>
-        </div>
-        <button onclick="logout()" class="auth-btn" style="margin-top:40px; background:transparent; border:1px solid #333;">LOGOUT</button>
-    </div>
-
-    <div id="shopModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
-        <div class="p-grid">
-            <div class="p-card">
-                <span class="p-tag" style="background:var(--gold); color:#000;">MODEL</span>
-                <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg">
-                <p style="font-size:11px; font-weight:600;">Custom 3D Model</p>
-                <p style="color:var(--gold); font-weight:800;">60k CR</p>
-                <button class="buy-btn-small">PURCHASE</button>
+            <h2 id="p-user">SEZEAN</h2>
+            <p style="color:var(--kurumi-red); font-size:12px; letter-spacing:2px; margin-bottom:30px;">NIGHTMARE CLASS</p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div class="info-item"><span>Balance</span><br><b id="p-bal">0</b></div>
+                <div class="info-item"><span>Status</span><br><b style="color:#0f0;">ACTIVE</b></div>
             </div>
         </div>
     </div>
 
-    <div id="topupModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
-        <div style="text-align:center; padding:30px; background:var(--glass); border-radius:20px;">
-            <i class="fab fa-whatsapp" style="font-size:50px; color:#25d366; margin-bottom:15px;"></i>
-            <a href="https://wa.me/6289696498841" class="auth-btn" style="display:block; text-decoration:none;">CHAT SEZEAN</a>
-        </div>
-    </div>
-
     <script>
+        // CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
             authDomain: "sezeean-store.firebaseapp.com",
@@ -246,431 +196,103 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        window.onload = function() {
-            const saved = localStorage.getItem('activeUser');
-            if(saved) showMain(saved);
+        window.onload = () => {
+            const user = localStorage.getItem('activeUser');
+            if(user) showMain(user);
         };
 
         function toggleAuth() {
-            const l = document.getElementById('login-box'); const r = document.getElementById('register-box');
-            l.style.display = l.style.display === 'none' ? 'block' : 'none'; r.style.display = r.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function handleLogin() {
-            const u = document.getElementById('log-user').value.toLowerCase().trim();
-            const p = document.getElementById('log-pass').value;
-            db.ref('accounts/' + u).get().then(s => {
-                if(s.exists() && s.val() === p) {
-                    localStorage.setItem('activeUser', u);
-                    showMain(u);
-                } else { alert("Login Fail!"); }
-            });
+            const l = document.getElementById('login-box');
+            const r = document.getElementById('register-box');
+            l.style.display = l.style.display === 'none' ? 'block' : 'none';
+            r.style.display = r.style.display === 'none' ? 'block' : 'none';
         }
 
         function handleRegister() {
             const u = document.getElementById('reg-user').value.toLowerCase().trim();
             const p = document.getElementById('reg-pass').value;
-            if(u && p) {
-                db.ref('accounts/' + u).set(p);
-                db.ref('users/' + u + '/credits').set(0);
-                alert("Soul Created!"); toggleAuth();
-            }
+            if(!u || !p) return alert("Isi semua!");
+
+            db.ref('accounts/' + u).get().then(snap => {
+                if(snap.exists()) { alert("User sudah ada!"); }
+                else {
+                    db.ref('accounts/' + u).set(p);
+                    db.ref('users/' + u).set({ credits: 0, rank: "NIGHTMARE" });
+                    alert("Berhasil! Silakan Login.");
+                    toggleAuth();
+                }
+            });
+        }
+
+        function handleLogin() {
+            const u = document.getElementById('log-user').value.toLowerCase().trim();
+            const p = document.getElementById('log-pass').value;
+
+            db.ref('accounts/' + u).get().then(snap => {
+                if(snap.exists() && snap.val() === p) {
+                    localStorage.setItem('activeUser', u);
+                    showMain(u);
+                } else { alert("User/Password Salah!"); }
+            });
         }
 
         function showMain(u) {
             document.getElementById('auth-page').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
-            document.getElementById('prof-name').innerText = u.toUpperCase();
-            
-            if(['zafkiel', 'owner', 'sean', 'sezean'].includes(u)) {
+            document.getElementById('p-user').innerText = u.toUpperCase();
+
+            if(['sean', 'sezean', 'owner'].includes(u)) {
                 document.getElementById('ownerPanel').style.display = 'block';
             }
 
-            db.ref('users/' + u + '/credits').on('value', s => {
-                const bal = (s.val() || 0).toLocaleString() + " CR";
-                document.getElementById('user-balance').innerText = bal;
-                document.getElementById('prof-bal').innerText = bal;
+            db.ref('users/' + u + '/credits').on('value', snap => {
+                const val = (snap.val() || 0).toLocaleString();
+                document.getElementById('user-balance').innerText = val + " CR";
+                document.getElementById('p-bal').innerText = val + " CR";
             });
         }
 
         function handleConsole(e) {
-            if (e.key === 'Enter') {
+            if(e.key === 'Enter') {
                 const val = e.target.value.toLowerCase();
-                const user = localStorage.getItem('activeUser');
-                if (val.startsWith('topup')) {
+                if(val.startsWith('topup')) {
                     const amt = val.split(' ')[1];
-                    db.ref('requests/' + user).push({ amount: amt, time: new Date().toISOString() });
-                    document.getElementById('termLog').innerText = "Sent: Request " + amt + " CR.";
+                    db.ref('requests/' + localStorage.getItem('activeUser')).push({
+                        amt: amt, time: new Date().toLocaleString()
+                    });
+                    alert("Request Topup Terkirim!");
                 }
                 e.target.value = '';
             }
         }
 
-        function addCreditAction() {
+        function addCredit() {
             const t = document.getElementById('targetUser').value.toLowerCase();
             const a = parseInt(document.getElementById('targetAmount').value);
             db.ref('users/' + t + '/credits').get().then(s => {
                 db.ref('users/' + t + '/credits').set((s.val() || 0) + a);
-                alert("Power Granted!");
+                alert("Added!");
             });
         }
 
-        function reduceCreditAction() {
+        function reduceCredit() {
             const t = document.getElementById('targetUser').value.toLowerCase();
             const a = parseInt(document.getElementById('targetAmount').value);
             db.ref('users/' + t + '/credits').get().then(s => {
                 db.ref('users/' + t + '/credits').set((s.val() || 0) - a);
-                alert("Power Drained!");
+                alert("Reduced!");
             });
+        }
+
+        function buy(name, price) {
+            const u = localStorage.getItem('activeUser');
+            window.open(`https://wa.me/6289696498841?text=Halo Sezean, saya @${u} mau beli ${name} (${price} CR)`, '_blank');
         }
 
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
-        
-        function buyProduct(name, price) {
-            const user = localStorage.getItem('activeUser');
-            window.open(`https://wa.me/6289696498841?text=Halo Sezean, saya @${user} ingin membeli ${name} seharga ${price} CR`, '_blank');
-        }
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Store | Sezean Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    
-    <style>
-        :root {
-            --kurumi-red: #ff1a1a;
-            --gold: #d4af37;
-            --bg-dark: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
-
-        /* --- BACKGROUND --- */
-        .clock-bg {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 150vw; height: 150vw; opacity: 0.07;
-            background: url('https://i.ibb.co.com/zY6H8Tq/1000969560.jpg') center/contain no-repeat;
-            animation: spin 100s linear infinite; z-index: -1;
-        }
-        @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-        /* --- AUTH PAGE --- */
-        #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
-        .auth-card { background: rgba(10,10,10,0.9); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; box-shadow: 0 0 30px rgba(255,0,0,0.2); }
-        .store-logo-main { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--kurumi-red); margin-bottom: 20px; box-shadow: 0 0 15px var(--kurumi-red); }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
-        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
-
-        /* --- HEADER --- */
-        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
-        .logo-area { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; }
-        .logo-img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--gold); }
-
-        .container { padding: 20px 6% 120px; }
-
-        /* --- BALANCE CARD --- */
-        .balance-card { 
-            background: linear-gradient(135deg, #1a0000, #000); padding: 25px; border-radius: 25px; 
-            border: 1px solid var(--gold); margin-bottom: 25px; position: relative; overflow: hidden;
-        }
-        .xp-bar { width: 100%; height: 5px; background: #222; border-radius: 10px; margin-top: 15px; }
-        .xp-fill { width: 70%; height: 100%; background: var(--gold); box-shadow: 0 0 10px var(--gold); border-radius: 10px; }
-
-        /* --- QUICK MENU --- */
-        .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
-        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 5px; border-radius: 15px; text-align: center; font-size: 10px; transition: 0.3s; }
-        .menu-box i { font-size: 20px; color: var(--kurumi-red); display: block; margin-bottom: 8px; }
-
-        /* --- PRODUCT GRID --- */
-        .section-header { font-family: 'Cinzel Decorative'; font-size: 16px; color: var(--gold); margin: 25px 0 15px; display: flex; justify-content: space-between; align-items: center; }
-        .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; text-align: left; position: relative; }
-        .p-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
-        .p-tag { position: absolute; top: 15px; left: 15px; font-size: 8px; padding: 2px 6px; border-radius: 4px; color: #fff; font-weight: 800; }
-        .buy-btn-small { width: 100%; padding: 10px; background: #fff; color: #000; border: none; border-radius: 10px; font-weight: 800; font-size: 11px; margin-top: 10px; }
-
-        /* --- TERMINAL --- */
-        .term-container { background: #000; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; font-family: monospace; margin-top: 25px; }
-        .term-input { background: transparent; border: none; color: #0f0; width: 80%; outline: none; }
-
-        /* --- OWNER PANEL --- */
-        #ownerPanel { display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--gold); border-radius: 25px; padding: 25px; margin-top: 25px; }
-
-        /* --- MODAL --- */
-        .modal { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; padding: 30px 6%; overflow-y: auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .modal-title { font-family: 'Cinzel Decorative'; color: var(--gold); font-size: 20px; }
-
-        /* --- PROFILE --- */
-        .profile-header { text-align: center; margin-bottom: 30px; }
-        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--kurumi-red); padding: 5px; margin-bottom: 15px; }
-        .profile-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .info-item { background: var(--glass); padding: 15px; border-radius: 15px; border: 1px solid var(--glass-border); text-align: center; }
-        .info-item span { display: block; font-size: 10px; color: #555; text-transform: uppercase; margin-bottom: 5px; }
-
-        /* --- PORTFOLIO --- */
-        .port-item { background: var(--glass); border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--glass-border); }
-        .port-img { width: 100%; height: 180px; object-fit: cover; }
-        .port-desc { padding: 15px; }
-
-        /* --- NAV --- */
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); backdrop-filter: blur(20px); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; }
-        nav i { font-size: 22px; color: #444; }
-        nav i.active { color: var(--kurumi-red); }
-    </style>
-</head>
-<body>
-
-    <div class="clock-bg"></div>
-
-    <div id="auth-page">
-        <div class="auth-card" id="login-box">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="store-logo-main">
-            <h1 style="font-family:'Cinzel Decorative'; color:#fff; margin-bottom:25px;">Cloud Store</h1>
-            <input type="text" id="log-user" class="auth-input" placeholder="Username">
-            <input type="password" id="log-pass" class="auth-input" placeholder="Password">
-            <button onclick="handleLogin()" class="auth-btn">LOGIN SYSTEM</button>
-            <p onclick="toggleAuth()" style="margin-top:20px; font-size:11px; color:#444; cursor:pointer;">New Identity? Register</p>
-        </div>
-        <div class="auth-card" id="register-box" style="display:none;">
-            <h1 style="font-family:'Cinzel Decorative'; color:var(--gold); margin-bottom:25px;">Register</h1>
-            <input type="text" id="reg-user" class="auth-input" placeholder="New Username">
-            <input type="password" id="reg-pass" class="auth-input" placeholder="New Password">
-            <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE SOUL</button>
-        </div>
-    </div>
-
-    <div id="main-content" style="display:none;">
-        <header>
-            <div class="logo-area">
-                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="logo-img">
-                Cloud Store
-            </div>
-            <i class="fas fa-power-off" onclick="logout()" style="color:var(--kurumi-red);"></i>
-        </header>
-
-        <div class="container">
-            <div class="balance-card">
-                <p style="font-size:10px; color:var(--gold); letter-spacing:2px;">TIME ENERGY</p>
-                <h1 id="user-balance" style="font-family:'Cinzel Decorative'; font-size:32px; margin:5px 0;">0 CR</h1>
-                <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--kurumi-red); font-weight:800;">
-                    <span id="hero-user">@USER</span>
-                    <span>RANK: NIGHTMARE</span>
-                </div>
-                <div class="xp-bar"><div class="xp-fill"></div></div>
-            </div>
-
-            <div class="quick-grid">
-                <div class="menu-box" onclick="openModal('shopModal')"><i class="fas fa-shopping-cart"></i>Shop</div>
-                <div class="menu-box" onclick="openModal('portModal')"><i class="fas fa-briefcase"></i>Porto</div>
-                <div class="menu-box" onclick="openModal('topModal')"><i class="fas fa-trophy"></i>Top</div>
-                <div class="menu-box" onclick="window.open('https://minecraft.wiki/w/Villager_News', '_blank')"><i class="fas fa-bullhorn"></i>News</div>
-            </div>
-
-            <div class="section-header"><span>MINECRAFT SPECIALS</span></div>
-            <div class="p-grid">
-                <div class="p-card">
-                    <span class="p-tag" style="background:var(--kurumi-red);">MYTHIC MOBS</span>
-                    <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg">
-                    <p style="font-size:11px; font-weight:600;">Custom Skill Pack</p>
-                    <p style="color:var(--gold); font-weight:800;">45k CR</p>
-                    <button class="buy-btn-small" onclick="buyProduct('Mythic Skill', 45000)">PURCHASE</button>
-                </div>
-                <div class="p-card">
-                    <span class="p-tag" style="background:#25d366;">MODEL ENGINE</span>
-                    <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg">
-                    <p style="font-size:11px; font-weight:600;">Model Engine Entity</p>
-                    <p style="color:var(--gold); font-weight:800;">85k CR</p>
-                    <button class="buy-btn-small" onclick="buyProduct('Model Engine', 85000)">PURCHASE</button>
-                </div>
-            </div>
-
-            <div class="term-container">
-                <p style="font-size:9px; color:#333; margin-bottom:5px;">CONSOLE_SYSTEM [v4.0.0]</p>
-                <div style="display:flex; gap:10px;">
-                    <span style="color:var(--kurumi-red);">></span>
-                    <input type="text" id="reqInput" class="term-input" placeholder="type: topup [amount]" onkeydown="handleConsole(event)">
-                </div>
-                <div id="termLog" style="font-size:9px; color:#444; margin-top:5px;">Waiting...</div>
-            </div>
-
-            <div id="ownerPanel">
-                <h3 style="font-family:'Cinzel Decorative'; font-size:14px; color:var(--gold); margin-bottom:20px;">SEZEAN MASTER CONTROL</h3>
-                <input type="text" id="targetUser" class="auth-input" placeholder="Target Username">
-                <input type="number" id="targetAmount" class="auth-input" placeholder="Amount">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000;">GRANT</button>
-                    <button onclick="reduceCreditAction()" class="auth-btn">DRAIN</button>
-                </div>
-            </div>
-        </div>
-
-        <nav>
-            <i class="fas fa-home active" onclick="location.reload()"></i>
-            <i class="fas fa-shopping-bag" onclick="openModal('shopModal')"></i>
-            <i class="fas fa-wallet" onclick="openModal('topupModal')"></i>
-            <i class="fas fa-user-circle" onclick="openModal('profileModal')"></i>
-        </nav>
-    </div>
-
-    <div id="portModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <div class="port-item">
-            <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg" class="port-img">
-            <div class="port-desc"><h4 style="color:var(--gold);">RPG UI Project</h4><p style="font-size:12px; color:#777;">Advanced visual interface system.</p></div>
-        </div>
-    </div>
-
-    <div id="profileModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div class="profile-header">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
-            <h2 id="prof-name">SEZEAN</h2>
-            <p style="color:var(--kurumi-red); font-size:12px; font-weight:800;">NIGHTMARE CLASS</p>
-        </div>
-        <div class="profile-info-grid">
-            <div class="info-item"><span>Balance</span><b id="prof-bal">0 CR</b></div>
-            <div class="info-item"><span>Status</span><b style="color:#0f0;">ONLINE</b></div>
-        </div>
-        <button onclick="logout()" class="auth-btn" style="margin-top:40px; background:transparent; border:1px solid #333;">LOGOUT</button>
-    </div>
-
-    <div id="shopModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
-        <div class="p-grid">
-            <div class="p-card">
-                <span class="p-tag" style="background:var(--gold); color:#000;">MODEL</span>
-                <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg">
-                <p style="font-size:11px; font-weight:600;">Custom 3D Model</p>
-                <p style="color:var(--gold); font-weight:800;">60k CR</p>
-                <button class="buy-btn-small">PURCHASE</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="topupModal" class="modal">
-        <div class="modal-header"><h2 class="modal-title">TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
-        <div style="text-align:center; padding:30px; background:var(--glass); border-radius:20px;">
-            <i class="fab fa-whatsapp" style="font-size:50px; color:#25d366; margin-bottom:15px;"></i>
-            <a href="https://wa.me/6289696498841" class="auth-btn" style="display:block; text-decoration:none;">CHAT SEZEAN</a>
-        </div>
-    </div>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
-            authDomain: "sezeean-store.firebaseapp.com",
-            databaseURL: "https://sezeean-store-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "sezeean-store",
-            storageBucket: "sezeean-store.firebasestorage.app",
-            messagingSenderId: "128288287658",
-            appId: "1:128288287658:web:774191d598cdd25c9119d3"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        window.onload = function() {
-            const saved = localStorage.getItem('activeUser');
-            if(saved) showMain(saved);
-        };
-
-        function toggleAuth() {
-            const l = document.getElementById('login-box'); const r = document.getElementById('register-box');
-            l.style.display = l.style.display === 'none' ? 'block' : 'none'; r.style.display = r.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function handleLogin() {
-            const u = document.getElementById('log-user').value.toLowerCase().trim();
-            const p = document.getElementById('log-pass').value;
-            db.ref('accounts/' + u).get().then(s => {
-                if(s.exists() && s.val() === p) {
-                    localStorage.setItem('activeUser', u);
-                    showMain(u);
-                } else { alert("Login Fail!"); }
-            });
-        }
-
-        function handleRegister() {
-            const u = document.getElementById('reg-user').value.toLowerCase().trim();
-            const p = document.getElementById('reg-pass').value;
-            if(u && p) {
-                db.ref('accounts/' + u).set(p);
-                db.ref('users/' + u + '/credits').set(0);
-                alert("Soul Created!"); toggleAuth();
-            }
-        }
-
-        function showMain(u) {
-            document.getElementById('auth-page').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
-            document.getElementById('prof-name').innerText = u.toUpperCase();
-            
-            if(['zafkiel', 'owner', 'sean', 'sezean'].includes(u)) {
-                document.getElementById('ownerPanel').style.display = 'block';
-            }
-
-            db.ref('users/' + u + '/credits').on('value', s => {
-                const bal = (s.val() || 0).toLocaleString() + " CR";
-                document.getElementById('user-balance').innerText = bal;
-                document.getElementById('prof-bal').innerText = bal;
-            });
-        }
-
-        function handleConsole(e) {
-            if (e.key === 'Enter') {
-                const val = e.target.value.toLowerCase();
-                const user = localStorage.getItem('activeUser');
-                if (val.startsWith('topup')) {
-                    const amt = val.split(' ')[1];
-                    db.ref('requests/' + user).push({ amount: amt, time: new Date().toISOString() });
-                    document.getElementById('termLog').innerText = "Sent: Request " + amt + " CR.";
-                }
-                e.target.value = '';
-            }
-        }
-
-        function addCreditAction() {
-            const t = document.getElementById('targetUser').value.toLowerCase();
-            const a = parseInt(document.getElementById('targetAmount').value);
-            db.ref('users/' + t + '/credits').get().then(s => {
-                db.ref('users/' + t + '/credits').set((s.val() || 0) + a);
-                alert("Power Granted!");
-            });
-        }
-
-        function reduceCreditAction() {
-            const t = document.getElementById('targetUser').value.toLowerCase();
-            const a = parseInt(document.getElementById('targetAmount').value);
-            db.ref('users/' + t + '/credits').get().then(s => {
-                db.ref('users/' + t + '/credits').set((s.val() || 0) - a);
-                alert("Power Drained!");
-            });
-        }
-
-        function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
-        
-        function buyProduct(name, price) {
-            const user = localStorage.getItem('activeUser');
-            window.open(`https://wa.me/6289696498841?text=Halo Sezean, saya @${user} ingin membeli ${name} seharga ${price} CR`, '_blank');
-        }
+        function logout() { localStorage.clear(); location.reload(); }
     </script>
 </body>
 </html>
