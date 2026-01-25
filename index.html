@@ -231,12 +231,85 @@
             messagingSenderId: "128288287658",
             appId: "1:128288287658:web:774191d598cdd25c9119d3"
         };
+        
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         let logoClicks = 0;
         let activeGame = '';
 
-        window.onload = () => { if(localStorage.getItem('activeUser')) showMain(localStorage.getItem('activeUser')); };
+        window.onload = () => { 
+            const savedUser = localStorage.getItem('activeUser');
+            if(savedUser) showMain(savedUser); 
+        };
+
+        function handleLogin() {
+            const u = document.getElementById('log-user').value.toLowerCase().trim();
+            const p = document.getElementById('log-pass').value;
+            if(!u || !p) return alert("Isi semua bidang!");
+
+            db.ref('accounts/' + u).once('value').then(snap => {
+                if(snap.exists() && snap.val() === p) { 
+                    localStorage.setItem('activeUser', u); 
+                    showMain(u); 
+                } else {
+                    alert("Wrong Credentials!");
+                }
+            }).catch(e => alert("Error Koneksi: " + e.message));
+        }
+
+        function handleRegister() {
+            const u = document.getElementById('reg-user').value.toLowerCase().trim();
+            const p = document.getElementById('reg-pass').value;
+            if(!u || !p) return alert("Isi semua bidang!");
+
+            db.ref('accounts/' + u).once('value').then(snap => {
+                if(snap.exists()) {
+                    alert("Username sudah ada!");
+                } else {
+                    db.ref('accounts/' + u).set(p);
+                    db.ref('users/' + u).set({credits: 0}).then(() => { 
+                        alert("Account Created!"); 
+                        toggleAuth('log'); 
+                    });
+                }
+            });
+        }
+
+        function showMain(u) {
+            document.getElementById('auth-page').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
+            document.getElementById('p-user').innerText = u.toUpperCase();
+            
+            db.ref('users/' + u + '/credits').on('value', snap => {
+                const val = snap.val() || 0;
+                document.getElementById('user-balance').innerText = val.toLocaleString() + " CR";
+                document.getElementById('p-bal').innerText = val.toLocaleString() + " CR";
+            });
+        }
+
+        function triggerSecret() {
+            if(localStorage.getItem('activeUser') !== 'sezean') return;
+            logoClicks++;
+            if(logoClicks >= 5) { 
+                document.getElementById('secretPanel').style.display = 'block'; 
+                alert("Master Console Active."); 
+                logoClicks = 0; 
+            }
+        }
+
+        function adjustCredit(type) {
+            const t = document.getElementById('s-target').value.toLowerCase().trim();
+            const a = parseInt(document.getElementById('s-amount').value);
+            if(!t || isNaN(a)) return alert("Data tidak valid!");
+
+            db.ref('users/' + t + '/credits').get().then(s => {
+                let current = s.val() || 0;
+                let newVal = type === 'grant' ? current + a : current - a;
+                db.ref('users/' + t + '/credits').set(newVal);
+                alert("Done! User " + t + " Balance: " + newVal);
+            });
+        }
 
         function filterItems() {
             let input = document.querySelector('.search-input').value.toLowerCase();
@@ -244,23 +317,6 @@
             cards.forEach(card => {
                 let txt = card.innerText.toLowerCase();
                 card.style.display = txt.includes(input) ? "block" : "none";
-            });
-        }
-
-        function triggerSecret() {
-            if(localStorage.getItem('activeUser') !== 'sezean') return;
-            logoClicks++;
-            if(logoClicks >= 5) { document.getElementById('secretPanel').style.display = 'block'; alert("Master Console Active."); logoClicks = 0; }
-        }
-
-        function adjustCredit(type) {
-            const t = document.getElementById('s-target').value.toLowerCase().trim();
-            const a = parseInt(document.getElementById('s-amount').value);
-            db.ref('users/' + t + '/credits').get().then(s => {
-                let current = s.val() || 0;
-                let newVal = type === 'grant' ? current + a : current - a;
-                db.ref('users/' + t + '/credits').set(newVal);
-                alert("Done! New Balance: " + newVal);
             });
         }
 
@@ -282,40 +338,21 @@
             window.open(`https://wa.me/6289696498841?text=Order ${activeGame}%0AID: ${pid} (${zid})`);
         }
 
-        function handleLogin() {
-            const u = document.getElementById('log-user').value.toLowerCase().trim();
-            const p = document.getElementById('log-pass').value;
-            db.ref('accounts/' + u).get().then(snap => {
-                if(snap.exists() && snap.val() === p) { localStorage.setItem('activeUser', u); showMain(u); }
-                else alert("Wrong Credentials!");
-            });
-        }
-
-        function handleRegister() {
-            const u = document.getElementById('reg-user').value.toLowerCase().trim();
-            const p = document.getElementById('reg-pass').value;
-            db.ref('accounts/' + u).set(p);
-            db.ref('users/' + u).set({credits: 0}).then(() => { alert("Created!"); toggleAuth('log'); });
-        }
-
-        function showMain(u) {
-            document.getElementById('auth-page').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
-            document.getElementById('p-user').innerText = u.toUpperCase();
-            db.ref('users/' + u + '/credits').on('value', snap => {
-                document.getElementById('user-balance').innerText = (snap.val() || 0).toLocaleString() + " CR";
-                document.getElementById('p-bal').innerText = (snap.val() || 0).toLocaleString() + " CR";
-            });
-        }
-
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; if(id==='gameModal') backToGames(); }
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            if(id==='gameModal') backToGames(); 
+        }
+        
         function toggleAuth(m) {
             document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
         }
-        function logout() { localStorage.clear(); location.reload(); }
+        
+        function logout() { 
+            localStorage.clear(); 
+            location.reload(); 
+        }
     </script>
 </body>
 </html>
