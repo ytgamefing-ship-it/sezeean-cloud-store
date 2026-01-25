@@ -17,12 +17,12 @@
             --bg-dark: #050505;
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --accent-gradient: linear-gradient(45deg, #ff1a1a, #800000);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
 
+        /* ANIMASI BACKGROUND */
         .clock-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 150vw; height: 150vw; opacity: 0.07;
@@ -31,15 +31,13 @@
         }
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* AUTH AREA */
+        /* AUTH - LOGIC TETAP */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
         .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; transition: 0.3s; }
-        .auth-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
-        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; transition: 0.3s; }
-        .auth-btn:active { transform: scale(0.95); }
+        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
+        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
 
-        /* HEADER & SEARCH */
+        /* HEADER */
         header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.85); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; backdrop-filter: blur(10px); }
         .logo-area { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
@@ -49,31 +47,36 @@
         .search-input { width: 100%; padding: 14px 20px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 15px; color: #fff; outline: none; font-size: 13px; }
         .search-container i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); }
 
-        /* BALANCE CARD */
         .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(255, 26, 26, 0.1); }
-        
         .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
         .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; transition: 0.3s; }
-        .menu-box:hover { background: rgba(255,255,255,0.1); border-color: var(--kurumi-red); }
         .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
 
         /* PRODUCT GRID */
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; overflow: hidden; transition: 0.3s; }
-        .p-card:hover { transform: translateY(-5px); border-color: var(--gold); }
-        .p-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; background: #111; }
+        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; overflow: hidden; }
+        .p-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; }
         .badge-cs { position: absolute; top: 10px; right: 10px; background: var(--gold); color: #000; font-size: 8px; padding: 3px 8px; border-radius: 20px; font-weight: 900; }
 
-        /* MODERN PROFILE */
-        .profile-header { text-align: center; margin-bottom: 30px; }
-        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--kurumi-red); margin-bottom: 15px; box-shadow: 0 0 20px var(--kurumi-red); }
-        .profile-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .stat-item { background: var(--glass); padding: 15px; border-radius: 20px; border: 1px solid var(--glass-border); text-align: center; }
-        .stat-item span { display: block; font-size: 10px; color: var(--gold); margin-bottom: 5px; }
-        .stat-item b { font-size: 16px; }
-        .profile-option { display: flex; align-items: center; justify-content: space-between; background: var(--glass); padding: 18px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--glass-border); cursor: pointer; }
-        .profile-option:hover { background: rgba(255,255,255,0.07); }
+        /* SUPER ELITE PROFILE STYLE */
+        .profile-container { background: linear-gradient(180deg, rgba(255,26,26,0.1) 0%, transparent 100%); border-radius: 30px; padding: 20px; border: 1px solid var(--glass-border); }
+        .profile-card-elite { background: url('https://i.imgur.com/jPIDTKm.jpeg') center/cover; border-radius: 20px; padding: 20px; position: relative; overflow: hidden; border: 1px solid var(--gold); margin-bottom: 20px; }
+        .profile-card-elite::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(2px); }
+        .profile-info { position: relative; z-index: 1; display: flex; align-items: center; gap: 15px; }
+        .profile-avatar { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold); box-shadow: 0 0 15px var(--gold); }
+        
+        .badge-elite { background: var(--gold); color: #000; font-size: 9px; font-weight: 900; padding: 2px 10px; border-radius: 5px; display: inline-block; margin-top: 5px; }
+        
+        .stats-elite { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 20px; position: relative; z-index: 1; }
+        .stat-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; text-align: center; border: 1px solid var(--glass-border); }
+        .stat-box span { font-size: 8px; color: #888; display: block; }
+        .stat-box b { font-size: 12px; color: var(--gold); }
 
+        .profile-option { display: flex; align-items: center; justify-content: space-between; background: var(--glass); padding: 16px; border-radius: 15px; margin-bottom: 10px; border: 1px solid var(--glass-border); transition: 0.3s; cursor: pointer; }
+        .profile-option:active { transform: scale(0.95); background: rgba(255,26,26,0.1); }
+        .profile-option i:first-child { width: 30px; color: var(--kurumi-red); }
+
+        /* SECRET PANEL */
         #secretPanel { display: none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05); }
 
         /* MODALS */
@@ -81,12 +84,11 @@
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; background: #000; padding: 10px 0; }
 
         /* NAV */
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); }
-        nav i { font-size: 22px; color: #444; cursor: pointer; transition: 0.3s; }
-        nav i.active { color: var(--kurumi-red); text-shadow: 0 0 10px var(--kurumi-red); }
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); z-index: 999; }
+        nav i { font-size: 22px; color: #444; cursor: pointer; }
+        nav i.active { color: var(--kurumi-red); }
 
-        .game-item { background: var(--glass); border-radius: 15px; padding: 15px; text-align: center; border: 1px solid var(--glass-border); cursor: pointer; transition: 0.3s; }
-        .game-item:hover { border-color: var(--kurumi-red); }
+        .game-item { background: var(--glass); border-radius: 15px; padding: 15px; text-align: center; border: 1px solid var(--glass-border); cursor: pointer; }
         .game-item img { width: 50px; height: 50px; border-radius: 12px; margin-bottom: 10px; }
         
         .section-header { font-family: 'Cinzel Decorative'; font-size: 14px; color: var(--gold); margin: 25px 0 15px; letter-spacing: 2px; }
@@ -184,23 +186,67 @@
     </div>
 
     <div id="profileModal" class="modal">
-        <div class="modal-header"><h2>YOUR SOUL</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div class="profile-header">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
-            <h2 id="p-user" style="font-family:'Cinzel Decorative';">USER</h2>
-            <p style="font-size:10px; color:var(--kurumi-red);">ELITE MEMBER</p>
+        <div class="modal-header"><h2>USER IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
+        
+        <div class="profile-container">
+            <div class="profile-card-elite">
+                <div class="profile-info">
+                    <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
+                    <div>
+                        <h2 id="p-user" style="font-family:'Cinzel Decorative'; color:#fff;">USER</h2>
+                        <span class="badge-elite">NIGHTMARE ELITE</span>
+                    </div>
+                </div>
+                <div class="stats-elite">
+                    <div class="stat-box"><span>ENERGY</span><b id="p-bal">0 CR</b></div>
+                    <div class="stat-box"><span>LEVEL</span><b>LV. 99</b></div>
+                    <div class="stat-box"><span>STATUS</span><b style="color:#00ff00;">ONLINE</b></div>
+                </div>
+            </div>
+
+            <div class="profile-option" onclick="openModal('topupModal')">
+                <div><i class="fas fa-plus-circle"></i> Recharge Energy (Topup)</div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="profile-option" onclick="openModal('portModal')">
+                <div><i class="fas fa-code"></i> Sezean Projects (Porto)</div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="profile-option">
+                <div><i class="fas fa-shield-alt"></i> Account Security</div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="profile-option" onclick="logout()" style="border-color:var(--kurumi-red);">
+                <div style="color:var(--kurumi-red);"><i class="fas fa-sign-out-alt"></i> Terminate Session</div>
+                <i class="fas fa-chevron-right" style="color:var(--kurumi-red);"></i>
+            </div>
         </div>
-        <div class="profile-stat-grid">
-            <div class="stat-item"><span>SALDO</span><b id="p-bal">0 CR</b></div>
-            <div class="stat-item"><span>RANK</span><b>NIGHTMARE</b></div>
-        </div>
-        <div class="profile-option"><div><i class="fas fa-history"></i> Riwayat</div><i class="fas fa-chevron-right"></i></div>
-        <div class="profile-option" onclick="logout()"><div><i class="fas fa-sign-out-alt"></i> Logout</div><i class="fas fa-chevron-right"></i></div>
+        
+        <p style="text-align:center; font-size:9px; color:#444; margin-top:20px;">UID: SEZ-82716-CLOUD</p>
     </div>
 
     <div id="shopModal" class="modal">
         <div class="modal-header"><h2>THE MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
         <div class="p-grid" id="market-list-container"></div>
+    </div>
+
+    <div id="portModal" class="modal">
+        <div class="modal-header"><h2>SEZEAN PORTO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
+        <div class="profile-container" style="text-align:center;">
+            <i class="fas fa-tools" style="font-size:40px; color:var(--gold); margin-bottom:15px;"></i>
+            <h3>PROJECT LIST</h3>
+            <p style="font-size:12px; color:#888; margin-top:10px;">Daftar karya Sezean akan muncul di sini segera setelah sinkronisasi selesai.</p>
+            <div class="profile-option" style="margin-top:20px;"><div>Web Store v1</div><b style="color:var(--gold);">ACTIVE</b></div>
+        </div>
+    </div>
+
+    <div id="topupModal" class="modal">
+        <div class="modal-header"><h2>RECHARGE</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
+        <div class="profile-container" style="text-align:center;">
+             <i class="fas fa-bolt" style="font-size:40px; color:var(--kurumi-red); margin-bottom:15px;"></i>
+             <p style="margin-bottom:20px;">Silahkan hubungi admin pusat untuk pengisian Time Energy (CR).</p>
+             <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none; display:block;">HUBUNGI SEZEAN</a>
+        </div>
     </div>
 
     <script>
@@ -218,7 +264,6 @@
         const db = firebase.database();
         let logoClicks = 0;
 
-        // DATA PRODUK (Nama Coming Soon & Logo Baru)
         const products = [];
         for(let i=1; i<=10; i++) {
             products.push({ name: "COMING SOON", price: "???", img: "https://i.imgur.com/jPIDTKm.jpeg" });
@@ -320,9 +365,16 @@
             });
         }
 
-        function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'block'; }
+        // --- MODAL FIX ---
+        function openModal(id) { 
+            closeAllModals(); 
+            document.getElementById(id).style.display = 'block'; 
+        }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function closeAllModals() { 
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(m => m.style.display = 'none');
+        }
         function toggleAuth(m) {
             document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
