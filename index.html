@@ -132,7 +132,7 @@
         <div class="wallet-container">
             <div class="wallet-card">
                 <div><p style="font-size:9px; color:#555;">AVAILABLE CREDITS</p><h2 id="user-balance">0 CR</h2></div>
-                <div onclick="openModal('topupModal')" style="background:var(--gold); color:#000; padding:10px 18px; border-radius:12px; font-weight:bold; font-size:10px;">TOPUP</div>
+                <div onclick="openModal('topupModal')" style="background:var(--gold); color:#000; padding:10px 18px; border-radius:12px; font-weight:bold; font-size:10px; cursor:pointer;">TOPUP</div>
             </div>
         </div>
 
@@ -143,13 +143,6 @@
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                 <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000; padding:10px; font-size:10px;">TAMBAH CR</button>
                 <button onclick="reduceCreditAction()" class="auth-btn" style="background:var(--primary); color:#fff; padding:10px; font-size:10px;">KURANGI CR</button>
-            </div>
-            
-            <div class="order-monitor">
-                <p style="font-size:9px; color:var(--gold); margin-bottom:10px;">ORDER MONITORING:</p>
-                <div id="liveOrderList">
-                    <p style="font-size:8px; color:#444;">Menunggu pesanan masuk...</p>
-                </div>
             </div>
         </div>
 
@@ -172,90 +165,29 @@
         </div>
     </div>
 
-    <div id="invoiceModal" class="modal" style="background: rgba(0,0,0,0.9);">
-        <div class="invoice-box">
-            <div class="invoice-header">
-                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:50px; border-radius:50%; margin-bottom:10px;">
-                <h3 style="font-family:'Cinzel';">TRANSACTION SUCCESS</h3>
-                <p style="font-size:10px; color:#666;" id="inv-date"></p>
-            </div>
-            <div class="invoice-body">
-                <div class="invoice-detail"><span>Product:</span><b id="inv-item"></b></div>
-                <div class="invoice-detail"><span>Price:</span><b id="inv-price"></b></div>
-                <div class="invoice-detail"><span>Order ID:</span><b id="inv-id"></b></div>
-                <div class="status-badge">PAID VIA CREDIT</div>
-            </div>
-            <hr style="border: 1px dashed #ccc; margin: 20px 0;">
-            <p style="font-size:9px; color:#888; margin-bottom:15px;">Bukti ini sah dan tercatat di sistem Alharazhiel.</p>
-            <button onclick="closeModal('invoiceModal')" class="auth-btn" style="background:#000; margin-bottom:10px;">CLOSE</button>
-            <button id="btnWA" class="btn-action">KONFIRMASI VIA WA</button>
-        </div>
-    </div>
-
     <div id="productModal" class="modal">
         <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>PRODUCTS</h2><i class="fas fa-times" onclick="closeModal('productModal')"></i></div>
-        <div class="card-luxury">
-            <h3>Custom Skill RPG</h3>
-            <p class="desc">Pembuatan skill unik dengan efek visual tingkat tinggi khusus server RPG lu.</p>
-            <p style="color:var(--gold); font-weight:bold;">50.000 CR</p>
-            <button onclick="buyProduct('Skill RPG', 50000)" class="btn-action">BUY</button>
-        </div>
-        <div class="card-luxury">
-            <h3>Model Engine Setup</h3>
-            <p class="desc">Konfigurasi Model Engine untuk mob atau kendaraan agar lancar jaya.</p>
-            <p style="color:var(--gold); font-weight:bold;">75.000 CR</p>
-            <button onclick="buyProduct('Model Engine', 75000)" class="btn-action">BUY</button>
-        </div>
-        <div class="card-luxury">
-            <h3>Server Setup RP</h3>
-            <p class="desc">Setup lengkap server Roleplay dari nol sampai siap open member.</p>
-            <p style="color:var(--gold); font-weight:bold;">100.000 CR</p>
-            <button onclick="buyProduct('Server Setup', 100000)" class="btn-action">BUY</button>
-        </div>
-    </div>
-
-    <div id="echoesModal" class="modal">
-        <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>ECHOES RP</h2><i class="fas fa-times" onclick="closeModal('echoesModal')"></i></div>
-        <div class="echoes-card">
-            <h1 style="font-family:'Cinzel'; color:var(--gold);">ECHOES RP</h1><div style="color:#0f0; margin:10px 0;">ONLINE</div>
-            <h2>echoesrp.my.id</h2>
-            <button onclick="alert('IP Copied')" class="btn-action" style="background:var(--gold); color:#000;">COPY IP</button>
-        </div>
+        <div class="card-luxury"><h3>Custom Skill RPG</h3><p class="desc">Efek visual tinggi khusus RPG.</p><p style="color:var(--gold); font-weight:bold;">50.000 CR</p><button onclick="buyProduct('Skill RPG', 50000)" class="btn-action">BUY</button></div>
     </div>
 
     <div id="profileModal" class="modal">
         <div style="display:flex; justify-content:space-between; margin-bottom:25px;"><h2>PROFILE</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div class="profile-main" style="background:var(--glass); border-radius:30px; padding:40px 20px; text-align:center; position:relative; overflow:hidden;">
-            <div style="position:absolute; top:0; left:0; width:100%; height:90px; background:linear-gradient(90deg, var(--primary), #600000);"></div>
-            <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg" style="width:110px; height:110px; border-radius:50%; border:5px solid #000; position:relative; z-index:1; object-fit: cover;">
-            <h2 id="user-display" style="font-family:'Cinzel'; margin-top:15px; color:var(--gold);">USER</h2>
-            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:25px;">
-                <div style="background:#000; padding:15px; border-radius:12px;"><h5>12</h5><p style="font-size:7px;">PROJ</p></div>
-                <div style="background:#000; padding:15px; border-radius:12px;"><h5>5.0</h5><p style="font-size:7px;">RATE</p></div>
-                <div style="background:#000; padding:15px; border-radius:12px;"><h5>24</h5><p style="font-size:7px;">CLIENT</p></div>
-            </div>
-            <button onclick="logout()" class="btn-action" style="background:rgba(255,0,0,0.1); color:var(--primary); margin-top:30px;">LOGOUT</button>
+        <div class="profile-main" style="background:var(--glass); border-radius:30px; padding:40px 20px; text-align:center;">
+            <h2 id="user-display" style="font-family:'Cinzel'; color:var(--gold);">USER</h2>
+            <button onclick="logout()" class="btn-action" style="background:var(--primary); margin-top:30px;">LOGOUT</button>
         </div>
     </div>
 
     <div id="topupModal" class="modal">
         <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
-        <div class="card-luxury">
-            <h3>Request Topup Manual</h3>
-            <p class="desc">Masukkan jumlah saldo yang ingin dibeli, lalu konfirmasi ke admin.</p>
-            <input type="number" id="reqAmount" class="auth-input" placeholder="Jumlah CR (Contoh: 50000)">
-            <button onclick="requestTopup()" class="btn-action">KIRIM PERMINTAAN</button>
-        </div>
-        <div class="card-luxury"><h3>Admin 1</h3><a href="https://wa.me/6289696498841" class="btn-action">089696498841</a></div>
+        <div class="card-luxury"><h3>Chat Admin</h3><a href="https://wa.me/6289696498841" class="btn-action">KONFIRMASI WA</a></div>
     </div>
 
-    <div id="portModal" class="modal">
-        <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>WORKS</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg" style="width:100%; border-radius:20px;">
-    </div>
+    <div id="echoesModal" class="modal"><div style="display:flex; justify-content:space-between;"><h2>ECHOES</h2><i class="fas fa-times" onclick="closeModal('echoesModal')"></i></div></div>
+    <div id="portModal" class="modal"><div style="display:flex; justify-content:space-between;"><h2>WORKS</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div></div>
 
     <script>
-        // FIREBASE SETTINGS
+        // FIREBASE SETTINGS (KONFIGURASI LU)
         const firebaseConfig = {
             apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
             authDomain: "sezeean-store.firebaseapp.com",
@@ -268,7 +200,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // CEK AUTO LOGIN
+        // CEK LOGIN
         window.onload = function() {
             const saved = localStorage.getItem('activeUser');
             if(saved) { showMainContent(saved); }
@@ -280,22 +212,70 @@
         }
 
         function handleRegister() {
-            const u = document.getElementById('reg-user').value.toLowerCase(); 
+            const u = document.getElementById('reg-user').value.toLowerCase().trim(); 
             const p = document.getElementById('reg-pass').value;
             if(u && p) {
                 db.ref('accounts/' + u).set(p).then(() => {
                     db.ref('users/' + u + '/credits').set(0);
                     alert("Daftar Berhasil!"); toggleAuth();
                 });
-            }
+            } else { alert("Isi semua data!"); }
         }
 
         function handleLogin() {
-            const u = document.getElementById('log-user').value.toLowerCase();
+            const u = document.getElementById('log-user').value.toLowerCase().trim();
             const p = document.getElementById('log-pass').value;
+            if(!u || !p) return alert("Isi user/pass!");
             db.ref('accounts/' + u).get().then((snapshot) => {
                 if(snapshot.exists() && snapshot.val() === p) {
                     localStorage.setItem('activeUser', u);
                     showMainContent(u);
-                } else { alert("Login Salah!
+                } else { alert("Login Gagal!"); }
+            });
+        }
 
+        function showMainContent(u) {
+            document.getElementById('auth-page').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('hero-user').innerText = u.toUpperCase();
+            document.getElementById('user-display').innerText = u.toUpperCase();
+            
+            // ROLE OWNER
+            if(u === 'owner' || u === 'zafkiel') { document.getElementById('adminPanel').style.display = 'block'; }
+
+            // REALTIME SALDO
+            db.ref('users/' + u + '/credits').on('value', (s) => {
+                document.getElementById('user-balance').innerText = (s.val() || 0).toLocaleString() + " CR";
+            });
+        }
+
+        function addCreditAction() {
+            const target = document.getElementById('targetUser').value.toLowerCase().trim();
+            const amount = parseInt(document.getElementById('targetAmount').value);
+            if(target && amount) {
+                db.ref('users/' + target + '/credits').get().then(s => {
+                    let cur = s.val() || 0;
+                    db.ref('users/' + target + '/credits').set(cur + amount);
+                    alert("Saldo Ditambah!");
+                });
+            }
+        }
+
+        function buyProduct(name, price) {
+            const u = localStorage.getItem('activeUser');
+            db.ref('users/' + u + '/credits').get().then(s => {
+                let bal = s.val() || 0;
+                if(bal >= price) {
+                    db.ref('users/' + u + '/credits').set(bal - price);
+                    alert("Pembelian Berhasil!");
+                } else { alert("Kere!"); }
+            });
+        }
+
+        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
+        function openModal(id) { document.getElementById(id).style.display = "block"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; }
+        function toggleNightmare() { document.getElementById('pageBody').classList.toggle('nightmare-active'); }
+    </script>
+</body>
+</html>
