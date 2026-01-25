@@ -71,12 +71,6 @@
         /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(20px); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        
-        /* GRID FOR MODALS */
-        .modal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .game-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 15px; padding: 10px; text-align: center; }
-        .game-item img { width: 100%; border-radius: 10px; margin-bottom: 5px; }
-        .game-item p { font-size: 8px; font-weight: 800; }
 
         nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; }
         nav i { font-size: 22px; color: #444; }
@@ -94,14 +88,14 @@
             <input type="text" id="log-user" class="auth-input" placeholder="Username" style="margin-top:20px;">
             <input type="password" id="log-pass" class="auth-input" placeholder="Password">
             <button onclick="handleLogin()" class="auth-btn">ENTER SYSTEM</button>
-            <p onclick="toggleAuth()" style="margin-top:20px; font-size:10px; color:#444; cursor:pointer;">New Soul? Register</p>
+            <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:10px; color:#444; cursor:pointer;">New Soul? Register</p>
         </div>
         <div class="auth-card" id="register-box" style="display:none;">
             <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">Identity</h2>
             <input type="text" id="reg-user" class="auth-input" placeholder="Username" style="margin-top:20px;">
             <input type="password" id="reg-pass" class="auth-input" placeholder="Password">
             <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE</button>
-            <p onclick="toggleAuth()" style="margin-top:20px; font-size:10px; color:var(--kurumi-red); cursor:pointer;">Back to Login</p>
+            <p onclick="toggleAuth('log')" style="margin-top:20px; font-size:10px; color:var(--kurumi-red); cursor:pointer;">Back to Login</p>
         </div>
     </div>
 
@@ -127,8 +121,8 @@
             </div>
 
             <div id="secretPanel">
-                <p style="color:var(--gold); font-size:11px; margin-bottom:10px;">SEZEAN MASTER CONTROL</p>
-                <input type="text" id="s-target" class="auth-input" placeholder="Username Target">
+                <p style="color:var(--gold); font-size:11px; margin-bottom:10px;">SECRET OWNER PANEL</p>
+                <input type="text" id="s-target" class="auth-input" placeholder="User Target">
                 <input type="number" id="s-amount" class="auth-input" placeholder="Jumlah CR">
                 <button onclick="addCreditSecret()" class="auth-btn" style="background:#fff; color:#000; padding:10px;">GRANT CREDIT</button>
             </div>
@@ -177,51 +171,22 @@
     </div>
 
     <div id="profileModal" class="modal">
-        <div class="modal-header"><h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
+        <div class="modal-header"><h2 style="font-family:'Cinzel Decorative';">IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
         <div style="text-align:center;">
             <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:80px; border-radius:50%; border:2px solid var(--kurumi-red); margin-bottom:15px;">
             <h2 id="p-user">USER</h2>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
                 <div style="background:var(--glass); padding:15px; border-radius:15px;"><span>Balance</span><br><b id="p-bal">0</b></div>
-                <div style="background:var(--glass); padding:15px; border-radius:15px;"><span>Rank</span><br><b>NIGHTMARE</b></div>
+                <div style="background:var(--glass); padding:15px; border-radius:15px;"><span>Rank</span><br><b>S1</b></div>
             </div>
             <button onclick="logout()" class="auth-btn" style="margin-top:30px; background:transparent; border:1px solid #333;">LOGOUT</button>
         </div>
     </div>
 
-    <div id="gameModal" class="modal">
-        <div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
-        <div class="modal-grid">
-            <div class="game-item" onclick="buy('MLBB', 'List')"><img src="https://i.ibb.co/LNN7pS2/ml-logo.png"><p>MLBB</p></div>
-            <div class="game-item" onclick="buy('FF', 'List')"><img src="https://i.ibb.co/3W6qWzV/ff-logo.png"><p>FREE FIRE</p></div>
-            <div class="game-item" onclick="buy('HOK', 'List')"><img src="https://i.ibb.co/xYq7YmK/hok-logo.png"><p>HOK</p></div>
-            <div class="game-item" onclick="buy('PUBG', 'List')"><img src="https://i.ibb.co/0fVdC9p/pubg-logo.png"><p>PUBGM</p></div>
-            <div class="game-item" onclick="buy('GI', 'List')"><img src="https://i.ibb.co/N6v4fT1/genshin-logo.png"><p>GENSHIN</p></div>
-            <div class="game-item" onclick="buy('VALO', 'List')"><img src="https://i.ibb.co/yYy4mK6/valorant-logo.png"><p>VALORANT</p></div>
-        </div>
-    </div>
-
-    <div id="shopModal" class="modal">
-        <div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
-        <div class="p-grid" id="market-list">
-            <p style="font-size: 12px; opacity: 0.6;">Menampilkan semua koleksi Cloud Store...</p>
-        </div>
-    </div>
-
-    <div id="portModal" class="modal">
-        <div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <div class="p-card"><img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg"><p style="font-size: 10px; margin-top:10px;">Project 01: Kurumi RPG UI</p></div>
-        <div class="p-card" style="margin-top:10px;"><img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg"><p style="font-size: 10px; margin-top:10px;">Project 02: Nightmare Engine</p></div>
-    </div>
-
-    <div id="topupModal" class="modal">
-        <div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
-        <div style="text-align:center;">
-            <i class="fab fa-whatsapp" style="font-size: 50px; color: #25D366; margin-bottom: 20px;"></i>
-            <p>Hubungi WhatsApp Sezean untuk isi Time Energy.</p><br>
-            <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration: none; display: block;">CHAT SEZEAN</a>
-        </div>
-    </div>
+    <div id="gameModal" class="modal"><div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div><p style="font-size:12px; opacity:0.5;">Pilih game untuk topup...</p></div>
+    <div id="shopModal" class="modal"><div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div><p>Semua produk Cloud ada di sini.</p></div>
+    <div id="portModal" class="modal"><div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div><p>Daftar project Sezean.</p></div>
+    <div id="topupModal" class="modal"><div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div><div style="text-align:center;"><p>Hubungi WhatsApp Sezean.</p><br><a href="https://wa.me/6289696498841" class="auth-btn">CHAT SEZEAN</a></div></div>
 
     <script>
         const firebaseConfig = {
@@ -241,16 +206,14 @@
         window.onload = () => { if(localStorage.getItem('activeUser')) showMain(localStorage.getItem('activeUser')); };
 
         function triggerSecret() {
-            // FIX: Validasi Username SEZEAN
-            const currentUser = localStorage.getItem('activeUser');
-            if (currentUser !== 'sezean') {
-                return; // Berhenti kalau bukan Sezean
-            }
+            // FIX: Hanya Sezean yang bisa buka panel
+            let currentUser = localStorage.getItem('activeUser');
+            if(currentUser !== 'sezean') return; 
 
             clickLogo++;
             if(clickLogo >= 5) {
                 document.getElementById('secretPanel').style.display = 'block';
-                alert("Master Sezean Authority Recognized.");
+                alert("Master Authority Recognized.");
                 clickLogo = 0;
             }
         }
@@ -259,7 +222,7 @@
             let val = document.getElementById('p-search').value.toLowerCase();
             let items = document.querySelectorAll('.p-card');
             items.forEach(item => {
-                let name = item.getAttribute('data-name') ? item.getAttribute('data-name').toLowerCase() : "";
+                let name = item.getAttribute('data-name').toLowerCase();
                 item.style.display = name.includes(val) ? "block" : "none";
             });
         }
@@ -267,20 +230,31 @@
         function handleLogin() {
             const u = document.getElementById('log-user').value.toLowerCase().trim();
             const p = document.getElementById('log-pass').value;
+            if(!u || !p) return alert("Isi username & password!");
+
             db.ref('accounts/' + u).get().then(snap => {
-                if(snap.exists() && snap.val() === p) { localStorage.setItem('activeUser', u); showMain(u); }
-                else alert("Akses Ditolak!");
-            });
+                if(snap.exists() && snap.val() === p) { 
+                    localStorage.setItem('activeUser', u); 
+                    showMain(u); 
+                }
+                else alert("Username atau Password Salah!");
+            }).catch(e => alert("Gagal koneksi: " + e.message));
         }
 
         function handleRegister() {
             const u = document.getElementById('reg-user').value.toLowerCase().trim();
             const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Isi data!");
+            if(!u || !p) return alert("Username & Password wajib diisi!");
+
             db.ref('accounts/' + u).get().then(snap => {
-                if(snap.exists()) alert("User sdh ada!");
-                else { db.ref('accounts/' + u).set(p); db.ref('users/' + u).set({credits:0}); toggleAuth(); }
-            });
+                if(snap.exists()) alert("Username sudah terdaftar!");
+                else { 
+                    db.ref('accounts/' + u).set(p); 
+                    db.ref('users/' + u).set({credits:0}); 
+                    alert("Registrasi Berhasil! Silakan Login.");
+                    toggleAuth('log'); 
+                }
+            }).catch(e => alert("Gagal daftar: " + e.message));
         }
 
         function showMain(u) {
@@ -289,40 +263,37 @@
             document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
             document.getElementById('p-user').innerText = u.toUpperCase();
             db.ref('users/' + u + '/credits').on('value', snap => {
-                const credit = snap.val() || 0;
-                document.getElementById('user-balance').innerText = credit.toLocaleString() + " CR";
-                document.getElementById('p-bal').innerText = credit.toLocaleString();
+                document.getElementById('user-balance').innerText = (snap.val() || 0).toLocaleString() + " CR";
+                document.getElementById('p-bal').innerText = (snap.val() || 0).toLocaleString();
             });
-            // Reset secret panel pas login
-            document.getElementById('secretPanel').style.display = 'none';
         }
 
         function addCreditSecret() {
             const t = document.getElementById('s-target').value.toLowerCase().trim();
             const a = parseInt(document.getElementById('s-amount').value);
-            if(!t || isNaN(a)) return alert("Data tidak valid!");
-            
-            db.ref('users/' + t + '/credits').get().then(s => {
-                if(!s.exists()) return alert("User target tidak ditemukan!");
-                db.ref('users/' + t + '/credits').set((s.val() || 0) + a);
-                alert("Credit Sent to " + t);
+            if(!t || isNaN(a)) return alert("Isi Target & Jumlah!");
+
+            db.ref('users/' + t).get().then(snap => {
+                if(!snap.exists()) return alert("User tidak ditemukan!");
+                db.ref('users/' + t + '/credits').set((snap.val().credits || 0) + a);
+                alert("Credit Sent!");
             });
         }
 
         function buy(n, p) { window.open(`https://wa.me/6289696498841?text=Beli ${n} (${p} CR)`); }
-        function openModal(id) { 
-            document.getElementById(id).style.display = 'block'; 
-            if(id === 'shopModal') {
-                document.getElementById('market-list').innerHTML = document.getElementById('main-product-list').innerHTML;
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
+        function toggleAuth(mode) { 
+            if(mode === 'reg') {
+                document.getElementById('login-box').style.display = 'none';
+                document.getElementById('register-box').style.display = 'block';
+            } else {
+                document.getElementById('login-box').style.display = 'block';
+                document.getElementById('register-box').style.display = 'none';
             }
         }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function toggleAuth() { 
-            let l = document.getElementById('login-box');
-            let r = document.getElementById('register-box');
-            l.style.display = l.style.display === 'none' ? 'block' : 'none';
-            r.style.display = r.style.display === 'none' ? 'block' : 'none';
-        }
+        
         function logout() { localStorage.clear(); location.reload(); }
     </script>
 </body>
