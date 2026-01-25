@@ -80,6 +80,12 @@
         .card-luxury p.desc { font-size: 10px; color: #888; margin-bottom: 12px; line-height: 1.4; }
         .btn-action { display: block; width: 100%; padding: 14px; background: #25D366; color: white; text-align: center; border-radius: 12px; font-weight: bold; font-size: 12px; border:none; cursor: pointer; }
 
+        /* --- INVOICE STYLE --- */
+        .invoice-box { background: #fff; color: #000; padding: 30px; border-radius: 20px; text-align: center; max-width: 400px; margin: 0 auto; }
+        .invoice-header { border-bottom: 1px dashed #ccc; padding-bottom: 15px; margin-bottom: 15px; }
+        .invoice-detail { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; }
+        .status-badge { background: #2ecc71; color: #fff; padding: 5px 15px; border-radius: 50px; font-size: 10px; display: inline-block; }
+
         .echoes-card { background: linear-gradient(135deg, #111 0%, #000 100%); padding: 40px 20px; border-radius: 30px; border: 1px solid var(--gold); text-align: center; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 20px 0; border-top: 1px solid #111; z-index: 5000; }
@@ -160,9 +166,29 @@
         </div>
 
         <div class="bottom-nav">
-            <div class="nav-item active-nav"><i class="fas fa-home"></i></div>
+            <div class="nav-item active-nav" onclick="location.reload()"><i class="fas fa-home"></i></div>
             <div class="nav-item" onclick="openModal('topupModal')"><i class="fas fa-credit-card"></i></div>
             <div class="nav-item" onclick="openModal('profileModal')"><i class="fas fa-user-shield"></i></div>
+        </div>
+    </div>
+
+    <div id="invoiceModal" class="modal" style="background: rgba(0,0,0,0.9);">
+        <div class="invoice-box">
+            <div class="invoice-header">
+                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:50px; border-radius:50%; margin-bottom:10px;">
+                <h3 style="font-family:'Cinzel';">TRANSACTION SUCCESS</h3>
+                <p style="font-size:10px; color:#666;" id="inv-date"></p>
+            </div>
+            <div class="invoice-body">
+                <div class="invoice-detail"><span>Product:</span><b id="inv-item"></b></div>
+                <div class="invoice-detail"><span>Price:</span><b id="inv-price"></b></div>
+                <div class="invoice-detail"><span>Order ID:</span><b id="inv-id"></b></div>
+                <div class="status-badge">PAID VIA CREDIT</div>
+            </div>
+            <hr style="border: 1px dashed #ccc; margin: 20px 0;">
+            <p style="font-size:9px; color:#888; margin-bottom:15px;">Bukti ini sah dan tercatat di sistem Alharazhiel.</p>
+            <button onclick="closeModal('invoiceModal')" class="auth-btn" style="background:#000; margin-bottom:10px;">CLOSE</button>
+            <button id="btnWA" class="btn-action">KONFIRMASI VIA WA</button>
         </div>
     </div>
 
@@ -214,8 +240,13 @@
 
     <div id="topupModal" class="modal">
         <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
+        <div class="card-luxury">
+            <h3>Request Topup Manual</h3>
+            <p class="desc">Masukkan jumlah saldo yang ingin dibeli, lalu konfirmasi ke admin.</p>
+            <input type="number" id="reqAmount" class="auth-input" placeholder="Jumlah CR (Contoh: 50000)">
+            <button onclick="requestTopup()" class="btn-action">KIRIM PERMINTAAN</button>
+        </div>
         <div class="card-luxury"><h3>Admin 1</h3><a href="https://wa.me/6289696498841" class="btn-action">089696498841</a></div>
-        <div class="card-luxury"><h3>Admin 2</h3><a href="https://wa.me/6281513681271" class="btn-action" style="background:#444;">081513681271</a></div>
     </div>
 
     <div id="portModal" class="modal">
@@ -279,7 +310,7 @@
             // TAMPILKAN PANEL JIKA OWNER
             if(u === 'owner') { 
                 document.getElementById('adminPanel').style.display = 'block'; 
-                listenToOrders(); // Aktifkan monitoring order
+                listenToOrders();
             }
             
             db.ref('users/' + u + '/credits').on('value', (s) => {
@@ -318,28 +349,60 @@
                 list.innerHTML = "";
                 snapshot.forEach((child) => {
                     const data = child.val();
-                    list.innerHTML += `<div class="order-card"><span>[${data.time}]</span> ${data.user} BUY ${data.item}</div>`;
+                    list.innerHTML += `<div class="order-card"><span>[${data.time}]</span> ${data.user} - ${data.item}</div>`;
                 });
             });
         }
 
+        // --- INVOICE SYSTEM ---
         function buyProduct(name, price) {
             const u = localStorage.getItem('activeUser');
             const ref = db.ref('users/' + u + '/credits');
             ref.get().then((s) => {
                 let bal = s.val() || 0;
                 if(bal >= price) { 
+                    const orderID = "INV-" + Math.floor(Math.random() * 1000000);
                     ref.set(bal - price); 
-                    // CATAT KE DATABASE ORDER
+                    
                     db.ref('orders').push({
                         user: u,
                         item: name,
-                        time: new Date().toLocaleTimeString()
+                        price: price,
+                        orderID: orderID,
+                        time: new Date().toLocaleString()
                     });
-                    window.location.href = `https://wa.me/6289696498841?text=BUY:${name}`; 
+
+                    // TAMPILKAN INVOICE
+                    showInvoice(name, price, orderID);
                 }
                 else { alert("Saldo Tipis!"); }
             });
+        }
+
+        function showInvoice(name, price, id) {
+            document.getElementById('inv-item').innerText = name;
+            document.getElementById('inv-price').innerText = price.toLocaleString() + " CR";
+            document.getElementById('inv-id').innerText = id;
+            document.getElementById('inv-date').innerText = new Date().toLocaleString();
+            
+            document.getElementById('btnWA').onclick = () => {
+                window.location.href = `https://wa.me/6289696498841?text=KONFIRMASI ORDER%0AID: ${id}%0AItem: ${name}%0AUser: ${localStorage.getItem('activeUser')}`;
+            };
+
+            openModal('invoiceModal');
+        }
+
+        function requestTopup() {
+            const amount = document.getElementById('reqAmount').value;
+            const u = localStorage.getItem('activeUser');
+            if(!amount) return alert("Isi jumlah saldo!");
+            
+            db.ref('orders').push({
+                user: u,
+                item: "TOPUP REQ: " + amount,
+                time: new Date().toLocaleTimeString()
+            });
+            alert("Permintaan terkirim ke Owner! Silakan bayar ke Admin.");
         }
 
         function toggleNightmare() { document.getElementById('pageBody').classList.toggle('nightmare-active'); }
