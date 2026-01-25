@@ -31,22 +31,19 @@
         }
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* ANIMASI API UNTUK JUDUL */
+        /* REMAKE: ANIMASI API ALA RADJA STORE (TEKS ISI API) */
         .fire-text {
-            font-family: 'Cinzel Decorative';
+            font-family: 'Cinzel Decorative', serif;
             font-weight: 900;
-            color: #fff;
-            text-shadow: 
-                0 0 5px #fff, 
-                0 -2px 4px #ff3, 
-                2px -5px 6px #f90, 
-                -2px -10px 11px #f30;
-            animation: fire-burn 1.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes fire-burn {
-            0% { text-shadow: 0 0 5px #fff, 0 -2px 4px #ff3, 2px -5px 6px #f90, -2px -10px 11px #f30; }
-            100% { text-shadow: 0 0 10px #fff, 0 -5px 8px #ff3, 4px -10px 12px #f90, -4px -15px 18px #f30; transform: scale(1.02); }
+            text-transform: uppercase;
+            background: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZ3bmZpZ3R3eXNueXNueXNueXNueXNueXNueXNueXNueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o72FfM5HJydzaMpfW/giphy.gif');
+            background-size: cover;
+            background-position: center;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 26, 26, 0.8));
+            display: inline-block;
+            letter-spacing: 2px;
         }
 
         /* AUTH - LOGIC TETAP */
@@ -123,7 +120,7 @@
             <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:10px; color:#444; cursor:pointer;">New Soul? Register</p>
         </div>
         <div class="auth-card" id="register-box" style="display:none;">
-            <h2 class="fire-text" style="color:var(--gold);">Identity</h2>
+            <h2 class="fire-text">Identity</h2>
             <input type="text" id="reg-user" class="auth-input" placeholder="Username">
             <input type="password" id="reg-pass" class="auth-input" placeholder="Password">
             <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE</button>
@@ -195,7 +192,7 @@
             <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
             <h3 id="selected-game-title" style="color:var(--kurumi-red);">GAME</h3>
             <input type="text" id="player-id" class="auth-input" placeholder="Player ID / ID Game" style="margin-top:15px;">
-            <input type="text" id="zone-id" class="auth-input" placeholder="Server / Zone ID (Opsional)">
+            <input type="text" id="zone-id" class="auth-input" placeholder="Server / Zone ID">
             <button onclick="confirmOrder()" class="auth-btn">BELI SEKARANG (WA)</button>
         </div>
     </div>
@@ -358,17 +355,13 @@
             document.getElementById('game-id-gui').style.display = 'none';
         }
 
-        // LOGIC DIRECT KE WHATSAPP SEZEAN
         function confirmOrder() {
             const id = document.getElementById('player-id').value;
             const zone = document.getElementById('zone-id').value;
             const user = localStorage.getItem('activeUser') || "Guest";
-
-            if(!id) return alert("Masukkan ID Game lu!");
-
+            if(!id) return alert("Masukkan ID Game!");
             const waNumber = "6289696498841";
-            const message = `Halo Sezean, Saya mau order game!\n\nUser: ${user}\nGame: ${selectedGame}\nID: ${id}\nZone/Server: ${zone || '-'}\n\nMohon diproses ya!`;
-            
+            const message = `Halo Sezean, Saya mau order!\n\nUser: ${user}\nGame: ${selectedGame}\nID: ${id}\nZone: ${zone || '-'}`;
             window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
