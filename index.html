@@ -20,62 +20,57 @@
             --border-glow: rgba(255, 26, 26, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
 
-        /* --- BACKGROUND CLOCK ANIMATION --- */
+        /* --- BACKGROUND --- */
         .zafkiel-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 120vw; height: 120vw; background: url('https://i.ibb.co.com/zY6H8Tq/1000969560.jpg') center/contain no-repeat;
-            opacity: 0.05; z-index: -1; animation: rotateClock 60s linear infinite;
+            opacity: 0.05; z-index: -1; animation: rotateClock 80s linear infinite;
         }
         @keyframes rotateClock { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* --- AUTH STYLE --- */
+        /* --- AUTH PAGE --- */
         #auth-page { position: fixed; inset: 0; background: radial-gradient(circle at center, #1a0000 0%, #000 100%); z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .auth-container { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid var(--border-glow); padding: 40px 30px; border-radius: 30px; width: 90%; max-width: 380px; text-align: center; }
-        .auth-logo { font-family: 'UnifrakturMaguntia', serif; font-size: 45px; color: var(--kurumi-red); margin-bottom: 30px; text-shadow: 0 0 15px var(--kurumi-red); }
-        .input-group { position: relative; margin-bottom: 20px; }
+        .store-logo-main { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--kurumi-red); margin-bottom: 15px; box-shadow: 0 0 20px rgba(255,0,0,0.4); }
+        .auth-logo { font-family: 'UnifrakturMaguntia', serif; font-size: 32px; color: #fff; margin-bottom: 30px; }
+        .auth-logo span { color: var(--kurumi-red); text-shadow: 0 0 10px var(--kurumi-red); }
+        .input-group { position: relative; margin-bottom: 15px; }
         .input-group i { position: absolute; left: 15px; top: 15px; color: #555; }
-        .auth-input { width: 100%; padding: 14px 14px 14px 45px; background: rgba(0,0,0,0.5); border: 1px solid #333; border-radius: 15px; color: #fff; outline: none; transition: 0.3s; }
-        .auth-input:focus { border-color: var(--kurumi-red); box-shadow: 0 0 10px rgba(255,0,0,0.2); }
-        .auth-btn { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--deep-red), var(--kurumi-red)); border: none; color: #fff; border-radius: 15px; font-weight: 600; cursor: pointer; transform: scale(1); transition: 0.2s; }
-        .auth-btn:active { transform: scale(0.95); }
+        .auth-input { width: 100%; padding: 14px 14px 14px 45px; background: rgba(0,0,0,0.5); border: 1px solid #333; border-radius: 12px; color: #fff; outline: none; }
+        .auth-btn { width: 100%; padding: 15px; background: linear-gradient(45deg, var(--deep-red), var(--kurumi-red)); border: none; color: #fff; border-radius: 12px; font-weight: 600; cursor: pointer; }
 
-        /* --- MODERN HEADER --- */
-        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-glow); }
-        .logo-text { font-family: 'Cinzel Decorative', cursive; font-size: 20px; color: #fff; }
-        .logo-text span { color: var(--kurumi-red); }
+        /* --- DASHBOARD --- */
+        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; background: rgba(5,5,5,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-glow); }
+        .logo-text { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+        .mini-logo { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--kurumi-red); }
 
-        /* --- HERO & BALANCE --- */
-        .dashboard { padding: 25px 6%; }
-        .user-card { background: linear-gradient(135deg, #111, #000); border: 1px solid var(--gold-leaf); border-radius: 25px; padding: 25px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .user-card::before { content: ""; position: absolute; right: -20px; bottom: -20px; width: 100px; height: 100px; background: url('https://i.ibb.co.com/zY6H8Tq/1000969560.jpg') center/cover; opacity: 0.2; filter: grayscale(1); }
-        .cr-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-leaf); }
-        .cr-value { font-family: 'Cinzel Decorative', serif; font-size: 28px; margin: 5px 0; }
-
-        /* --- SECRET OWNER PANEL --- */
-        #secretPanel { display: none; margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px dashed var(--kurumi-red); }
-        .owner-title { font-size: 12px; color: var(--kurumi-red); font-weight: 800; margin-bottom: 15px; display: block; }
-
-        /* --- MENU GRID --- */
-        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 25px; }
-        .menu-card { background: var(--glass); border: 1px solid #222; padding: 20px; border-radius: 20px; text-align: center; transition: 0.3s; }
-        .menu-card i { font-size: 24px; color: var(--kurumi-red); margin-bottom: 10px; }
-        .menu-card:active { border-color: var(--kurumi-red); background: rgba(255,0,0,0.05); }
-
-        /* --- MODALS --- */
-        .modal { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; padding: 30px 6%; overflow-y: auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .modal-title { font-family: 'Cinzel Decorative'; color: var(--gold-leaf); font-size: 24px; }
+        .dashboard { padding: 25px 6% 100px; }
+        .user-card { background: linear-gradient(135deg, #111, #000); border: 1px solid var(--gold-leaf); border-radius: 25px; padding: 25px; position: relative; overflow: hidden; }
+        .card-logo-bg { position: absolute; right: -10px; top: -10px; width: 100px; opacity: 0.15; filter: grayscale(1); transform: rotate(15deg); }
         
-        .product-item { background: #0f0f0f; border-radius: 20px; padding: 20px; margin-bottom: 15px; border-left: 4px solid var(--kurumi-red); }
-        .buy-btn { margin-top: 15px; width: 100%; padding: 12px; background: #fff; color: #000; border: none; border-radius: 12px; font-weight: bold; }
+        .cr-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-leaf); display: flex; align-items: center; gap: 8px; }
+        .cr-value { font-family: 'Cinzel Decorative', serif; font-size: 30px; margin: 8px 0; color: #fff; }
 
-        /* --- NAV --- */
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(15,15,15,0.9); backdrop-filter: blur(20px); border-radius: 25px; display: flex; justify-content: space-around; padding: 15px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,1); }
-        nav i { font-size: 20px; color: #555; transition: 0.3s; }
-        nav i.active { color: var(--kurumi-red); text-shadow: 0 0 10px var(--kurumi-red); }
+        /* --- CONSOLE REQUEST --- */
+        .console-box { background: #000; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-top: 20px; font-family: 'monospace'; }
+        .console-header { font-size: 10px; color: #444; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .console-input { background: transparent; border: none; color: #0f0; width: 100%; outline: none; font-family: monospace; font-size: 13px; }
+
+        /* --- OWNER PANEL --- */
+        #secretPanel { display: none; margin: 25px 0; padding: 20px; background: rgba(255, 204, 0, 0.05); border: 1px solid var(--gold-leaf); border-radius: 20px; }
+        
+        /* --- MODALS & BUTTONS --- */
+        .modal { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; padding: 30px 6%; overflow-y: auto; }
+        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .menu-card { background: var(--glass); border: 1px solid #222; padding: 20px; border-radius: 20px; text-align: center; }
+        .menu-card i { font-size: 24px; color: var(--kurumi-red); margin-bottom: 10px; }
+        
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(15,15,15,0.9); backdrop-filter: blur(20px); border-radius: 25px; display: flex; justify-content: space-around; padding: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        nav i { font-size: 20px; color: #444; }
+        nav i.active { color: var(--kurumi-red); }
     </style>
 </head>
 <body>
@@ -84,149 +79,94 @@
 
     <div id="auth-page">
         <div class="auth-container" id="login-box">
-            <div class="auth-logo">Cloud Store</div>
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" id="log-user" class="auth-input" placeholder="Username">
-            </div>
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" id="log-pass" class="auth-input" placeholder="Password">
-            </div>
-            <button onclick="handleLogin()" class="auth-btn">ACTIVATE SYSTEM</button>
-            <p onclick="toggleAuth()" style="margin-top:20px; color:#555; font-size:13px; cursor:pointer;">Register New Essence</p>
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="store-logo-main">
+            <div class="auth-logo">Cloud <span>Store</span></div>
+            <div class="input-group"><i class="fas fa-user"></i><input type="text" id="log-user" class="auth-input" placeholder="Username"></div>
+            <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="log-pass" class="auth-input" placeholder="Password"></div>
+            <button onclick="handleLogin()" class="auth-btn">LOGIN SYSTEM</button>
+            <p onclick="toggleAuth()" style="margin-top:20px; color:#444; font-size:12px; cursor:pointer;">New Essence? Register</p>
         </div>
         <div class="auth-container" id="register-box" style="display:none;">
-            <div class="auth-logo" style="color:var(--gold-leaf);">Register</div>
-            <input type="text" id="reg-user" class="auth-input" placeholder="Username" style="margin-bottom:15px; padding-left:15px;">
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="store-logo-main">
+            <div class="auth-logo">Create <span>Soul</span></div>
+            <input type="text" id="reg-user" class="auth-input" placeholder="Username" style="margin-bottom:10px; padding-left:15px;">
             <input type="password" id="reg-pass" class="auth-input" placeholder="Password" style="margin-bottom:15px; padding-left:15px;">
-            <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold-leaf); color:#000;">CREATE SOUL</button>
-            <p onclick="toggleAuth()" style="margin-top:20px; color:var(--kurumi-red); font-size:13px; cursor:pointer;">Back to Login</p>
+            <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold-leaf); color:#000;">SIGN UP</button>
+            <p onclick="toggleAuth()" style="margin-top:20px; color:var(--kurumi-red); font-size:12px; cursor:pointer;">Back to Login</p>
         </div>
     </div>
 
     <div id="main-content" style="display:none;">
         <header>
-            <div class="logo-text">CLOUD<span>STORE</span></div>
-            <i class="fas fa-bars" style="color:var(--gold-leaf);"></i>
+            <div class="logo-text">
+                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="mini-logo">
+                Cloud<span>Store</span>
+            </div>
+            <i class="fas fa-sign-out-alt" onclick="logout()" style="color:var(--kurumi-red);"></i>
         </header>
 
         <div class="dashboard">
             <div class="user-card">
-                <p class="cr-label">Available Power</p>
+                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="card-logo-bg">
+                <p class="cr-label"><i class="fas fa-bolt"></i> Time Energy</p>
                 <h2 class="cr-value" id="user-balance">0 CR</h2>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span id="hero-user" style="font-size:13px; color:#aaa;">USER</span>
-                    <button onclick="openModal('topupModal')" style="background:transparent; border:1px solid var(--gold-leaf); color:var(--gold-leaf); padding:5px 15px; border-radius:10px; font-size:11px;">RECHARGE</button>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span id="hero-user" style="font-size:12px; color:var(--gold-leaf); font-weight:600;">@USER</span>
+                    <span style="font-size:10px; color:#444;">CLOUD-RANK: S1</span>
                 </div>
             </div>
 
+            <div class="console-box">
+                <div class="console-header">
+                    <span>SYSTEM_TERMINAL</span>
+                    <span>v1.0.4</span>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <span style="color:var(--kurumi-red);">></span>
+                    <input type="text" id="reqInput" class="console-input" placeholder="Type: topup [amount] then enter" onkeydown="handleConsole(event)">
+                </div>
+                <div id="consoleMsg" style="font-size:10px; color:#555; margin-top:5px;">Waiting for command...</div>
+            </div>
+
             <div id="secretPanel">
-                <span class="owner-title"><i class="fas fa-crown"></i> SEZEAN GOD PANEL</span>
-                <input type="text" id="targetUser" class="auth-input" placeholder="User" style="margin-bottom:10px; padding-left:15px;">
-                <input type="number" id="targetAmount" class="auth-input" placeholder="Amount" style="margin-bottom:10px; padding-left:15px;">
+                <p style="font-size:11px; color:var(--gold-leaf); margin-bottom:15px; font-weight:bold;">SEZEAN MASTER CONTROL</p>
+                <input type="text" id="targetUser" class="auth-input" placeholder="Target User" style="padding-left:15px; margin-bottom:10px;">
+                <input type="number" id="targetAmount" class="auth-input" placeholder="Amount" style="padding-left:15px; margin-bottom:10px;">
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000; font-size:12px;">+ CR</button>
-                    <button onclick="reduceCreditAction()" class="auth-btn" style="font-size:12px;">- CR</button>
+                    <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000;">GRANT</button>
+                    <button onclick="reduceCreditAction()" class="auth-btn">DRAIN</button>
                 </div>
             </div>
 
             <div class="menu-grid">
-                <div class="menu-card" onclick="openModal('productModal')">
-                    <i class="fas fa-box-open"></i>
-                    <p style="font-size:12px; font-weight:600;">Products</p>
-                </div>
-                <div class="menu-card" onclick="openModal('echoesModal')">
-                    <i class="fas fa-satellite-dish"></i>
-                    <p style="font-size:12px; font-weight:600;">Echoes RP</p>
-                </div>
-                <div class="menu-card" onclick="openModal('portModal')">
-                    <i class="fas fa-folder-open"></i>
-                    <p style="font-size:12px; font-weight:600;">Portfolio</p>
-                </div>
-                <div class="menu-card" onclick="openModal('profileModal')">
-                    <i class="fas fa-id-card"></i>
-                    <p style="font-size:12px; font-weight:600;">Profile</p>
-                </div>
+                <div class="menu-card" onclick="openModal('productModal')"><i class="fas fa-shopping-bag"></i><p>Market</p></div>
+                <div class="menu-card" onclick="openModal('echoesModal')"><i class="fas fa-broadcast-tower"></i><p>Echoes</p></div>
             </div>
         </div>
 
         <nav>
-            <i class="fas fa-home active" onclick="location.reload()"></i>
-            <i class="fas fa-shopping-cart" onclick="openModal('productModal')"></i>
-            <i class="fas fa-history"></i>
-            <i class="fas fa-user" onclick="openModal('profileModal')"></i>
+            <i class="fas fa-th-large active"></i>
+            <i class="fas fa-wallet" onclick="openModal('topupModal')"></i>
+            <i class="fas fa-user-circle" onclick="openModal('profileModal')"></i>
         </nav>
     </div>
 
     <div id="productModal" class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">MARKET</h2>
-            <i class="fas fa-times" onclick="closeModal('productModal')" style="font-size:20px;"></i>
-        </div>
-        <div class="product-item">
-            <h3 style="color:var(--gold-leaf);">RPG System v2.0</h3>
-            <p style="font-size:12px; color:#777; margin-top:5px;">Full visual skill, custom UI, & level system.</p>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
-                <span style="font-weight:600;">50.000 CR</span>
-                <button onclick="buyProduct('RPG System', 50000)" style="background:var(--kurumi-red); border:none; color:#fff; padding:8px 20px; border-radius:10px;">BUY</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="echoesModal" class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">ECHOES RP</h2>
-            <i class="fas fa-times" onclick="closeModal('echoesModal')"></i>
-        </div>
-        <div style="text-align:center; padding-top:50px;">
-            <div style="width:100px; height:100px; background:var(--kurumi-red); border-radius:50%; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 30px var(--kurumi-red);">
-                <i class="fas fa-server" style="font-size:40px;"></i>
-            </div>
-            <h1 style="font-family:'Cinzel Decorative'; margin-bottom:10px;">ECHOES RP</h1>
-            <p style="color:#0f0; font-size:12px; font-weight:bold; letter-spacing:2px;">• SERVER ONLINE •</p>
-            <div style="margin-top:30px; background:#111; padding:15px; border-radius:15px; font-family:monospace; color:var(--gold-leaf); border:1px solid #333;">
-                echoesrp.my.id
-            </div>
-            <button onclick="alert('IP Copied!')" class="buy-btn" style="margin-top:20px;">COPY IP ADDRESS</button>
-        </div>
-    </div>
-
-    <div id="portModal" class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">WORKS</h2>
-            <i class="fas fa-times" onclick="closeModal('portModal')"></i>
-        </div>
-        <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg" style="width:100%; border-radius:20px; margin-bottom:15px; border:1px solid #333;">
-        <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg" style="width:100%; border-radius:20px; border:1px solid #333;">
-    </div>
-
-    <div id="profileModal" class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">PROFILE</h2>
-            <i class="fas fa-times" onclick="closeModal('profileModal')"></i>
-        </div>
-        <div style="text-align:center;">
-            <div style="position:relative; width:120px; margin:0 auto;">
-                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:120px; height:120px; border-radius:50%; border:2px solid var(--kurumi-red); padding:5px;">
-                <div style="position:absolute; bottom:5px; right:5px; background:var(--gold-leaf); width:25px; height:25px; border-radius:50%; border:3px solid #000;"></div>
-            </div>
-            <h2 id="user-display" style="font-family:'Cinzel Decorative'; margin-top:15px;">USER</h2>
-            <p style="color:#555; font-size:12px;">Rank: Nightmare Class</p>
-            <button onclick="logout()" class="buy-btn" style="margin-top:40px; background:transparent; border:1px solid var(--kurumi-red); color:var(--kurumi-red);">LOGOUT</button>
+        <div class="modal-header"><h2 class="modal-title">MARKET</h2><i class="fas fa-times" onclick="closeModal('productModal')"></i></div>
+        <div style="background:#111; padding:20px; border-radius:15px; border-left:4px solid var(--kurumi-red);">
+            <h3>Visual RPG Pack</h3>
+            <p style="font-size:12px; color:#555; margin:10px 0;">Premium visual effects for your server.</p>
+            <button onclick="buyProduct('RPG Pack', 50000)" class="auth-btn">BUY: 50.000 CR</button>
         </div>
     </div>
 
     <div id="topupModal" class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">RECHARGE</h2>
-            <i class="fas fa-times" onclick="closeModal('topupModal')"></i>
-        </div>
-        <div class="product-item" style="text-align:center;">
-            <i class="fab fa-whatsapp" style="font-size:40px; color:#25d366; margin-bottom:15px;"></i>
-            <h3>Payment to Sezean</h3>
-            <p style="font-size:12px; color:#777; margin:10px 0 20px;">Topup saldo via QRIS, Dana, atau Bank melalui admin.</p>
-            <a href="https://wa.me/6289696498841" style="text-decoration:none;" class="buy-btn">HUBUNGI SEZEAN</a>
+        <div class="modal-header"><h2 class="modal-title">RECHARGE</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
+        <div style="text-align:center; padding:40px 20px; background:#111; border-radius:20px;">
+            <i class="fab fa-whatsapp" style="font-size:50px; color:#25d366; margin-bottom:20px;"></i>
+            <h3>Direct Topup</h3>
+            <p style="color:#555; margin:15px 0;">Contact Sezean for manual balance injection.</p>
+            <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none; display:block;">CHAT ADMIN</a>
         </div>
     </div>
 
@@ -259,7 +199,7 @@
             if(u && p) {
                 db.ref('accounts/' + u).set(p);
                 db.ref('users/' + u + '/credits').set(0);
-                alert("Essence Created!"); toggleAuth();
+                alert("Soul Registered!"); toggleAuth();
             }
         }
 
@@ -270,17 +210,16 @@
                 if(s.exists() && s.val() === p) {
                     localStorage.setItem('activeUser', u);
                     showMain(u);
-                } else { alert("Login Denied!"); }
+                } else { alert("Access Denied!"); }
             });
         }
 
         function showMain(u) {
             document.getElementById('auth-page').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-            document.getElementById('hero-user').innerText = "@" + u;
-            document.getElementById('user-display').innerText = u.toUpperCase();
+            document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
             
-            if(u === 'zafkiel' || u === 'owner' || u === 'sean') {
+            if(['zafkiel', 'owner', 'sean'].includes(u)) {
                 document.getElementById('secretPanel').style.display = 'block';
             }
 
@@ -289,12 +228,42 @@
             });
         }
 
+        // CONSOLE SYSTEM
+        function handleConsole(e) {
+            if (e.key === 'Enter') {
+                const input = e.target.value.toLowerCase();
+                const msg = document.getElementById('consoleMsg');
+                const user = localStorage.getItem('activeUser');
+
+                if (input.startsWith('topup')) {
+                    const amount = input.split(' ')[1];
+                    if (amount) {
+                        db.ref('requests/' + user).push({
+                            type: 'topup',
+                            amount: amount,
+                            status: 'pending',
+                            time: new Date().toISOString()
+                        });
+                        msg.innerText = "Request sent: Topup " + amount + " CR to Sezean.";
+                        msg.style.color = "#0f0";
+                    } else {
+                        msg.innerText = "Error: Please specify amount. (topup 50000)";
+                        msg.style.color = "red";
+                    }
+                } else {
+                    msg.innerText = "Unknown command. Try 'topup [amount]'";
+                    msg.style.color = "orange";
+                }
+                e.target.value = '';
+            }
+        }
+
         function addCreditAction() {
             const t = document.getElementById('targetUser').value.toLowerCase();
             const a = parseInt(document.getElementById('targetAmount').value);
             db.ref('users/' + t + '/credits').get().then(s => {
                 db.ref('users/' + t + '/credits').set((s.val() || 0) + a);
-                alert("Power Injected!");
+                alert("Power Granted!");
             });
         }
 
@@ -304,17 +273,6 @@
             db.ref('users/' + t + '/credits').get().then(s => {
                 db.ref('users/' + t + '/credits').set((s.val() || 0) - a);
                 alert("Power Drained!");
-            });
-        }
-
-        function buyProduct(n, p) {
-            const u = localStorage.getItem('activeUser');
-            db.ref('users/' + u + '/credits').get().then(s => {
-                let bal = s.val() || 0;
-                if(bal >= p) {
-                    db.ref('users/' + u + '/credits').set(bal - p);
-                    alert("Exchange Successful: " + n);
-                } else { alert("Insufficient Energy!"); }
             });
         }
 
