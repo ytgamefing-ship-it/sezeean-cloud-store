@@ -23,7 +23,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
 
-        /* ANIMASI BACKGROUND */
         .clock-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 150vw; height: 150vw; opacity: 0.07;
@@ -32,7 +31,7 @@
         }
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* AUTH - NO CHANGES TO LOGIC */
+        /* AUTH AREA */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
         .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; }
         .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; transition: 0.3s; }
@@ -65,7 +64,7 @@
         .p-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; background: #111; }
         .badge-cs { position: absolute; top: 10px; right: 10px; background: var(--gold); color: #000; font-size: 8px; padding: 3px 8px; border-radius: 20px; font-weight: 900; }
 
-        /* MODERN PROFILE STYLING */
+        /* MODERN PROFILE */
         .profile-header { text-align: center; margin-bottom: 30px; }
         .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--kurumi-red); margin-bottom: 15px; box-shadow: 0 0 20px var(--kurumi-red); }
         .profile-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 25px; }
@@ -75,7 +74,6 @@
         .profile-option { display: flex; align-items: center; justify-content: space-between; background: var(--glass); padding: 18px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--glass-border); cursor: pointer; }
         .profile-option:hover { background: rgba(255,255,255,0.07); }
 
-        /* SECRET PANEL */
         #secretPanel { display: none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05); }
 
         /* MODALS */
@@ -141,7 +139,7 @@
                 <p style="color:var(--gold); font-size:11px; margin-bottom:12px; font-weight: 800;"><i class="fas fa-crown"></i> SEZEAN CONSOLE</p>
                 <input type="text" id="s-target" class="auth-input" placeholder="Target Username">
                 <input type="number" id="s-amount" class="auth-input" placeholder="CR Amount">
-                <div class="cp-btns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <button onclick="adjustCredit('grant')" class="auth-btn" style="background:#fff; color:#000; padding:10px;">GRANT</button>
                     <button onclick="adjustCredit('revoke')" class="auth-btn" style="background:transparent; border:1px solid #fff; padding:10px;">REVOKE</button>
                 </div>
@@ -156,8 +154,7 @@
             </div>
 
             <div class="section-header">LATEST PRODUCTS</div>
-            <div class="p-grid" id="product-list-container">
-                </div>
+            <div class="p-grid" id="product-list-container"></div>
         </div>
 
         <nav>
@@ -170,16 +167,15 @@
     <div id="gameModal" class="modal">
         <div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
         <div id="game-list-gui">
-            <p style="font-size:11px; margin-bottom:15px; opacity:0.6;">Pilih game untuk topup...</p>
             <div class="p-grid">
-                <div class="game-item" onclick="selectGame('MLBB')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">MLBB</p></div>
+                <div class="game-item" onclick="selectGame('MLBB')"><img src="https://i.imgur.com/1kFNSpI.jpeg"><p style="font-size:10px;">MLBB</p></div>
                 <div class="game-item" onclick="selectGame('Free Fire')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">Free Fire</p></div>
                 <div class="game-item" onclick="selectGame('HOK')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">HOK</p></div>
                 <div class="game-item" onclick="selectGame('PUBGM')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">PUBGM</p></div>
             </div>
         </div>
         <div id="game-id-gui" style="display:none; margin-top:20px;">
-            <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); font-size:12px; margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
             <h3 id="selected-game-title" style="color:var(--kurumi-red);">GAME</h3>
             <input type="text" id="player-id" class="auth-input" placeholder="Player ID" style="margin-top:15px;">
             <input type="text" id="zone-id" class="auth-input" placeholder="Server/Zone ID">
@@ -191,38 +187,20 @@
         <div class="modal-header"><h2>YOUR SOUL</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
         <div class="profile-header">
             <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
-            <h2 id="p-user" style="font-family:'Cinzel Decorative'; letter-spacing:3px;">USER</h2>
-            <p style="font-size:10px; color:var(--kurumi-red); font-weight:800;">ELITE MEMBER</p>
+            <h2 id="p-user" style="font-family:'Cinzel Decorative';">USER</h2>
+            <p style="font-size:10px; color:var(--kurumi-red);">ELITE MEMBER</p>
         </div>
-        
         <div class="profile-stat-grid">
             <div class="stat-item"><span>SALDO</span><b id="p-bal">0 CR</b></div>
             <div class="stat-item"><span>RANK</span><b>NIGHTMARE</b></div>
         </div>
-
-        <div class="profile-option"><div><i class="fas fa-history"></i> Riwayat Pesanan</div><i class="fas fa-chevron-right"></i></div>
-        <div class="profile-option"><div><i class="fas fa-shield-alt"></i> Keamanan Akun</div><i class="fas fa-chevron-right"></i></div>
-        <div class="profile-option" onclick="openModal('topupModal')"><div><i class="fas fa-plus-circle"></i> Isi Saldo (CR)</div><i class="fas fa-chevron-right"></i></div>
-        
-        <button class="auth-btn" style="margin-top:30px; background:linear-gradient(to right, transparent, var(--kurumi-red), transparent); border:1px solid var(--kurumi-red);" onclick="logout()">LOGOUT SYSTEM</button>
+        <div class="profile-option"><div><i class="fas fa-history"></i> Riwayat</div><i class="fas fa-chevron-right"></i></div>
+        <div class="profile-option" onclick="logout()"><div><i class="fas fa-sign-out-alt"></i> Logout</div><i class="fas fa-chevron-right"></i></div>
     </div>
 
     <div id="shopModal" class="modal">
         <div class="modal-header"><h2>THE MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
-        <div class="p-grid" id="market-list-container">
-            </div>
-    </div>
-
-    <div id="portModal" class="modal">
-        <div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <p>Project List by Sezean.</p>
-    </div>
-    <div id="topupModal" class="modal">
-        <div class="modal-header"><h2>TOPUP CR</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
-        <div style="text-align:center;">
-             <p style="margin-bottom:20px;">Hubungi Admin untuk pengisian CR.</p>
-             <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none;">HUBUNGI SEZEAN</a>
-        </div>
+        <div class="p-grid" id="market-list-container"></div>
     </div>
 
     <script>
@@ -240,19 +218,11 @@
         const db = firebase.database();
         let logoClicks = 0;
 
-        // PRODUK DATA (10 PRODUK)
-        const products = [
-            { name: "Premium UI Kit", price: "50k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Bot WhatsApp", price: "35k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Web Portfolio", price: "100k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Script Auto Buy", price: "25k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Cloud Server 1GB", price: "15k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Logo Design", price: "20k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Encrypted DB", price: "45k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Special Effect v2", price: "30k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Admin Panel v1", price: "75k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" },
-            { name: "Kurumi Theme", price: "10k", img: "https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" }
-        ];
+        // DATA PRODUK (Nama Coming Soon & Logo Baru)
+        const products = [];
+        for(let i=1; i<=10; i++) {
+            products.push({ name: "COMING SOON", price: "???", img: "https://i.imgur.com/jPIDTKm.jpeg" });
+        }
 
         window.onload = () => { 
             const savedUser = localStorage.getItem('activeUser');
@@ -268,11 +238,10 @@
                 products.forEach(p => {
                     container.innerHTML += `
                         <div class="p-card">
-                            <span class="badge-cs">COMING SOON</span>
+                            <span class="badge-cs">CS</span>
                             <img src="${p.img}">
-                            <div style="padding:10px 5px;">
-                                <p style="font-size:11px; font-weight:600;">${p.name}</p>
-                                <p style="font-size:10px; color:var(--gold);">${p.price} CR</p>
+                            <div style="padding:10px 5px; text-align:center;">
+                                <p style="font-size:11px; font-weight:800; color:var(--gold);">${p.name}</p>
                             </div>
                         </div>
                     `;
@@ -280,7 +249,6 @@
             });
         }
 
-        // --- AUTH LOGIC (DO NOT CHANGE) ---
         function handleLogin() {
             const u = document.getElementById('log-user').value.toLowerCase().trim();
             const p = document.getElementById('log-pass').value;
@@ -320,7 +288,6 @@
             });
         }
 
-        // --- GAME CENTER FIX ---
         function selectGame(name) {
             document.getElementById('game-list-gui').style.display = 'none';
             document.getElementById('game-id-gui').style.display = 'block';
@@ -333,42 +300,29 @@
         }
 
         function confirmOrder() {
-            const id = document.getElementById('player-id').value;
-            if(!id) return alert("Isi ID Player!");
-            alert("Pesanan " + document.getElementById('selected-game-title').innerText + " sedang diproses!");
+            alert("Sistem Coming Soon!");
             closeModal('gameModal');
         }
 
-        // --- UI HELPERS ---
         function triggerSecret() {
             if(localStorage.getItem('activeUser') !== 'sezean') return;
             logoClicks++;
-            if(logoClicks >= 5) { 
-                document.getElementById('secretPanel').style.display = 'block'; 
-                alert("Welcome Admin Sezean!");
-                logoClicks = 0; 
-            }
+            if(logoClicks >= 5) { document.getElementById('secretPanel').style.display = 'block'; logoClicks = 0; }
         }
 
         function adjustCredit(type) {
             const t = document.getElementById('s-target').value.toLowerCase().trim();
             const a = parseInt(document.getElementById('s-amount').value);
-            if(!t || isNaN(a)) return alert("Data tidak valid!");
             db.ref('users/' + t + '/credits').get().then(s => {
                 let current = s.val() || 0;
                 db.ref('users/' + t + '/credits').set(type === 'grant' ? current + a : current - a);
-                alert("Credit Updated!");
+                alert("Updated!");
             });
         }
 
-        function openModal(id) { 
-            closeAllModals();
-            document.getElementById(id).style.display = 'block'; 
-        }
+        function openModal(id) { closeAllModals(); document.getElementById(id).style.display = 'block'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function closeAllModals() {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        }
+        function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function toggleAuth(m) {
             document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
