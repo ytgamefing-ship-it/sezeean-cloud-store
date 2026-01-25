@@ -20,8 +20,9 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
+        body { background: var(--bg-dark); color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
 
+        /* --- BACKGROUND --- */
         .clock-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 150vw; height: 150vw; opacity: 0.07;
@@ -30,15 +31,15 @@
         }
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* AUTH SECTION */
+        /* --- AUTH SECTION --- */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
         .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; box-shadow: 0 0 30px rgba(255,0,0,0.3); }
         .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
         .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; transition: 0.3s; }
         .auth-btn:active { transform: scale(0.95); }
 
-        /* MAIN APP */
-        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
+        /* --- MAIN APP --- */
+        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; backdrop-filter: blur(10px); }
         .logo-area { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; }
         .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
         .container { padding: 20px 6% 120px; }
@@ -51,29 +52,37 @@
         .xp-fill { width: 70%; height: 100%; background: var(--gold); box-shadow: 0 0 10px var(--gold); border-radius: 10px; }
 
         .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
-        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 5px; border-radius: 15px; text-align: center; font-size: 10px; }
+        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 5px; border-radius: 15px; text-align: center; font-size: 10px; cursor: pointer; transition: 0.3s; }
         .menu-box i { font-size: 20px; color: var(--kurumi-red); display: block; margin-bottom: 8px; }
+        .menu-box:active { transform: scale(0.9); border-color: var(--kurumi-red); }
 
         .section-header { font-family: 'Cinzel Decorative'; font-size: 16px; color: var(--gold); margin: 25px 0 15px; }
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; }
         .p-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; border: 1px solid #222; }
-        .p-tag { position: absolute; top: 18px; left: 18px; font-size: 7px; padding: 2px 5px; border-radius: 3px; color: #fff; font-weight: 900; }
+        .p-tag { position: absolute; top: 18px; left: 18px; font-size: 7px; padding: 2px 5px; border-radius: 3px; color: #fff; font-weight: 900; z-index: 10; }
 
+        /* --- TERMINAL --- */
         .term-container { background: #000; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; font-family: monospace; margin-top: 25px; }
         .term-input { background: transparent; border: none; color: #0f0; width: 80%; outline: none; font-family: monospace; }
 
         #ownerPanel { display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid var(--gold); border-radius: 25px; padding: 25px; margin-top: 25px; }
 
-        /* MODALS */
-        .modal { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; padding: 30px 6%; overflow-y: auto; }
+        /* --- MODALS --- */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(15px); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .profile-avatar { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--kurumi-red); margin-bottom: 15px; }
         .info-item { background: var(--glass); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid var(--glass-border); }
 
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); backdrop-filter: blur(20px); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; }
-        nav i { font-size: 22px; color: #444; }
-        nav i.active { color: var(--kurumi-red); }
+        /* --- PORTFOLIO ITEM --- */
+        .port-item { background: var(--glass); border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border); margin-bottom: 20px; }
+        .port-img { width: 100%; height: 160px; object-fit: cover; }
+        .port-body { padding: 15px; }
+
+        /* --- NAVIGATION --- */
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); backdrop-filter: blur(20px); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; z-index: 500; }
+        nav i { font-size: 22px; color: #444; cursor: pointer; }
+        nav i.active { color: var(--kurumi-red); text-shadow: 0 0 10px var(--kurumi-red); }
     </style>
 </head>
 <body>
@@ -121,23 +130,23 @@
             <div class="quick-grid">
                 <div class="menu-box" onclick="openModal('shopModal')"><i class="fas fa-shopping-cart"></i>Shop</div>
                 <div class="menu-box" onclick="openModal('portModal')"><i class="fas fa-briefcase"></i>Porto</div>
-                <div class="menu-box" onclick="openModal('topModal')"><i class="fas fa-trophy"></i>Top</div>
+                <div class="menu-box" onclick="openModal('topupModal')"><i class="fas fa-trophy"></i>Topup</div>
                 <div class="menu-box" onclick="window.open('https://minecraft.wiki/w/Villager_News', '_blank')"><i class="fas fa-bullhorn"></i>News</div>
             </div>
 
-            <div class="section-header">MINECRAFT SHOP</div>
+            <div class="section-header">MINECRAFT SPECIALS</div>
             <div class="p-grid">
                 <div class="p-card">
                     <span class="p-tag" style="background:#ff1a1a;">MYTHIC MOBS</span>
                     <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg">
                     <p style="font-size:10px; font-weight:600;">Custom Skill Pack</p>
-                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Skill Pack', 45000)">45k CR</button>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Custom Skill Mythic Mobs', 45000)">45k CR</button>
                 </div>
                 <div class="p-card">
-                    <span class="p-tag" style="background:#25d366;">ENGINE</span>
+                    <span class="p-tag" style="background:#25d366;">MODEL ENGINE</span>
                     <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg">
                     <p style="font-size:10px; font-weight:600;">Model Engine Mob</p>
-                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Model Engine', 85000)">85k CR</button>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Model Engine Entity', 85000)">85k CR</button>
                 </div>
             </div>
 
@@ -161,29 +170,78 @@
         <nav>
             <i class="fas fa-home active" onclick="location.reload()"></i>
             <i class="fas fa-store" onclick="openModal('shopModal')"></i>
-            <i class="fas fa-wallet" onclick="openModal('topModal')"></i>
+            <i class="fas fa-wallet" onclick="openModal('topupModal')"></i>
             <i class="fas fa-user" onclick="openModal('profileModal')"></i>
         </nav>
     </div>
 
+    <div id="portModal" class="modal">
+        <div class="modal-header">
+            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">PORTFOLIO</h2>
+            <i class="fas fa-times" onclick="closeModal('portModal')"></i>
+        </div>
+        <div class="port-item">
+            <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg" class="port-img">
+            <div class="port-body">
+                <h4 style="color:var(--gold);">Advanced RPG UI</h4>
+                <p style="font-size:11px; color:#777; margin-top:5px;">Project UI system custom untuk server Minecraft RPG.</p>
+            </div>
+        </div>
+        <div class="port-item">
+            <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg" class="port-img">
+            <div class="port-body">
+                <h4 style="color:var(--gold);">Custom Entity Boss</h4>
+                <p style="font-size:11px; color:#777; margin-top:5px;">Pembuatan Boss menggunakan Model Engine & Mythic Mobs.</p>
+            </div>
+        </div>
+    </div>
+
     <div id="profileModal" class="modal">
         <div class="modal-header">
-            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">PROFILE</h2>
+            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">USER IDENTITY</h2>
             <i class="fas fa-times" onclick="closeModal('profileModal')"></i>
         </div>
         <div style="text-align:center;">
             <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
-            <h2 id="p-user">SEZEAN</h2>
+            <h2 id="p-user" style="font-family:'Cinzel Decorative';">SEZEAN</h2>
             <p style="color:var(--kurumi-red); font-size:12px; letter-spacing:2px; margin-bottom:30px;">NIGHTMARE CLASS</p>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                 <div class="info-item"><span>Balance</span><br><b id="p-bal">0</b></div>
                 <div class="info-item"><span>Status</span><br><b style="color:#0f0;">ACTIVE</b></div>
             </div>
+            <button onclick="logout()" class="auth-btn" style="margin-top:40px; background:transparent; border:1px solid #333;">LOGOUT</button>
+        </div>
+    </div>
+
+    <div id="shopModal" class="modal">
+        <div class="modal-header">
+            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">GLOBAL MARKET</h2>
+            <i class="fas fa-times" onclick="closeModal('shopModal')"></i>
+        </div>
+        <div class="p-grid">
+            <div class="p-card">
+                <span class="p-tag" style="background:var(--gold); color:#000;">HOT</span>
+                <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg">
+                <p style="font-size:10px; font-weight:600;">Custom 3D Item</p>
+                <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Custom 3D Model', 60000)">60k CR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="topupModal" class="modal">
+        <div class="modal-header">
+            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">RECHARGE</h2>
+            <i class="fas fa-times" onclick="closeModal('topupModal')"></i>
+        </div>
+        <div style="text-align:center; padding:30px; background:var(--glass); border-radius:20px;">
+            <i class="fab fa-whatsapp" style="font-size:50px; color:#25d366; margin-bottom:15px;"></i>
+            <p style="font-size:13px; color:#aaa;">Hubungi Sezean untuk pengisian saldo manual.</p>
+            <a href="https://wa.me/6289696498841" class="auth-btn" style="display:block; text-decoration:none; margin-top:20px; line-height:50px; padding:0;">HUBUNGI SEZEAN</a>
         </div>
     </div>
 
     <script>
-        // CONFIG
+        // --- FIREBASE CONFIG ---
         const firebaseConfig = {
             apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
             authDomain: "sezeean-store.firebaseapp.com",
@@ -211,14 +269,14 @@
         function handleRegister() {
             const u = document.getElementById('reg-user').value.toLowerCase().trim();
             const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Isi semua!");
+            if(!u || !p) return alert("Jangan dikosongin!");
 
             db.ref('accounts/' + u).get().then(snap => {
-                if(snap.exists()) { alert("User sudah ada!"); }
+                if(snap.exists()) { alert("Username sudah dipakai!"); }
                 else {
                     db.ref('accounts/' + u).set(p);
                     db.ref('users/' + u).set({ credits: 0, rank: "NIGHTMARE" });
-                    alert("Berhasil! Silakan Login.");
+                    alert("Berhasil Daftar! Silakan Login.");
                     toggleAuth();
                 }
             });
@@ -232,7 +290,7 @@
                 if(snap.exists() && snap.val() === p) {
                     localStorage.setItem('activeUser', u);
                     showMain(u);
-                } else { alert("User/Password Salah!"); }
+                } else { alert("Login Gagal! Cek Username/PW."); }
             });
         }
 
@@ -242,6 +300,7 @@
             document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
             document.getElementById('p-user').innerText = u.toUpperCase();
 
+            // Hak Akses Owner
             if(['sean', 'sezean', 'owner'].includes(u)) {
                 document.getElementById('ownerPanel').style.display = 'block';
             }
@@ -256,12 +315,13 @@
         function handleConsole(e) {
             if(e.key === 'Enter') {
                 const val = e.target.value.toLowerCase();
+                const user = localStorage.getItem('activeUser');
                 if(val.startsWith('topup')) {
                     const amt = val.split(' ')[1];
-                    db.ref('requests/' + localStorage.getItem('activeUser')).push({
+                    db.ref('requests/' + user).push({
                         amt: amt, time: new Date().toLocaleString()
                     });
-                    alert("Request Topup Terkirim!");
+                    alert("Permintaan Topup terkirim ke Sezean!");
                 }
                 e.target.value = '';
             }
@@ -272,7 +332,7 @@
             const a = parseInt(document.getElementById('targetAmount').value);
             db.ref('users/' + t + '/credits').get().then(s => {
                 db.ref('users/' + t + '/credits').set((s.val() || 0) + a);
-                alert("Added!");
+                alert("Saldo Berhasil Ditambah!");
             });
         }
 
@@ -281,13 +341,13 @@
             const a = parseInt(document.getElementById('targetAmount').value);
             db.ref('users/' + t + '/credits').get().then(s => {
                 db.ref('users/' + t + '/credits').set((s.val() || 0) - a);
-                alert("Reduced!");
+                alert("Saldo Berhasil Dikurangi!");
             });
         }
 
         function buy(name, price) {
             const u = localStorage.getItem('activeUser');
-            window.open(`https://wa.me/6289696498841?text=Halo Sezean, saya @${u} mau beli ${name} (${price} CR)`, '_blank');
+            window.open(`https://wa.me/6289696498841?text=Halo Sezean, saya @${u} ingin membeli ${name} seharga ${price} CR`, '_blank');
         }
 
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
