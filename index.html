@@ -60,7 +60,7 @@
         .wallet-container { padding: 0 6%; margin-top: -60px; position: relative; z-index: 10; }
         .wallet-card { background: linear-gradient(135deg, #111, #000); border: 1px solid #222; border-radius: 20px; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
 
-        /* --- TAMBAHAN: SECRET OWNER PANEL STYLE --- */
+        /* --- OWNER PANEL --- */
         #adminPanel { background: #0d0d0d; border: 2px solid var(--gold); padding: 20px; border-radius: 20px; margin: 20px 6% 0; display: none; box-shadow: 0 0 15px rgba(255, 204, 0, 0.1); }
         .order-monitor { margin-top: 20px; max-height: 200px; overflow-y: auto; background: #000; border-radius: 10px; padding: 10px; border: 1px solid #222; }
         .order-card { font-size: 10px; border-bottom: 1px solid #222; padding: 8px 0; color: #ccc; }
@@ -69,14 +69,14 @@
         .dashboard-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px 6% 10px; }
         .info-box { background: rgba(255,255,255,0.03); border: 1px solid #111; padding: 15px; border-radius: 15px; display: flex; align-items: center; gap: 10px; }
 
-        .categories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px 6% 25px; }
+        /* CATEGORIES ADJUSTMENT */
+        .categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 15px 6% 25px; }
         .cat-icon { width: 55px; height: 55px; background: #111; border: 1px solid #222; border-radius: 18px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 20px; margin: 0 auto 8px; }
         .cat-item p { font-size: 8px; font-weight: bold; color: #666; text-align: center; }
 
-        /* --- TAMBAHAN STYLE GAME --- */
+        /* --- GAME STORE STYLE --- */
         .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
         .game-card-select { background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; }
-        .game-card-select:hover { border-color: var(--gold); }
         .game-card-select img { width: 50px; height: 50px; border-radius: 10px; margin-bottom: 8px; }
 
         /* --- MODALS --- */
@@ -86,12 +86,7 @@
         .card-luxury p.desc { font-size: 10px; color: #888; margin-bottom: 12px; line-height: 1.4; }
         .btn-action { display: block; width: 100%; padding: 14px; background: #25D366; color: white; text-align: center; border-radius: 12px; font-weight: bold; font-size: 12px; border:none; cursor: pointer; }
 
-        /* --- INVOICE STYLE --- */
         .invoice-box { background: #fff; color: #000; padding: 30px; border-radius: 20px; text-align: center; max-width: 400px; margin: 0 auto; }
-        .invoice-header { border-bottom: 1px dashed #ccc; padding-bottom: 15px; margin-bottom: 15px; }
-        .invoice-detail { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px; }
-        .status-badge { background: #2ecc71; color: #fff; padding: 5px 15px; border-radius: 50px; font-size: 10px; display: inline-block; }
-
         .echoes-card { background: linear-gradient(135deg, #111 0%, #000 100%); padding: 40px 20px; border-radius: 30px; border: 1px solid var(--gold); text-align: center; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #000; display: flex; justify-content: space-around; padding: 20px 0; border-top: 1px solid #111; z-index: 5000; }
@@ -150,99 +145,25 @@
                 <button onclick="addCreditAction()" class="auth-btn" style="background:#fff; color:#000; padding:10px; font-size:10px;">TAMBAH CR</button>
                 <button onclick="reduceCreditAction()" class="auth-btn" style="background:var(--primary); color:#fff; padding:10px; font-size:10px;">KURANGI CR</button>
             </div>
-            
             <div class="order-monitor">
                 <p style="font-size:9px; color:var(--gold); margin-bottom:10px;">ORDER MONITORING:</p>
-                <div id="liveOrderList">
-                    <p style="font-size:8px; color:#444;">Menunggu pesanan masuk...</p>
-                </div>
+                <div id="liveOrderList"></div>
             </div>
-        </div>
-
-        <div class="dashboard-info">
-            <div class="info-box"><i class="fas fa-bolt" style="color:var(--gold);"></i><div><span>System</span><b>STABLE</b></div></div>
-            <div class="info-box"><i class="fas fa-shield-alt" style="color:var(--gold);"></i><div><span>Secure</span><b>AES-256</b></div></div>
         </div>
 
         <div class="categories">
             <div class="cat-item" onclick="openModal('gameModal')"><div class="cat-icon"><i class="fas fa-gamepad"></i></div><p>GAMES</p></div>
-            
-            <div class="cat-item" onclick="openModal('topupModal')"><div class="cat-icon"><i class="fas fa-wallet"></i></div><p>TOPUP</p></div>
             <div class="cat-item" onclick="openModal('productModal')"><div class="cat-icon"><i class="fas fa-gem"></i></div><p>PRODUK</p></div>
             <div class="cat-item" onclick="openModal('portModal')"><div class="cat-icon"><i class="fas fa-code"></i></div><p>PORTFOLIO</p></div>
+            <div class="cat-item" onclick="openModal('topupModal')"><div class="cat-icon"><i class="fas fa-wallet"></i></div><p>TOPUP</p></div>
+            <div class="cat-item" onclick="openModal('profileModal')"><div class="cat-icon"><i class="fas fa-user"></i></div><p>PROFILE</p></div>
+            <div class="cat-item" onclick="openModal('echoesModal')"><div class="cat-icon" style="border-color:var(--gold);"><i class="fas fa-wifi"></i></div><p style="color:var(--gold);">ECHOES</p></div>
         </div>
 
         <div class="bottom-nav">
             <div class="nav-item active-nav" onclick="location.reload()"><i class="fas fa-home"></i></div>
             <div class="nav-item" onclick="openModal('topupModal')"><i class="fas fa-credit-card"></i></div>
             <div class="nav-item" onclick="openModal('profileModal')"><i class="fas fa-user-shield"></i></div>
-        </div>
-    </div>
-
-    <div id="gameModal" class="modal">
-        <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>GAME STORE</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
-        <div class="game-grid">
-            <div class="game-card-select" onclick="setupGame('Mobile Legends')">
-                <img src="https://img.utdstc.com/icon/900/402/900402b8514125f18721115858021c1f9643d937748950882e307779f64923e3:200">
-                <p style="font-size:10px;">MLBB</p>
-            </div>
-            <div class="game-card-select" onclick="setupGame('Free Fire')">
-                <img src="https://play-lh.googleusercontent.com/IqYpTnoBCOhXl0S0YvE1id1Y9p-pY7XN6S6_7C1N9Jz-6qS-O5C3W0N_7v-S7F5uVw">
-                <p style="font-size:10px;">FREE FIRE</p>
-            </div>
-        </div>
-
-        <div id="gameForm" style="display:none; margin-top:30px;">
-            <h3 id="gameTitle" style="color:var(--gold); margin-bottom:15px; font-size:14px;"></h3>
-            <input type="text" id="gameID" class="auth-input" placeholder="User ID (+ Server ID)">
-            <select id="gameNominal" class="auth-input" style="background:#000;">
-                <option value="15000">86 Diamonds - 15.000 CR</option>
-                <option value="30000">172 Diamonds - 30.000 CR</option>
-                <option value="85000">514 Diamonds - 85.000 CR</option>
-            </select>
-            <button onclick="processGamePurchase()" class="btn-action">BELI SEKARANG</button>
-        </div>
-    </div>
-
-    <div id="invoiceModal" class="modal" style="background: rgba(0,0,0,0.9);">
-        <div class="invoice-box">
-            <div class="invoice-header">
-                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:50px; border-radius:50%; margin-bottom:10px;">
-                <h3 style="font-family:'Cinzel';">TRANSACTION SUCCESS</h3>
-                <p style="font-size:10px; color:#666;" id="inv-date"></p>
-            </div>
-            <div class="invoice-body">
-                <div class="invoice-detail"><span>Product:</span><b id="inv-item"></b></div>
-                <div class="invoice-detail"><span>Price:</span><b id="inv-price"></b></div>
-                <div class="invoice-detail"><span>Order ID:</span><b id="inv-id"></b></div>
-                <div class="status-badge">PAID VIA CREDIT</div>
-            </div>
-            <hr style="border: 1px dashed #ccc; margin: 20px 0;">
-            <p style="font-size:9px; color:#888; margin-bottom:15px;">Bukti ini sah dan tercatat di sistem Alharazhiel.</p>
-            <button onclick="closeModal('invoiceModal')" class="auth-btn" style="background:#000; margin-bottom:10px;">CLOSE</button>
-            <button id="btnWA" class="btn-action">KONFIRMASI VIA WA</button>
-        </div>
-    </div>
-
-    <div id="productModal" class="modal">
-        <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>PRODUCTS</h2><i class="fas fa-times" onclick="closeModal('productModal')"></i></div>
-        <div class="card-luxury">
-            <h3>Custom Skill RPG</h3>
-            <p class="desc">Pembuatan skill unik dengan efek visual tingkat tinggi khusus server RPG lu.</p>
-            <p style="color:var(--gold); font-weight:bold;">50.000 CR</p>
-            <button onclick="buyProduct('Skill RPG', 50000)" class="btn-action">BUY</button>
-        </div>
-        <div class="card-luxury">
-            <h3>Model Engine Setup</h3>
-            <p class="desc">Konfigurasi Model Engine untuk mob atau kendaraan agar lancar jaya.</p>
-            <p style="color:var(--gold); font-weight:bold;">75.000 CR</p>
-            <button onclick="buyProduct('Model Engine', 75000)" class="btn-action">BUY</button>
-        </div>
-        <div class="card-luxury">
-            <h3>Server Setup RP</h3>
-            <p class="desc">Setup lengkap server Roleplay dari nol sampai siap open member.</p>
-            <p style="color:var(--gold); font-weight:bold;">100.000 CR</p>
-            <button onclick="buyProduct('Server Setup', 100000)" class="btn-action">BUY</button>
         </div>
     </div>
 
@@ -255,39 +176,28 @@
         </div>
     </div>
 
-    <div id="profileModal" class="modal">
-        <div style="display:flex; justify-content:space-between; margin-bottom:25px;"><h2>PROFILE</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div class="profile-main" style="background:var(--glass); border-radius:30px; padding:40px 20px; text-align:center; position:relative; overflow:hidden;">
-            <div style="position:absolute; top:0; left:0; width:100%; height:90px; background:linear-gradient(90deg, var(--primary), #600000);"></div>
-            <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg" style="width:110px; height:110px; border-radius:50%; border:5px solid #000; position:relative; z-index:1; object-fit: cover;">
-            <h2 id="user-display" style="font-family:'Cinzel'; margin-top:15px; color:var(--gold);">USER</h2>
-            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:25px;">
-                <div style="background:#000; padding:15px; border-radius:12px;"><h5>12</h5><p style="font-size:7px;">PROJ</p></div>
-                <div style="background:#000; padding:15px; border-radius:12px;"><h5>5.0</h5><p style="font-size:7px;">RATE</p></div>
-                <div style="background:#000; padding:15px; border-radius:12px;"><h5>24</h5><p style="font-size:7px;">CLIENT</p></div>
+    <div id="gameModal" class="modal">
+        <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>GAME STORE</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
+        <div class="game-grid">
+            <div class="game-card-select" onclick="setupGame('Mobile Legends')">
+                <img src="https://img.utdstc.com/icon/900/402/900402b8514125f18721115858021c1f9643d937748950882e307779f64923e3:200"><p style="font-size:10px;">MLBB</p>
             </div>
-            <button onclick="logout()" class="btn-action" style="background:rgba(255,0,0,0.1); color:var(--primary); margin-top:30px;">LOGOUT</button>
+            <div class="game-card-select" onclick="setupGame('Free Fire')">
+                <img src="https://pakarberita.com/wp-content/uploads/2020/12/Logo-Free-Fire.jpg"><p style="font-size:10px;">FREE FIRE</p>
+            </div>
         </div>
-    </div>
-
-    <div id="topupModal" class="modal">
-        <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
-        <div class="card-luxury">
-            <h3>Request Topup Manual</h3>
-            <p class="desc">Masukkan jumlah saldo yang ingin dibeli, lalu konfirmasi ke admin.</p>
-            <input type="number" id="reqAmount" class="auth-input" placeholder="Jumlah CR (Contoh: 50000)">
-            <button onclick="requestTopup()" class="btn-action">KIRIM PERMINTAAN</button>
+        <div id="gameForm" style="display:none; margin-top:30px;">
+            <h3 id="gameTitle" style="color:var(--gold); margin-bottom:15px;"></h3>
+            <input type="text" id="gameID" class="auth-input" placeholder="User ID (+ Server)">
+            <select id="gameNominal" class="auth-input" style="background:#000;">
+                <option value="15000">86 Diamonds - 15.000 CR</option>
+                <option value="30000">172 Diamonds - 30.000 CR</option>
+            </select>
+            <button onclick="processGamePurchase()" class="btn-action">BELI SEKARANG</button>
         </div>
-        <div class="card-luxury"><h3>Admin 1</h3><a href="https://wa.me/6289696498841" class="btn-action">089696498841</a></div>
-    </div>
-
-    <div id="portModal" class="modal">
-        <div style="display:flex; justify-content:space-between; margin-bottom:30px;"><h2>WORKS</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg" style="width:100%; border-radius:20px;">
     </div>
 
     <script>
-        // FIREBASE SETTINGS
         const firebaseConfig = {
             apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
             authDomain: "sezeean-store.firebaseapp.com",
@@ -300,59 +210,22 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // CEK AUTO LOGIN
         window.onload = function() {
             const saved = localStorage.getItem('activeUser');
             if(saved) { showMainContent(saved); }
         };
 
-        function toggleAuth() {
-            const l = document.getElementById('login-box'); const r = document.getElementById('register-box');
-            l.style.display = l.style.display === 'none' ? 'block' : 'none'; r.style.display = r.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function handleRegister() {
-            const u = document.getElementById('reg-user').value.toLowerCase(); 
-            const p = document.getElementById('reg-pass').value;
-            if(u && p) {
-                db.ref('accounts/' + u).set(p).then(() => {
-                    db.ref('users/' + u + '/credits').set(0);
-                    alert("Daftar Berhasil!"); toggleAuth();
-                });
-            }
-        }
-
-        function handleLogin() {
-            const u = document.getElementById('log-user').value.toLowerCase();
-            const p = document.getElementById('log-pass').value;
-            db.ref('accounts/' + u).get().then((snapshot) => {
-                if(snapshot.exists() && snapshot.val() === p) {
-                    localStorage.setItem('activeUser', u);
-                    showMainContent(u);
-                } else { alert("Login Salah!"); }
-            });
-        }
-
         function showMainContent(u) {
             document.getElementById('auth-page').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('hero-user').innerText = u.toUpperCase();
-            document.getElementById('user-display').innerText = u.toUpperCase();
-            
-            // TAMPILKAN PANEL JIKA OWNER
-            if(u === 'owner') { 
-                document.getElementById('adminPanel').style.display = 'block'; 
-                listenToOrders();
-            }
-            
+            if(u === 'owner') { document.getElementById('adminPanel').style.display = 'block'; listenToOrders(); }
             db.ref('users/' + u + '/credits').on('value', (s) => {
                 document.getElementById('user-balance').innerText = (s.val() || 0).toLocaleString() + " CR";
             });
         }
 
-        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
-
-        // --- TAMBAHAN LOGIKA GAME ---
+        // --- GAME LOGIC ---
         let selectedGame = "";
         function setupGame(name) {
             selectedGame = name;
@@ -362,116 +235,48 @@
 
         function processGamePurchase() {
             const u = localStorage.getItem('activeUser');
-            const idGame = document.getElementById('gameID').value;
+            const id = document.getElementById('gameID').value;
             const price = parseInt(document.getElementById('gameNominal').value);
-            const nominalName = document.getElementById('gameNominal').options[document.getElementById('gameNominal').selectedIndex].text;
-
-            if(!idGame) return alert("Isi ID Akun!");
-
+            if(!id) return alert("Isi ID!");
             db.ref('users/' + u + '/credits').get().then((s) => {
                 let bal = s.val() || 0;
                 if(bal >= price) {
-                    const orderID = "GAME-" + Math.floor(Math.random() * 1000000);
                     db.ref('users/' + u + '/credits').set(bal - price);
-                    
-                    db.ref('orders').push({
-                        user: u,
-                        item: selectedGame + " (" + nominalName + ")",
-                        id_game: idGame,
-                        orderID: orderID,
-                        time: new Date().toLocaleString()
-                    });
-
+                    db.ref('orders').push({ user: u, item: selectedGame, id_game: id, time: new Date().toLocaleString() });
+                    alert("Berhasil! Tunggu proses Admin.");
                     closeModal('gameModal');
-                    showInvoice(selectedGame + " - " + idGame, price, orderID);
-                } else {
-                    alert("Saldo Gak Cukup!");
-                }
+                } else { alert("Saldo Kurang!"); }
             });
         }
 
-        // --- OWNER ACTIONS ---
-        function addCreditAction() {
-            const target = document.getElementById('targetUser').value.toLowerCase();
-            const amount = parseInt(document.getElementById('targetAmount').value);
-            if(target && amount) {
-                const ref = db.ref('users/' + target + '/credits');
-                ref.get().then((s) => { ref.set((s.val() || 0) + amount); alert("Berhasil Tambah Saldo!"); });
-            }
-        }
-
-        function reduceCreditAction() {
-            const target = document.getElementById('targetUser').value.toLowerCase();
-            const amount = parseInt(document.getElementById('targetAmount').value);
-            if(target && amount) {
-                const ref = db.ref('users/' + target + '/credits');
-                ref.get().then((s) => { 
-                    let cur = s.val() || 0;
-                    ref.set(cur - amount < 0 ? 0 : cur - amount); 
-                    alert("Berhasil Kurangi Saldo!"); 
-                });
-            }
+        function handleLogin() {
+            const u = document.getElementById('log-user').value.toLowerCase();
+            const p = document.getElementById('log-pass').value;
+            db.ref('accounts/' + u).get().then((s) => {
+                if(s.exists() && s.val() === p) { localStorage.setItem('activeUser', u); showMainContent(u); }
+                else { alert("Salah!"); }
+            });
         }
 
         function listenToOrders() {
-            db.ref('orders').limitToLast(10).on('value', (snapshot) => {
+            db.ref('orders').limitToLast(5).on('value', (s) => {
                 const list = document.getElementById('liveOrderList');
                 list.innerHTML = "";
-                snapshot.forEach((child) => {
-                    const data = child.val();
-                    // Menampilkan ID Game jika ada
-                    const detail = data.id_game ? ` - ID: ${data.id_game}` : "";
-                    list.innerHTML += `<div class="order-card"><span>[${data.time}]</span> ${data.user} - ${data.item}${detail}</div>`;
+                s.forEach((c) => { 
+                    const d = c.val();
+                    list.innerHTML += `<div class="order-card"><span>[${d.time}]</span> ${d.user}: ${d.item} ${d.id_game ? '('+d.id_game+')' : ''}</div>`;
                 });
             });
-        }
-
-        function buyProduct(name, price) {
-            const u = localStorage.getItem('activeUser');
-            const ref = db.ref('users/' + u + '/credits');
-            ref.get().then((s) => {
-                let bal = s.val() || 0;
-                if(bal >= price) { 
-                    const orderID = "INV-" + Math.floor(Math.random() * 1000000);
-                    ref.set(bal - price); 
-                    db.ref('orders').push({
-                        user: u,
-                        item: name,
-                        price: price,
-                        orderID: orderID,
-                        time: new Date().toLocaleString()
-                    });
-                    showInvoice(name, price, orderID);
-                } else { alert("Saldo Tipis!"); }
-            });
-        }
-
-        function showInvoice(name, price, id) {
-            document.getElementById('inv-item').innerText = name;
-            document.getElementById('inv-price').innerText = price.toLocaleString() + " CR";
-            document.getElementById('inv-id').innerText = id;
-            document.getElementById('inv-date').innerText = new Date().toLocaleString();
-            document.getElementById('btnWA').onclick = () => {
-                window.location.href = `https://wa.me/6289696498841?text=KONFIRMASI ORDER%0AID: ${id}%0AItem: ${name}%0AUser: ${localStorage.getItem('activeUser')}`;
-            };
-            openModal('invoiceModal');
-        }
-
-        function requestTopup() {
-            const amount = document.getElementById('reqAmount').value;
-            const u = localStorage.getItem('activeUser');
-            if(!amount) return alert("Isi jumlah saldo!");
-            db.ref('orders').push({
-                user: u,
-                item: "TOPUP REQ: " + amount,
-                time: new Date().toLocaleTimeString()
-            });
-            alert("Permintaan terkirim!");
         }
 
         function toggleNightmare() { document.getElementById('pageBody').classList.toggle('nightmare-active'); }
         function openModal(id) { document.getElementById(id).style.display = "block"; }
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
+        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
+        function toggleAuth() {
+            const l = document.getElementById('login-box'); const r = document.getElementById('register-box');
+            l.style.display = l.style.display === 'none' ? 'block' : 'none'; r.style.display = r.style.display === 'none' ? 'block' : 'none';
+        }
     </script>
 </body>
 </html>
