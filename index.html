@@ -47,34 +47,26 @@
             border: 1px solid var(--gold); margin-bottom: 25px; position: relative;
         }
 
-        /* SEARCH STYLING */
+        /* SEARCH BAR */
         .search-container { margin-bottom: 25px; position: relative; }
-        .search-input { width: 100%; padding: 12px 45px 12px 15px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 15px; color: #fff; outline: none; }
+        .search-input { width: 100%; padding: 12px 15px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 15px; color: #fff; outline: none; font-size: 13px; }
         .search-container i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--gold); }
 
         .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
         .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; }
         .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
 
-        /* GAME GRID LOGOS */
-        .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; }
-        .game-item { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 15px; padding: 12px 5px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .game-item:hover, .game-item.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); transform: translateY(-3px); }
-        .game-item img { width: 45px; height: 45px; border-radius: 12px; margin-bottom: 8px; object-fit: cover; border: 1px solid #333; }
-        .game-item p { font-size: 10px; font-weight: 800; color: #eee; }
-
         .section-header { font-family: 'Cinzel Decorative'; font-size: 16px; color: var(--gold); margin: 25px 0 15px; }
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; transition: 0.3s; }
-        .p-card img { width: 100%; border-radius: 15px; }
+        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; }
+        .p-card img { width: 100%; border-radius: 15px; filter: grayscale(0.3); }
+        .coming-soon-tag { position: absolute; top: 20px; right: 20px; background: var(--gold); color: #000; font-size: 8px; font-weight: 900; padding: 2px 8px; border-radius: 5px; }
 
-        /* SECRET PANEL MODAL */
+        /* SECRET PANEL */
         #secretPanel { 
-            display: none; margin-top: 30px; border: 2px solid var(--kurumi-red); 
-            padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05);
-            animation: glow 1.5s infinite alternate;
+            display: none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); 
+            padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05); 
         }
-        @keyframes glow { from { box-shadow: 0 0 5px var(--kurumi-red); } to { box-shadow: 0 0 15px var(--kurumi-red); } }
 
         /* MODALS */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(20px); }
@@ -124,8 +116,15 @@
             </div>
 
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="Search products..." onkeyup="searchProduct()">
+                <input type="text" id="p-search" class="search-input" placeholder="Cari produk Cloud..." onkeyup="filterProducts()">
                 <i class="fas fa-search"></i>
+            </div>
+
+            <div id="secretPanel">
+                <p style="color:var(--gold); font-size:11px; margin-bottom:10px;">SECRET OWNER PANEL</p>
+                <input type="text" id="s-target" class="auth-input" placeholder="User Target">
+                <input type="number" id="s-amount" class="auth-input" placeholder="Jumlah CR">
+                <button onclick="addCreditSecret()" class="auth-btn" style="background:#fff; color:#000; padding:10px;">GRANT CREDIT</button>
             </div>
 
             <div class="quick-grid">
@@ -136,32 +135,30 @@
                 <div class="menu-box" onclick="window.open('https://minecraft.wiki/w/Villager_News', '_blank')"><i class="fas fa-bullhorn"></i>News</div>
             </div>
 
-            <div id="secretPanel">
-                <p style="color:var(--kurumi-red); font-weight: 800; font-size:12px; margin-bottom:15px; text-align: center;">MASTER CONTROL ACTIVATED</p>
-                <input type="text" id="targetUserSecret" class="auth-input" placeholder="Target User">
-                <input type="number" id="targetAmountSecret" class="auth-input" placeholder="Amount">
-                <button onclick="addCreditSecret()" class="auth-btn" style="background:#fff; color:#000;">GRANT CREDIT</button>
-            </div>
-
             <div class="section-header">MINECRAFT SPECIALS</div>
-            <div class="p-grid" id="productGrid">
-                <div class="p-card" data-name="Mythic Mobs Skill">
+            <div class="p-grid" id="main-product-list">
+                <div class="p-card" data-name="Custom Skill Pack">
                     <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg">
                     <p style="font-size:10px; font-weight:600; margin-top:10px;">Custom Skill Pack</p>
-                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Mythic Mobs Skill', 45000)">45k CR</button>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Skill Pack', 45000)">45k CR</button>
                 </div>
-                <div class="p-card" data-name="Model Engine Entity">
+                <div class="p-card" data-name="Model Engine Mob">
                     <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg">
                     <p style="font-size:10px; font-weight:600; margin-top:10px;">Model Engine Mob</p>
-                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Model Engine Entity', 85000)">85k CR</button>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px;" onclick="buy('Model Engine', 85000)">85k CR</button>
                 </div>
-            </div>
-
-            <div id="ownerPanel" style="display:none; margin-top:30px; border:1px solid var(--gold); padding:20px; border-radius:20px;">
-                <p style="color:var(--gold); font-size:12px; margin-bottom:15px;">ADMIN CONTROL</p>
-                <input type="text" id="targetUser" class="auth-input" placeholder="User">
-                <input type="number" id="targetAmount" class="auth-input" placeholder="Amount">
-                <button onclick="addCredit()" class="auth-btn" style="background:#fff; color:#000;">GRANT</button>
+                <div class="p-card" data-name="RPG UI System">
+                    <span class="coming-soon-tag">SOON</span>
+                    <img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg" style="opacity: 0.2;">
+                    <p style="font-size:10px; font-weight:600; margin-top:10px; color:#444;">RPG UI System</p>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px; background:#111; color:#333;">LOCKED</button>
+                </div>
+                <div class="p-card" data-name="Furniture Pack">
+                    <span class="coming-soon-tag">SOON</span>
+                    <img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg" style="opacity: 0.2;">
+                    <p style="font-size:10px; font-weight:600; margin-top:10px; color:#444;">Furniture Pack</p>
+                    <button class="auth-btn" style="padding:8px; font-size:10px; margin-top:8px; background:#111; color:#333;">LOCKED</button>
+                </div>
             </div>
         </div>
 
@@ -173,37 +170,23 @@
         </nav>
     </div>
 
-    <div id="gameModal" class="modal">
-        <div class="modal-header">
-            <h2 style="font-family:'Cinzel Decorative'; color:var(--gold);">GAME CENTER</h2>
-            <i class="fas fa-times" onclick="closeModal('gameModal')"></i>
-        </div>
-        <div class="game-grid">
-            <div class="game-item" onclick="selectGame('Mobile Legends', this)"><img src="https://i.ibb.co/LNN7pS2/ml-logo.png"><p>MLBB</p></div>
-            <div class="game-item" onclick="selectGame('Free Fire', this)"><img src="https://i.ibb.co/3W6qWzV/ff-logo.png"><p>Free Fire</p></div>
-            <div class="game-item" onclick="selectGame('PUBG Mobile', this)"><img src="https://i.ibb.co/0fVdC9p/pubg-logo.png"><p>PUBGM</p></div>
-        </div>
-        <div id="game-form" style="display:none; background:var(--glass); padding:20px; border-radius:20px; border:1px solid var(--glass-border);">
-            <h4 id="selected-game-title" style="color:var(--gold); margin-bottom:15px;">Game</h4>
-            <input type="text" id="game-id" class="auth-input" placeholder="User ID">
-            <input type="text" id="game-nominal" class="auth-input" placeholder="Nominal">
-            <button onclick="sendGameOrder()" class="auth-btn" style="background:var(--gold); color:#000;">KIRIM PESAN</button>
-        </div>
-    </div>
-
-    <div id="portModal" class="modal"><div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div><div class="p-card"><img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg"><h4>RPG Project</h4></div></div>
-
-    <div id="topupModal" class="modal"><div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div><div style="text-align:center;"><i class="fab fa-whatsapp" style="font-size:50px; color:#25d366;"></i><p>Hubungi Sezean untuk Topup.</p><a href="https://wa.me/6289696498841" class="auth-btn" style="display:block; margin-top:20px;">CHAT SEZEAN</a></div></div>
-
     <div id="profileModal" class="modal">
-        <div class="modal-header"><h2>IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
+        <div class="modal-header"><h2 style="font-family:'Cinzel Decorative';">IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
         <div style="text-align:center;">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:80px; border-radius:50%; border:2px solid var(--kurumi-red);">
-            <h2 id="p-user-display" style="margin-top:15px;">USER</h2>
-            <div style="background:var(--glass); padding:15px; border-radius:15px; margin-top:20px;">Balance: <b id="p-bal-display">0</b> CR</div>
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:80px; border-radius:50%; border:2px solid var(--kurumi-red); margin-bottom:15px;">
+            <h2 id="p-user">USER</h2>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
+                <div style="background:var(--glass); padding:15px; border-radius:15px;"><span>Balance</span><br><b id="p-bal">0</b></div>
+                <div style="background:var(--glass); padding:15px; border-radius:15px;"><span>Rank</span><br><b>S1</b></div>
+            </div>
             <button onclick="logout()" class="auth-btn" style="margin-top:30px; background:transparent; border:1px solid #333;">LOGOUT</button>
         </div>
     </div>
+
+    <div id="gameModal" class="modal"><div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div><p style="font-size:12px; opacity:0.5;">Pilih game untuk topup...</p></div>
+    <div id="shopModal" class="modal"><div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div><p>Semua produk Cloud ada di sini.</p></div>
+    <div id="portModal" class="modal"><div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div><p>Daftar project Sezean.</p></div>
+    <div id="topupModal" class="modal"><div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div><div style="text-align:center;"><p>Hubungi WhatsApp Sezean.</p><br><a href="https://wa.me/6289696498841" class="auth-btn">CHAT SEZEAN</a></div></div>
 
     <script>
         const firebaseConfig = {
@@ -218,29 +201,26 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        let logoClicks = 0;
-        let currentSelectedGame = "";
+        let clickLogo = 0;
 
         window.onload = () => { if(localStorage.getItem('activeUser')) showMain(localStorage.getItem('activeUser')); };
 
-        // SEARCH FUNCTION
-        function searchProduct() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('.p-card');
-            cards.forEach(card => {
-                let name = card.getAttribute('data-name').toLowerCase();
-                card.style.display = name.includes(input) ? "block" : "none";
-            });
+        function triggerSecret() {
+            clickLogo++;
+            if(clickLogo >= 5) {
+                document.getElementById('secretPanel').style.display = 'block';
+                alert("Master Authority Recognized.");
+                clickLogo = 0;
+            }
         }
 
-        // SECRET TRIGGER (Klik Logo 5x)
-        function triggerSecret() {
-            logoClicks++;
-            if(logoClicks >= 5) {
-                document.getElementById('secretPanel').style.display = 'block';
-                alert("Owner Authority Recognized.");
-                logoClicks = 0;
-            }
+        function filterProducts() {
+            let val = document.getElementById('p-search').value.toLowerCase();
+            let items = document.querySelectorAll('.p-card');
+            items.forEach(item => {
+                let name = item.getAttribute('data-name').toLowerCase();
+                item.style.display = name.includes(val) ? "block" : "none";
+            });
         }
 
         function handleLogin() {
@@ -265,50 +245,25 @@
             document.getElementById('auth-page').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
-            document.getElementById('p-user-display').innerText = u.toUpperCase();
-            if(['sean', 'sezean'].includes(u)) document.getElementById('ownerPanel').style.display = 'block';
+            document.getElementById('p-user').innerText = u.toUpperCase();
             db.ref('users/' + u + '/credits').on('value', snap => {
                 document.getElementById('user-balance').innerText = (snap.val() || 0).toLocaleString() + " CR";
-                document.getElementById('p-bal-display').innerText = (snap.val() || 0).toLocaleString();
+                document.getElementById('p-bal').innerText = (snap.val() || 0).toLocaleString();
             });
         }
 
         function addCreditSecret() {
-            const t = document.getElementById('targetUserSecret').value.toLowerCase();
-            const a = parseInt(document.getElementById('targetAmountSecret').value);
-            if(!t || isNaN(a)) return alert("Isi data!");
-            db.ref('users/' + t + '/credits').get().then(s => {
-                db.ref('users/' + t + '/credits').set((s.val() || 0) + a);
-                alert("Energy Granted to " + t);
-            });
+            const t = document.getElementById('s-target').value.toLowerCase();
+            const a = parseInt(document.getElementById('s-amount').value);
+            db.ref('users/' + t + '/credits').get().then(s => db.ref('users/' + t + '/credits').set((s.val() || 0) + a));
+            alert("Credit Sent!");
         }
 
-        function selectGame(game, element) {
-            currentSelectedGame = game;
-            document.querySelectorAll('.game-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('game-form').style.display = 'block';
-            document.getElementById('selected-game-title').innerText = "Topup " + game;
-        }
-
-        function sendGameOrder() {
-            const u = localStorage.getItem('activeUser');
-            const i = document.getElementById('game-id').value;
-            const n = document.getElementById('game-nominal').value;
-            const text = `Halo Sezean! Order ${currentSelectedGame} ID: ${i} Nom: ${n} User: @${u}`;
-            window.open(`https://wa.me/6289696498841?text=${text}`, '_blank');
-        }
-
-        function buy(name, price) { window.open(`https://wa.me/6289696498841?text=Beli ${name} (${price} CR)`, '_blank'); }
+        function buy(n, p) { window.open(`https://wa.me/6289696498841?text=Beli ${n} (${p} CR)`); }
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function toggleAuth() { document.getElementById('login-box').style.display = document.getElementById('login-box').style.display === 'none' ? 'block' : 'none'; document.getElementById('register-box').style.display = document.getElementById('register-box').style.display === 'none' ? 'block' : 'none'; }
         function logout() { localStorage.clear(); location.reload(); }
-        function addCredit() {
-            const t = document.getElementById('targetUser').value.toLowerCase();
-            const a = parseInt(document.getElementById('targetAmount').value);
-            db.ref('users/' + t + '/credits').get().then(s => db.ref('users/' + t + '/credits').set((s.val() || 0) + a));
-        }
     </script>
 </body>
 </html>
