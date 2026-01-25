@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Store | Sezean Edition</title>
+    <title>Cloud Store | Sezean Elite</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -33,38 +33,42 @@
         /* AUTH */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
         .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
+        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
         .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
 
-        /* MAIN */
-        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
-        .logo-area { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+        /* HEADER & SEARCH */
+        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.85); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; backdrop-filter: blur(10px); }
+        .logo-area { font-family: 'Cinzel Decorative'; font-size: 18px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
         .container { padding: 20px 6% 120px; }
 
-        .balance-card { 
-            background: linear-gradient(135deg, #1a0000, #000); padding: 25px; border-radius: 25px; 
-            border: 1px solid var(--gold); margin-bottom: 25px; position: relative;
-        }
+        .search-container { position: relative; margin-bottom: 25px; }
+        .search-input { width: 100%; padding: 14px 20px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 15px; color: #fff; outline: none; font-size: 13px; }
+        .search-container i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); }
 
+        /* CARDS & GRID */
+        .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 20px; }
         .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
         .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; }
         .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
 
-        .section-header { font-family: 'Cinzel Decorative'; font-size: 16px; color: var(--gold); margin: 25px 0 15px; }
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; overflow: hidden; }
         .p-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; }
 
-        #secretPanel { 
-            display: none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); 
-            padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05); 
-        }
+        /* PROFILE STYLE */
+        .profile-option { display: flex; align-items: center; justify-content: space-between; background: var(--glass); padding: 18px; border-radius: 18px; margin-bottom: 10px; border: 1px solid var(--glass-border); }
+        .profile-option i { color: var(--gold); margin-right: 15px; }
+
+        /* CONSOLE PANEL */
+        #secretPanel { display: none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05); }
+        .cp-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         /* MODALS */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(20px); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; background: rgba(0,0,0,0.9); padding: 10px 0; z-index: 10; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(25px); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; background: #000; }
 
+        /* NAV */
         nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; }
         nav i { font-size: 22px; color: #444; }
         nav i.active { color: var(--kurumi-red); }
@@ -103,7 +107,7 @@
 
         <div class="container">
             <div class="balance-card">
-                <p style="font-size:10px; color:var(--gold);">TIME ENERGY</p>
+                <p style="font-size:10px; color:var(--gold); letter-spacing: 2px;">TIME ENERGY</p>
                 <h1 id="user-balance" style="font-family:'Cinzel Decorative'; font-size:32px; margin:5px 0;">0 CR</h1>
                 <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--kurumi-red);">
                     <span id="hero-user">@USER</span>
@@ -111,11 +115,19 @@
                 </div>
             </div>
 
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for items, skins, or server..." onkeyup="filterItems()">
+                <i class="fas fa-search"></i>
+            </div>
+
             <div id="secretPanel">
-                <p style="color:var(--gold); font-size:11px; margin-bottom:10px;">SEZEAN CONTROL PANEL</p>
-                <input type="text" id="s-target" class="auth-input" placeholder="Target User">
-                <input type="number" id="s-amount" class="auth-input" placeholder="Amount">
-                <button onclick="addCreditSecret()" class="auth-btn" style="background:#fff; color:#000; padding:10px;">GRANT</button>
+                <p style="color:var(--gold); font-size:11px; margin-bottom:12px; font-weight: 800;"><i class="fas fa-crown"></i> SEZEAN CONSOLE</p>
+                <input type="text" id="s-target" class="auth-input" placeholder="Target Username">
+                <input type="number" id="s-amount" class="auth-input" placeholder="CR Amount">
+                <div class="cp-btns">
+                    <button onclick="adjustCredit('grant')" class="auth-btn" style="background:#fff; color:#000; padding:10px;">GRANT</button>
+                    <button onclick="adjustCredit('revoke')" class="auth-btn" style="background:transparent; border:1px solid #fff; padding:10px;">REVOKE</button>
+                </div>
             </div>
 
             <div class="quick-grid">
@@ -127,7 +139,7 @@
             </div>
 
             <div class="section-header">FEATURED</div>
-            <div class="p-grid">
+            <div class="p-grid" id="featured-list">
                 <div class="p-card"><img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg"><p style="font-size:10px; padding:10px;">Skill Pack V1</p></div>
                 <div class="p-card"><img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg"><p style="font-size:10px; padding:10px;">Model Engine Mob</p></div>
             </div>
@@ -140,57 +152,56 @@
         </nav>
     </div>
 
-    <div id="shopModal" class="modal">
-        <div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
-        <div class="p-grid">
-            <div class="p-card"><img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg"><div style="padding:10px;"><p style="font-size:11px;">RPG Skill UI</p><b style="color:var(--gold);">25k CR</b></div></div>
-            <div class="p-card"><img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg"><div style="padding:10px;"><p style="font-size:11px;">Boss Mob Pack</p><b style="color:var(--gold);">50k CR</b></div></div>
-            <div class="p-card"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><div style="padding:10px;"><p style="font-size:11px;">Custom Cape</p><b style="color:var(--gold);">15k CR</b></div></div>
-            <div class="p-card"><img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg"><div style="padding:10px;"><p style="font-size:11px;">Furniture Pack</p><b style="color:var(--gold);">30k CR</b></div></div>
+    <div id="gameModal" class="modal">
+        <div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
+        <div id="game-list-gui">
+            <div class="p-grid">
+                <div class="game-item" onclick="selectGame('MLBB')"><img src="https://w7.pngwing.com/pngs/433/343/png-transparent-mobile-legends-bang-bang-logo-video-game-moba-legend-purple-game-violet.png"><p style="font-size:10px;">MLBB</p></div>
+                <div class="game-item" onclick="selectGame('Free Fire')"><img src="https://i.pinimg.com/originals/f3/78/33/f378335496417730e25180f17b3531b7.png"><p style="font-size:10px;">Free Fire</p></div>
+            </div>
+        </div>
+        <div id="game-id-gui" style="display:none; margin-top:20px; background:var(--glass); padding:20px; border-radius:20px; border:1px solid var(--gold);">
+            <h3 id="selected-game-title" style="margin-bottom:15px; color:var(--gold);">GAME</h3>
+            <input type="text" id="player-id" class="auth-input" placeholder="Player ID">
+            <input type="text" id="zone-id" class="auth-input" placeholder="Zone ID (Optional)">
+            <button onclick="confirmOrder()" class="auth-btn">PROCESS ORDER</button>
+            <button onclick="backToGames()" style="background:none; border:none; color:#555; font-size:12px; margin-top:15px;">Back to list</button>
         </div>
     </div>
 
-    <div id="gameModal" class="modal">
-        <div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
+    <div id="profileModal" class="modal">
+        <div class="modal-header"><h2>PROFILE</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
+        <div style="text-align:center; margin-bottom:30px;">
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:80px; height:80px; border-radius:50%; border:2px solid var(--gold); margin-bottom:10px;">
+            <h2 id="p-user">USER</h2>
+            <p id="p-bal" style="color:var(--gold);">0 CR</p>
+        </div>
+        <div class="profile-option"><div><i class="fas fa-globe"></i>Language</div><span>English</span></div>
+        <div class="profile-option"><div><i class="fas fa-bell"></i>Notifications</div><span>On</span></div>
+        <div class="profile-option"><div><i class="fas fa-shield-alt"></i>Security</div><span>Active</span></div>
+        <div class="profile-option" style="border-color:var(--kurumi-red);" onclick="logout()"><div><i class="fas fa-sign-out-alt" style="color:var(--kurumi-red);"></i>Logout</div></div>
+    </div>
+
+    <div id="shopModal" class="modal">
+        <div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
         <div class="p-grid">
-            <div class="game-item" onclick="buy('MLBB', 'Input ID')"><img src="https://i.ibb.co.com/mC6f9Vp/mlbb-logo.png" onerror="this.src='https://w7.pngwing.com/pngs/433/343/png-transparent-mobile-legends-bang-bang-logo-video-game-moba-legend-purple-game-violet.png'"><p style="font-size:10px;">MLBB</p></div>
-            <div class="game-item" onclick="buy('Free Fire', 'Input ID')"><img src="https://i.pinimg.com/originals/f3/78/33/f378335496417730e25180f17b3531b7.png"><p style="font-size:10px;">Free Fire</p></div>
-            <div class="game-item" onclick="buy('PUBGM', 'Input ID')"><img src="https://w7.pngwing.com/pngs/351/484/png-transparent-pubg-mobile-playerunknown-s-battlegrounds-logo-game-pubg-mobile-tencent-games-thumbnail.png"><p style="font-size:10px;">PUBGM</p></div>
-            <div class="game-item" onclick="buy('HOK', 'Input ID')"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0N-92wYj7V6e2p3H8p8Y6I696S77259-87A&s"><p style="font-size:10px;">HOK</p></div>
+            <div class="p-card"><img src="https://i.ibb.co.com/vrBkm1X/1000969565.jpg"><p style="padding:10px;">RPG Skill UI <br><b>25k CR</b></p></div>
+            <div class="p-card"><img src="https://i.ibb.co.com/3yq0jQ11/1000969564.jpg"><p style="padding:10px;">Boss Mob Pack <br><b>50k CR</b></p></div>
         </div>
     </div>
 
     <div id="portModal" class="modal">
         <div class="modal-header"><h2>PORTFOLIO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <div style="background:var(--glass); padding:20px; border-radius:15px; margin-bottom:10px; border:1px solid var(--glass-border);">
-            <h3 style="color:var(--gold); margin-bottom:5px;">Cloud MC Server</h3>
-            <p style="font-size:12px; opacity:0.7;">Project server survival Indonesia dengan custom model engine dan sistem ekonomi CR.</p>
-        </div>
-        <div style="background:var(--glass); padding:20px; border-radius:15px; margin-bottom:10px; border:1px solid var(--glass-border);">
-            <h3 style="color:var(--gold); margin-bottom:5px;">Sezean UI Kit</h3>
-            <p style="font-size:12px; opacity:0.7;">Desain antar muka (UI) eksklusif bergaya Nightmare untuk Minecraft Bedrock & Java.</p>
-        </div>
-        <div style="background:var(--glass); padding:20px; border-radius:15px; border:1px solid var(--glass-border);">
-            <h3 style="color:var(--gold); margin-bottom:5px;">Custom Boss Mob</h3>
-            <p style="font-size:12px; opacity:0.7;">Pembuatan animasi Mob khusus menggunakan Model Engine untuk tantangan baru.</p>
+        <div style="background:var(--glass); padding:20px; border-radius:15px; margin-bottom:10px;">
+            <h3 style="color:var(--gold);">Cloud MC Server</h3>
+            <p style="font-size:12px; opacity:0.7;">Project server survival Indonesia dengan custom model engine.</p>
         </div>
     </div>
 
     <div id="topupModal" class="modal">
-        <div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
+        <div class="modal-header"><h2>TOPUP CR</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
         <div style="text-align:center;">
-            <p>Untuk isi Time Energy (CR), silakan hubungi WhatsApp Master.</p>
-            <br>
             <a href="https://wa.me/6289696498841" class="auth-btn" style="text-decoration:none; display:block;">CHAT SEZEAN</a>
-        </div>
-    </div>
-
-    <div id="profileModal" class="modal">
-        <div class="modal-header"><h2>IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div style="text-align:center;">
-            <h2 id="p-user" style="color:var(--kurumi-red);">USER</h2>
-            <p id="p-bal" style="color:var(--gold); margin-bottom:30px;">0 CR</p>
-            <button onclick="logout()" class="auth-btn" style="background:transparent; border:1px solid #333;">LOGOUT SYSTEM</button>
         </div>
     </div>
 
@@ -207,32 +218,68 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         let logoClicks = 0;
+        let activeGame = '';
 
         window.onload = () => { if(localStorage.getItem('activeUser')) showMain(localStorage.getItem('activeUser')); };
 
+        function filterItems() {
+            let input = document.querySelector('.search-input').value.toLowerCase();
+            let cards = document.querySelectorAll('.p-card');
+            cards.forEach(card => {
+                let txt = card.innerText.toLowerCase();
+                card.style.display = txt.includes(input) ? "block" : "none";
+            });
+        }
+
         function triggerSecret() {
-            let user = localStorage.getItem('activeUser');
-            if(user !== 'sezean') return;
+            if(localStorage.getItem('activeUser') !== 'sezean') return;
             logoClicks++;
-            if(logoClicks >= 5) { document.getElementById('secretPanel').style.display = 'block'; alert("Master Authority Recognized."); logoClicks = 0; }
+            if(logoClicks >= 5) { document.getElementById('secretPanel').style.display = 'block'; alert("Master Console Active."); logoClicks = 0; }
+        }
+
+        function adjustCredit(type) {
+            const t = document.getElementById('s-target').value.toLowerCase().trim();
+            const a = parseInt(document.getElementById('s-amount').value);
+            db.ref('users/' + t + '/credits').get().then(s => {
+                let current = s.val() || 0;
+                let newVal = type === 'grant' ? current + a : current - a;
+                db.ref('users/' + t + '/credits').set(newVal);
+                alert("Done! New Balance: " + newVal);
+            });
+        }
+
+        function selectGame(game) {
+            activeGame = game;
+            document.getElementById('game-list-gui').style.display = 'none';
+            document.getElementById('game-id-gui').style.display = 'block';
+            document.getElementById('selected-game-title').innerText = "TOPUP " + game;
+        }
+
+        function backToGames() {
+            document.getElementById('game-list-gui').style.display = 'block';
+            document.getElementById('game-id-gui').style.display = 'none';
+        }
+
+        function confirmOrder() {
+            const pid = document.getElementById('player-id').value;
+            const zid = document.getElementById('zone-id').value;
+            window.open(`https://wa.me/6289696498841?text=Order ${activeGame}%0AID: ${pid} (${zid})`);
         }
 
         function handleLogin() {
             const u = document.getElementById('log-user').value.toLowerCase().trim();
             const p = document.getElementById('log-pass').value;
-            if(!u || !p) return alert("Lengkapi data!");
             db.ref('accounts/' + u).get().then(snap => {
                 if(snap.exists() && snap.val() === p) { localStorage.setItem('activeUser', u); showMain(u); }
-                else alert("Data salah!");
+                else alert("Wrong Credentials!");
             });
         }
 
         function handleRegister() {
             const u = document.getElementById('reg-user').value.toLowerCase().trim();
             const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Lengkapi data!");
             db.ref('accounts/' + u).set(p);
-            db.ref('users/' + u).set({credits: 0}).then(() => { alert("Sukses! Login sekarang."); toggleAuth('log'); });
+            db.ref('users/' + u).set({credits: 0}).then(() => { alert("Created!"); toggleAuth('log'); });
         }
 
         function showMain(u) {
@@ -246,16 +293,8 @@
             });
         }
 
-        function addCreditSecret() {
-            const t = document.getElementById('s-target').value.toLowerCase().trim();
-            const a = parseInt(document.getElementById('s-amount').value);
-            db.ref('users/' + t + '/credits').get().then(s => db.ref('users/' + t + '/credits').set((s.val() || 0) + a));
-            alert("Credits Granted!");
-        }
-
-        function buy(game, note) { window.open(`https://wa.me/6289696498841?text=Halo Sezean, mau beli ${game}. ${note}: `); }
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; if(id==='gameModal') backToGames(); }
         function toggleAuth(m) {
             document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
