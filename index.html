@@ -55,37 +55,12 @@
         .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
         
         .container { padding: 20px 6% 120px; }
-        .search-container { position: relative; margin-bottom: 25px; }
-        .search-input { width: 100%; padding: 14px 20px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 15px; color: #fff; outline: none; font-size: 13px; }
-        .search-container i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--gold); }
-
         .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(255, 26, 26, 0.1); }
         .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
         .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; transition: 0.3s; }
         .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
 
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; position: relative; overflow: hidden; }
-        .p-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; }
-        .badge-cs { position: absolute; top: 10px; right: 10px; background: var(--gold); color: #000; font-size: 8px; padding: 3px 8px; border-radius: 20px; font-weight: 900; }
-
-        .profile-container { background: linear-gradient(180deg, rgba(255,26,26,0.1) 0%, transparent 100%); border-radius: 30px; padding: 20px; border: 1px solid var(--glass-border); }
-        .profile-card-elite { background: url('https://i.imgur.com/jPIDTKm.jpeg') center/cover; border-radius: 20px; padding: 20px; position: relative; overflow: hidden; border: 1px solid var(--gold); margin-bottom: 20px; }
-        .profile-card-elite::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(2px); }
-        .profile-info { position: relative; z-index: 1; display: flex; align-items: center; gap: 15px; }
-        .profile-avatar { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold); box-shadow: 0 0 15px var(--gold); }
-        
-        .badge-elite { background: var(--gold); color: #000; font-size: 9px; font-weight: 900; padding: 2px 10px; border-radius: 5px; display: inline-block; margin-top: 5px; }
-        
-        .stats-elite { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 20px; position: relative; z-index: 1; }
-        .stat-box { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; text-align: center; border: 1px solid var(--glass-border); }
-        .stat-box span { font-size: 8px; color: #888; display: block; }
-        .stat-box b { font-size: 12px; color: var(--gold); }
-
-        .profile-option { display: flex; align-items: center; justify-content: space-between; background: var(--glass); padding: 16px; border-radius: 15px; margin-bottom: 10px; border: 1px solid var(--glass-border); transition: 0.3s; cursor: pointer; }
-        .profile-option:active { transform: scale(0.95); background: rgba(255,26,26,0.1); }
-        .profile-option i:first-child { width: 30px; color: var(--kurumi-red); }
-
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(25px); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; background: #000; padding: 10px 0; }
 
@@ -93,20 +68,13 @@
         nav i { font-size: 22px; color: #444; cursor: pointer; }
         nav i.active { color: var(--kurumi-red); }
 
-        .game-item { background: var(--glass); border-radius: 15px; padding: 15px; text-align: center; border: 1px solid var(--glass-border); cursor: pointer; }
-        .game-item img { width: 50px; height: 50px; border-radius: 12px; margin-bottom: 10px; }
-        
-        .section-header { font-family: 'Cinzel Decorative'; font-size: 14px; color: var(--gold); margin: 25px 0 15px; letter-spacing: 2px; }
-
-        .pay-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
-        .pay-item.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
-        .nominal-item.active { border-color: var(--kurumi-red); background: rgba(255, 26, 26, 0.05); }
-
-        /* RADJA STYLE EXTENSION */
+        /* RADJA STYLE CSS */
         .section-card-elite { background: rgba(15,15,15,0.8); border: 1px solid #222; border-radius: 15px; margin-bottom: 15px; overflow: hidden; }
-        .section-tag { background: #222; padding: 8px 15px; font-size: 10px; font-weight: 800; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333; }
-        .n-badge { position: absolute; top: 5px; right: 5px; background: var(--gold); color: #000; font-size: 7px; padding: 2px 5px; border-radius: 4px; font-weight: 900; }
-        .price-sync { font-size: 11px; font-weight: 800; color: #fff; }
+        .section-tag { background: #222; padding: 8px 15px; font-size: 10px; font-weight: 800; border-bottom: 1px solid #333; }
+        .nominal-item.active { border-color: var(--kurumi-red); background: rgba(255, 26, 26, 0.05); }
+        .pay-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .pay-item.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
+        .price-sync { font-size: 11px; font-weight: 800; color: var(--gold); }
     </style>
 </head>
 <body>
@@ -133,7 +101,7 @@
 
     <div id="main-content" style="display:none;">
         <header>
-            <div class="logo-area" onclick="triggerSecret()"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="logo-img"><span class="fire-text">Cloud Store</span></div>
+            <div class="logo-area"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="logo-img"><span class="fire-text">Cloud Store</span></div>
             <i class="fas fa-power-off" onclick="logout()" style="color:var(--kurumi-red);"></i>
         </header>
 
@@ -144,21 +112,6 @@
                 <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--kurumi-red);">
                     <span id="hero-user">@USER</span>
                     <span>RANK: NIGHTMARE</span>
-                </div>
-            </div>
-
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search product..." onkeyup="filterItems()">
-                <i class="fas fa-search"></i>
-            </div>
-
-            <div id="secretPanel" style="display:none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05);">
-                <p style="color:var(--gold); font-size:11px; margin-bottom:12px; font-weight: 800;"><i class="fas fa-crown"></i> SEZEAN CONSOLE</p>
-                <input type="text" id="s-target" class="auth-input" placeholder="Target Username">
-                <input type="number" id="s-amount" class="auth-input" placeholder="CR Amount">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <button onclick="adjustCredit('grant')" class="auth-btn" style="background:#fff; color:#000; padding:10px;">GRANT</button>
-                    <button onclick="adjustCredit('revoke')" class="auth-btn" style="background:transparent; border:1px solid #fff; padding:10px;">REVOKE</button>
                 </div>
             </div>
 
@@ -186,21 +139,17 @@
         
         <div id="game-list-gui">
             <div class="p-grid">
-                <div class="game-item" onclick="selectGame('MLBB')"><img src="https://i.imgur.com/1kFNSpI.jpeg"><p style="font-size:10px;">MLBB</p></div>
-                <div class="game-item" onclick="selectGame('Free Fire')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">Free Fire</p></div>
-                <div class="game-item" onclick="selectGame('HOK')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">HOK</p></div>
-                <div class="game-item" onclick="selectGame('PUBGM')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">PUBGM</p></div>
+                <div class="game-item" onclick="selectGame('MLBB')" style="background:var(--glass); padding:15px; border-radius:15px; text-align:center; border:1px solid var(--glass-border);">
+                    <img src="https://i.imgur.com/1kFNSpI.jpeg" style="width:50px; border-radius:10px; margin-bottom:5px;">
+                    <p style="font-size:10px;">Mobile Legends</p>
+                </div>
             </div>
         </div>
         
         <div id="game-id-gui" style="display:none; margin-top:10px;">
             <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
-            <div style="width:100%; height:120px; background:linear-gradient(to bottom, transparent, #000), url('https://i.imgur.com/jPIDTKm.jpeg') center/cover; border-radius:15px; margin-bottom:20px; display:flex; align-items:flex-end; padding:15px; border:1px solid #333;">
-                <h3 id="selected-game-title" style="color:#fff; font-family: 'Cinzel Decorative';">GAME</h3>
-            </div>
-
             <div class="section-card-elite">
-                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">1</span> MASUKKAN DATA USER</div>
+                <div class="section-tag">1. USER DATA</div>
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; padding:15px;">
                     <input type="text" id="player-id" class="auth-input" placeholder="User ID" style="margin-bottom:0;">
                     <input type="text" id="zone-id" class="auth-input" placeholder="Zone" style="margin-bottom:0;">
@@ -208,76 +157,119 @@
             </div>
 
             <div class="section-card-elite">
-                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">2</span> PILIH NOMINAL</div>
+                <div class="section-tag">2. PILIH NOMINAL</div>
                 <div class="p-grid" style="grid-template-columns: 1fr 1fr; gap: 10px; padding:15px;" id="nominal-container">
                     <div class="menu-box nominal-item" onclick="chooseNominal('86 Diamonds', 'Rp 20.350', this)"><p style="font-size:10px;">86 DM</p><small>Rp 20.350</small></div>
-                    <div class="menu-box nominal-item" style="border-color:var(--kurumi-red);" onclick="chooseNominal('Weekly Pass', 'Rp 27.500', this)"><p style="font-size:10px; color:var(--kurumi-red);">WEEKLY PASS</p><small>Rp 27.500</small></div>
-                    <div class="menu-box nominal-item" onclick="chooseNominal('2195 Diamonds', 'Rp 506.000', this)"><p style="font-size:10px;">2195 DM</p><small>Rp 506.000</small></div>
-                    <div class="menu-box nominal-item" style="grid-column: span 2; border: 1px solid var(--gold);" onclick="chooseNominal('57960 Diamonds', 'Rp 14.159.988', this)"><p style="font-size:12px; color:var(--gold);">57960 DM (ULTIMATE)</p><p>Rp 14.159.988</p></div>
+                    <div class="menu-box nominal-item" onclick="chooseNominal('57960 Diamonds', 'Rp 14.159.988', this)" style="grid-column: span 2; border:1px solid var(--gold);"><p style="font-size:11px; color:var(--gold);">57960 DM (ULTIMATE)</p><p>Rp 14.159.988</p></div>
                 </div>
             </div>
 
             <div class="section-card-elite">
-                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">3</span> PEMBAYARAN</div>
+                <div class="section-tag">3. PEMBAYARAN</div>
                 <div style="padding:15px; display: grid; gap: 10px;">
-                    <div class="pay-item" onclick="choosePayment('DANA', this)" style="justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><img src="https://i.imgur.com/ueLbkVM.png" style="width:20px;"> <span>DANA</span></div><span class="price-sync">Rp 0</span></div>
-                    <div class="pay-item" onclick="choosePayment('QRIS', this)" style="justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><img src="https://i.imgur.com/EG7hgtC.png" style="width:20px;"> <span>QRIS</span></div><span class="price-sync">Rp 0</span></div>
+                    <div class="pay-item" id="pay-dana" onclick="choosePayment('DANA', this)">
+                        <span>DANA</span><span class="price-sync">Rp 0</span>
+                    </div>
                 </div>
             </div>
             <button onclick="confirmOrder()" class="auth-btn" style="margin-top: 10px; background: linear-gradient(90deg, #ff1a1a, #550000);">BELI SEKARANG</button>
         </div>
     </div>
 
-    <div id="profileModal" class="modal">...</div>
-    <div id="shopModal" class="modal">...</div>
-    <div id="portModal" class="modal">...</div>
+    <div id="shopModal" class="modal"><div class="modal-header"><h2>SHOP</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div><div id="market-list-container"></div></div>
+    <div id="portModal" class="modal"><div class="modal-header"><h2>PORTO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div></div>
+    <div id="profileModal" class="modal"><div class="modal-header"><h2>PROFILE</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div><div id="p-user"></div><div id="p-bal"></div></div>
+    <div id="topupModal" class="modal"><div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div></div>
 
     <script>
-        // --- TEMPEL SEMUA SCRIPT ASLI LU (FIREBASE/LOGIN/DLL) DI SINI ---
-        // JANGAN DIUBAH SCRIPT ASLI LU, CUKUP TAMBAHKAN INI DI BAWAHNYA:
-
+        // --- SCRIPT GAME CENTER REMAKE ---
         let selNominal = '', selPrice = '', selGame = '', selPay = '';
-
         function selectGame(game) {
             selGame = game;
-            document.getElementById('selected-game-title').innerText = game.toUpperCase();
             document.getElementById('game-list-gui').style.display = 'none';
             document.getElementById('game-id-gui').style.display = 'block';
         }
-
         function backToGames() {
             document.getElementById('game-list-gui').style.display = 'grid';
             document.getElementById('game-id-gui').style.display = 'none';
         }
-
         function chooseNominal(nom, prc, el) {
             selNominal = nom; selPrice = prc;
             document.querySelectorAll('.nominal-item').forEach(x => x.classList.remove('active'));
             el.classList.add('active');
             document.querySelectorAll('.price-sync').forEach(item => { item.innerText = prc; });
         }
-
         function choosePayment(mthd, el) {
             selPay = mthd;
             document.querySelectorAll('.pay-item').forEach(x => x.classList.remove('active'));
             el.classList.add('active');
         }
-
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { 
-            document.getElementById(id).style.display = 'none'; 
-            if(id === 'gameModal') backToGames();
-        }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-
-        // --- MASUKKAN SCRIPT LOGIC PEMBELIAN/WA LU DI SINI ---
         function confirmOrder() {
-            const pID = document.getElementById('player-id').value;
-            const zID = document.getElementById('zone-id').value;
-            if(!pID || !selNominal || !selPay) return alert("Lengkapi Data!");
-            const msg = `Halo Cloud Store, Saya mau beli:\nGame: ${selGame}\nID: ${pID} (${zID})\nNominal: ${selNominal}\nPayment: ${selPay}\nTotal: ${selPrice}`;
-            window.open(`https://wa.me/628XXXXXXXXX?text=${encodeURIComponent(msg)}`);
+            if(!selPay || !selNominal) return alert("Pilih nominal & payment!");
+            window.open(`https://wa.me/628XXXXXXXXX?text=Beli ${selGame} ${selNominal} via ${selPay}`);
         }
+
+        // --- SCRIPT LOGIC FIREBASE ASLI LU (JANGAN DIUBAH CONFIG-NYA) ---
+        const firebaseConfig = {
+            apiKey: "PASTE_API_KEY_LU_DISINI",
+            authDomain: "PASTE_DOMAIN_LU_DISINI",
+            databaseURL: "PASTE_URL_DB_LU_DISINI",
+            projectId: "PASTE_PROJECT_ID_LU_DISINI",
+            storageBucket: "PASTE_BUCKET_LU_DISINI",
+            messagingSenderId: "PASTE_SENDER_ID_LU_DISINI",
+            appId: "PASTE_APP_ID_LU_DISINI"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function toggleAuth(type) {
+            document.getElementById('login-box').style.display = type === 'reg' ? 'none' : 'block';
+            document.getElementById('register-box').style.display = type === 'reg' ? 'block' : 'none';
+        }
+
+        function handleLogin() {
+            const u = document.getElementById('log-user').value;
+            const p = document.getElementById('log-pass').value;
+            if(!u || !p) return alert("Isi semua!");
+            db.ref('users/' + u).once('value', s => {
+                if(s.exists() && s.val().pass === p) {
+                    localStorage.setItem('currentUser', u);
+                    showMain(u, s.val().balance);
+                } else alert("Salah user/pass!");
+            });
+        }
+
+        function handleRegister() {
+            const u = document.getElementById('reg-user').value;
+            const p = document.getElementById('reg-pass').value;
+            if(!u || !p) return alert("Isi semua!");
+            db.ref('users/' + u).set({ pass: p, balance: 0 }).then(() => {
+                alert("Sukses! Silakan Login.");
+                toggleAuth('log');
+            });
+        }
+
+        function showMain(user, bal) {
+            document.getElementById('auth-page').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('hero-user').innerText = '@' + user.toUpperCase();
+            document.getElementById('user-balance').innerText = bal + ' CR';
+            document.getElementById('p-user').innerText = user.toUpperCase();
+            document.getElementById('p-bal').innerText = bal + ' CR';
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            location.reload();
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('currentUser');
+            if(saved) db.ref('users/' + saved).once('value', s => showMain(saved, s.val().balance));
+        };
     </script>
 </body>
 </html>
