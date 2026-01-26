@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     
     <style>
         :root {
@@ -22,14 +22,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
 
-        .clock-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            opacity: 0.2;
-            background: url('https://i.imgur.com/VvyVXjX.jpeg') center center/cover no-repeat;
-            z-index: -1;
-            pointer-events: none;
-        }
-
         .fire-text {
             font-family: 'Cinzel Decorative', serif;
             font-weight: 900;
@@ -39,92 +31,97 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: fireFlow 3s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 5px rgba(255, 26, 26, 0.5));
-            display: inline-block;
-            letter-spacing: 2px;
         }
         @keyframes fireFlow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
 
+        /* AUTH SECTION */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
         .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; }
         .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
-        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
+        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; transition: 0.2s; }
+        .auth-btn:active { transform: scale(0.95); }
 
-        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.85); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; backdrop-filter: blur(10px); }
-        .logo-area { font-size: 18px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        /* MAIN CONTENT */
+        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); border-bottom: 1px solid #111; position: sticky; top: 0; z-index: 100; }
         .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
-        
         .container { padding: 20px 6% 120px; }
-        .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(255, 26, 26, 0.1); }
-        .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
-        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; transition: 0.3s; }
-        .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
+        .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 25px; }
 
+        .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
+        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 5px; border-radius: 15px; text-align: center; font-size: 10px; cursor: pointer; }
+        .menu-box i { font-size: 20px; color: var(--kurumi-red); display: block; margin-bottom: 8px; }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 25px; overflow-y: auto; backdrop-filter: blur(15px); }
+        .section-card-elite { background: rgba(20,20,20,0.8); border: 1px solid #333; border-radius: 15px; margin-bottom: 15px; overflow: hidden; }
+        .section-tag { background: #222; padding: 10px 15px; font-size: 11px; font-weight: 800; border-bottom: 1px solid #333; color: var(--gold); }
+        
         .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(25px); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; background: #000; padding: 10px 0; }
+        .nominal-item { background: rgba(255,255,255,0.03); border: 1px solid #333; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; }
+        .nominal-item.active { border-color: var(--kurumi-red); background: rgba(255,26,26,0.1); }
 
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); z-index: 999; }
-        nav i { font-size: 22px; color: #444; cursor: pointer; }
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; z-index: 999; }
+        nav i { font-size: 22px; color: #555; cursor: pointer; }
         nav i.active { color: var(--kurumi-red); }
-
-        /* RADJA STYLE CSS */
-        .section-card-elite { background: rgba(15,15,15,0.8); border: 1px solid #222; border-radius: 15px; margin-bottom: 15px; overflow: hidden; }
-        .section-tag { background: #222; padding: 8px 15px; font-size: 10px; font-weight: 800; border-bottom: 1px solid #333; }
-        .nominal-item.active { border-color: var(--kurumi-red); background: rgba(255, 26, 26, 0.05); }
-        .pay-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-        .pay-item.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
-        .price-sync { font-size: 11px; font-weight: 800; color: var(--gold); }
     </style>
 </head>
 <body>
 
-    <div class="clock-bg"></div>
-
     <div id="auth-page">
         <div class="auth-card" id="login-box">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:60px; border-radius:50%; border:2px solid var(--kurumi-red); margin-bottom:15px;">
-            <h2 class="fire-text">Cloud Store</h2>
-            <input type="text" id="log-user" class="auth-input" placeholder="Username">
-            <input type="password" id="log-pass" class="auth-input" placeholder="Password">
-            <button onclick="handleLogin()" class="auth-btn">ENTER SYSTEM</button>
-            <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:10px; color:#444; cursor:pointer;">New Soul? Register</p>
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:60px; border-radius:50%; margin-bottom:15px; border:2px solid var(--kurumi-red);">
+            <h2 class="fire-text">CLOUD STORE</h2>
+            <div style="margin-top:20px;">
+                <input type="text" id="log-user" class="auth-input" placeholder="Username">
+                <input type="password" id="log-pass" class="auth-input" placeholder="Password">
+                <button onclick="handleLogin()" class="auth-btn">LOGIN</button>
+                <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:11px; color:#666; cursor:pointer;">New Account? Register</p>
+            </div>
         </div>
+
         <div class="auth-card" id="register-box" style="display:none;">
-            <h2 class="fire-text">Identity</h2>
-            <input type="text" id="reg-user" class="auth-input" placeholder="Username">
-            <input type="password" id="reg-pass" class="auth-input" placeholder="Password">
-            <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE</button>
-            <p onclick="toggleAuth('log')" style="margin-top:20px; font-size:10px; color:var(--kurumi-red); cursor:pointer;">Back to Login</p>
+            <h2 class="fire-text">REGISTER</h2>
+            <div style="margin-top:20px;">
+                <input type="text" id="reg-user" class="auth-input" placeholder="New Username">
+                <input type="password" id="reg-pass" class="auth-input" placeholder="New Password">
+                <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE ACCOUNT</button>
+                <p onclick="toggleAuth('log')" style="margin-top:20px; font-size:11px; color:var(--kurumi-red); cursor:pointer;">Back to Login</p>
+            </div>
         </div>
     </div>
 
     <div id="main-content" style="display:none;">
         <header>
-            <div class="logo-area"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="logo-img"><span class="fire-text">Cloud Store</span></div>
-            <i class="fas fa-power-off" onclick="logout()" style="color:var(--kurumi-red);"></i>
+            <div class="logo-area" onclick="triggerSecret()">
+                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="logo-img">
+                <span class="fire-text" style="margin-left:10px;">SEZEAN</span>
+            </div>
+            <i class="fas fa-power-off" onclick="logout()" style="color:var(--kurumi-red); cursor:pointer;"></i>
         </header>
 
         <div class="container">
             <div class="balance-card">
-                <p style="font-size:10px; color:var(--gold); letter-spacing: 2px;">TIME ENERGY</p>
-                <h1 id="user-balance" style="font-family:'Cinzel Decorative'; font-size:32px; margin:5px 0;">0 CR</h1>
-                <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800; color:var(--kurumi-red);">
-                    <span id="hero-user">@USER</span>
-                    <span>RANK: NIGHTMARE</span>
+                <p style="font-size:10px; color:var(--gold); letter-spacing: 2px;">YOUR CREDITS</p>
+                <h1 id="user-balance" style="font-family:'Cinzel Decorative'; font-size:35px; margin:5px 0;">0 CR</h1>
+                <p id="hero-user" style="font-size:12px; color:var(--kurumi-red); font-weight:800;"></p>
+            </div>
+
+            <div id="secretPanel" style="display:none; margin-bottom: 25px; border: 1px solid var(--kurumi-red); padding: 20px; border-radius: 20px; background: rgba(255, 0, 0, 0.05);">
+                <p style="color:var(--gold); font-size:11px; margin-bottom:12px; font-weight: 800;">ADMIN CONSOLE</p>
+                <input type="text" id="s-target" class="auth-input" placeholder="Username Target">
+                <input type="number" id="s-amount" class="auth-input" placeholder="Amount">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button onclick="adjustCredit('grant')" class="auth-btn" style="background:#fff; color:#000;">GRANT</button>
+                    <button onclick="adjustCredit('revoke')" class="auth-btn" style="background:transparent; border:1px solid #fff;">REVOKE</button>
                 </div>
             </div>
 
             <div class="quick-grid">
-                <div class="menu-box" onclick="openModal('shopModal')"><i class="fas fa-shopping-cart"></i>Shop</div>
-                <div class="menu-box" onclick="openModal('portModal')"><i class="fas fa-briefcase"></i>Porto</div>
                 <div class="menu-box" onclick="openModal('gameModal')"><i class="fas fa-gamepad"></i>Games</div>
+                <div class="menu-box" onclick="openModal('shopModal')"><i class="fas fa-shopping-cart"></i>Shop</div>
                 <div class="menu-box" onclick="openModal('topupModal')"><i class="fas fa-wallet"></i>Topup</div>
                 <div class="menu-box" onclick="location.reload()"><i class="fas fa-sync"></i>Sync</div>
             </div>
-
-            <div class="section-header">LATEST PRODUCTS</div>
-            <div class="p-grid" id="product-list-container"></div>
         </div>
 
         <nav>
@@ -135,130 +132,102 @@
     </div>
 
     <div id="gameModal" class="modal">
-        <div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+            <h2 class="fire-text">GAME CENTER</h2>
+            <i class="fas fa-times" onclick="closeModal('gameModal')" style="font-size:20px; cursor:pointer;"></i>
+        </div>
         
-        <div id="game-list-gui">
-            <div class="p-grid">
-                <div class="game-item" onclick="selectGame('MLBB')" style="background:var(--glass); padding:15px; border-radius:15px; text-align:center; border:1px solid var(--glass-border);">
-                    <img src="https://i.imgur.com/1kFNSpI.jpeg" style="width:50px; border-radius:10px; margin-bottom:5px;">
-                    <p style="font-size:10px;">Mobile Legends</p>
-                </div>
+        <div id="game-list-gui" class="p-grid">
+            <div class="nominal-item" onclick="selectGame('MLBB')">
+                <img src="https://i.imgur.com/1kFNSpI.jpeg" style="width:50px; border-radius:10px; margin-bottom:10px;">
+                <p style="font-size:11px;">Mobile Legends</p>
+            </div>
+            <div class="nominal-item" onclick="selectGame('Free Fire')">
+                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:50px; border-radius:10px; margin-bottom:10px;">
+                <p style="font-size:11px;">Free Fire</p>
             </div>
         </div>
         
-        <div id="game-id-gui" style="display:none; margin-top:10px;">
-            <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
+        <div id="game-id-gui" style="display:none;">
+            <p onclick="backToGames()" style="color:var(--gold); margin-bottom:20px; cursor:pointer;"><i class="fas fa-arrow-left"></i> Back</p>
             <div class="section-card-elite">
-                <div class="section-tag">1. USER DATA</div>
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; padding:15px;">
-                    <input type="text" id="player-id" class="auth-input" placeholder="User ID" style="margin-bottom:0;">
+                <div class="section-tag">STEP 1: USER ID</div>
+                <div style="padding:15px; display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
+                    <input type="text" id="player-id" class="auth-input" placeholder="ID" style="margin-bottom:0;">
                     <input type="text" id="zone-id" class="auth-input" placeholder="Zone" style="margin-bottom:0;">
                 </div>
             </div>
-
             <div class="section-card-elite">
-                <div class="section-tag">2. PILIH NOMINAL</div>
-                <div class="p-grid" style="grid-template-columns: 1fr 1fr; gap: 10px; padding:15px;" id="nominal-container">
-                    <div class="menu-box nominal-item" onclick="chooseNominal('86 Diamonds', 'Rp 20.350', this)"><p style="font-size:10px;">86 DM</p><small>Rp 20.350</small></div>
-                    <div class="menu-box nominal-item" onclick="chooseNominal('57960 Diamonds', 'Rp 14.159.988', this)" style="grid-column: span 2; border:1px solid var(--gold);"><p style="font-size:11px; color:var(--gold);">57960 DM (ULTIMATE)</p><p>Rp 14.159.988</p></div>
+                <div class="section-tag">STEP 2: NOMINAL</div>
+                <div class="p-grid" style="padding:15px;">
+                    <div class="nominal-item item-price" onclick="chooseNominal('86 DM', 'Rp 20.350', this)">86 DM</div>
+                    <div class="nominal-item item-price" onclick="chooseNominal('Weekly Pass', 'Rp 27.500', this)">WEEKLY</div>
                 </div>
             </div>
-
-            <div class="section-card-elite">
-                <div class="section-tag">3. PEMBAYARAN</div>
-                <div style="padding:15px; display: grid; gap: 10px;">
-                    <div class="pay-item" id="pay-dana" onclick="choosePayment('DANA', this)">
-                        <span>DANA</span><span class="price-sync">Rp 0</span>
-                    </div>
-                </div>
-            </div>
-            <button onclick="confirmOrder()" class="auth-btn" style="margin-top: 10px; background: linear-gradient(90deg, #ff1a1a, #550000);">BELI SEKARANG</button>
+            <button onclick="confirmOrder()" class="auth-btn">PROCESS ORDER</button>
         </div>
     </div>
 
-    <div id="shopModal" class="modal"><div class="modal-header"><h2>SHOP</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div><div id="market-list-container"></div></div>
-    <div id="portModal" class="modal"><div class="modal-header"><h2>PORTO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div></div>
-    <div id="profileModal" class="modal"><div class="modal-header"><h2>PROFILE</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div><div id="p-user"></div><div id="p-bal"></div></div>
-    <div id="topupModal" class="modal"><div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div></div>
+    <div id="shopModal" class="modal"><h2>SHOP</h2><button onclick="closeModal('shopModal')">Close</button></div>
+    <div id="topupModal" class="modal"><h2>TOPUP</h2><button onclick="closeModal('topupModal')">Close</button></div>
+    <div id="profileModal" class="modal"><h2>PROFILE</h2><button onclick="closeModal('profileModal')">Close</button></div>
 
     <script>
-        // --- SCRIPT GAME CENTER REMAKE ---
-        let selNominal = '', selPrice = '', selGame = '', selPay = '';
-        function selectGame(game) {
-            selGame = game;
-            document.getElementById('game-list-gui').style.display = 'none';
-            document.getElementById('game-id-gui').style.display = 'block';
-        }
-        function backToGames() {
-            document.getElementById('game-list-gui').style.display = 'grid';
-            document.getElementById('game-id-gui').style.display = 'none';
-        }
-        function chooseNominal(nom, prc, el) {
-            selNominal = nom; selPrice = prc;
-            document.querySelectorAll('.nominal-item').forEach(x => x.classList.remove('active'));
-            el.classList.add('active');
-            document.querySelectorAll('.price-sync').forEach(item => { item.innerText = prc; });
-        }
-        function choosePayment(mthd, el) {
-            selPay = mthd;
-            document.querySelectorAll('.pay-item').forEach(x => x.classList.remove('active'));
-            el.classList.add('active');
-        }
-        function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function confirmOrder() {
-            if(!selPay || !selNominal) return alert("Pilih nominal & payment!");
-            window.open(`https://wa.me/628XXXXXXXXX?text=Beli ${selGame} ${selNominal} via ${selPay}`);
-        }
-
-        // --- SCRIPT LOGIC FIREBASE ASLI LU (JANGAN DIUBAH CONFIG-NYA) ---
+        // --- 1. FIREBASE CONFIG (ISI PUNYA LU) ---
         const firebaseConfig = {
-            apiKey: "PASTE_API_KEY_LU_DISINI",
-            authDomain: "PASTE_DOMAIN_LU_DISINI",
-            databaseURL: "PASTE_URL_DB_LU_DISINI",
-            projectId: "PASTE_PROJECT_ID_LU_DISINI",
-            storageBucket: "PASTE_BUCKET_LU_DISINI",
-            messagingSenderId: "PASTE_SENDER_ID_LU_DISINI",
-            appId: "PASTE_APP_ID_LU_DISINI"
+            apiKey: "ISI_API_KEY_LU",
+            authDomain: "ISI_DOMAIN_LU",
+            databaseURL: "ISI_DB_URL_LU",
+            projectId: "ISI_PROJECT_ID_LU",
+            storageBucket: "ISI_BUCKET_LU",
+            messagingSenderId: "ISI_SENDER_ID",
+            appId: "ISI_APP_ID"
         };
+
+        // Inisialisasi Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // --- 2. AUTH LOGIC ---
         function toggleAuth(type) {
             document.getElementById('login-box').style.display = type === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = type === 'reg' ? 'block' : 'none';
         }
 
         function handleLogin() {
-            const u = document.getElementById('log-user').value;
-            const p = document.getElementById('log-pass').value;
-            if(!u || !p) return alert("Isi semua!");
-            db.ref('users/' + u).once('value', s => {
-                if(s.exists() && s.val().pass === p) {
+            const u = document.getElementById('log-user').value.trim();
+            const p = document.getElementById('log-pass').value.trim();
+            if(!u || !p) return alert("Please enter identity!");
+
+            db.ref('users/' + u).once('value').then(snap => {
+                if(snap.exists() && snap.val().pass === p) {
                     localStorage.setItem('currentUser', u);
-                    showMain(u, s.val().balance);
-                } else alert("Salah user/pass!");
-            });
+                    showMain(u, snap.val().balance || 0);
+                } else {
+                    alert("Identity not found or wrong password!");
+                }
+            }).catch(e => alert("Database Connection Error!"));
         }
 
         function handleRegister() {
-            const u = document.getElementById('reg-user').value;
-            const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Isi semua!");
-            db.ref('users/' + u).set({ pass: p, balance: 0 }).then(() => {
-                alert("Sukses! Silakan Login.");
+            const u = document.getElementById('reg-user').value.trim();
+            const p = document.getElementById('reg-pass').value.trim();
+            if(!u || !p) return alert("Fill all fields!");
+
+            db.ref('users/' + u).set({
+                pass: p,
+                balance: 0
+            }).then(() => {
+                alert("Identity Created! Please Login.");
                 toggleAuth('log');
             });
         }
 
-        function showMain(user, bal) {
+        function showMain(user, balance) {
             document.getElementById('auth-page').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('hero-user').innerText = '@' + user.toUpperCase();
-            document.getElementById('user-balance').innerText = bal + ' CR';
-            document.getElementById('p-user').innerText = user.toUpperCase();
-            document.getElementById('p-bal').innerText = bal + ' CR';
+            document.getElementById('user-balance').innerText = balance + ' CR';
         }
 
         function logout() {
@@ -266,9 +235,64 @@
             location.reload();
         }
 
+        // --- 3. GAME CENTER LOGIC ---
+        let selectedGame = '', selectedNominal = '', selectedPrice = '';
+        function selectGame(game) {
+            selectedGame = game;
+            document.getElementById('game-list-gui').style.display = 'none';
+            document.getElementById('game-id-gui').style.display = 'block';
+        }
+        function backToGames() {
+            document.getElementById('game-list-gui').style.display = 'grid';
+            document.getElementById('game-id-gui').style.display = 'none';
+        }
+        function chooseNominal(nom, price, el) {
+            selectedNominal = nom; selectedPrice = price;
+            document.querySelectorAll('.item-price').forEach(x => x.classList.remove('active'));
+            el.classList.add('active');
+        }
+        function confirmOrder() {
+            const id = document.getElementById('player-id').value;
+            if(!id || !selectedNominal) return alert("Complete the form!");
+            alert(`Order Sent: ${selectedGame} - ${selectedNominal}`);
+        }
+
+        // --- 4. ADMIN PANEL (7x Click Logo) ---
+        let clicks = 0;
+        function triggerSecret() {
+            clicks++;
+            if(clicks >= 7) {
+                document.getElementById('secretPanel').style.display = 'block';
+                alert("Admin Console Unlocked.");
+            }
+        }
+        function adjustCredit(type) {
+            const target = document.getElementById('s-target').value.trim();
+            const amount = parseInt(document.getElementById('s-amount').value);
+            if(!target || !amount) return alert("Missing target/amount!");
+
+            db.ref('users/' + target).once('value', s => {
+                if(s.exists()) {
+                    let newBal = type === 'grant' ? (s.val().balance + amount) : (s.val().balance - amount);
+                    db.ref('users/' + target + '/balance').set(newBal);
+                    alert("Credit Updated!");
+                } else alert("Target User not found!");
+            });
+        }
+
+        // --- 5. MODAL CONTROL ---
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+        // --- 6. AUTO LOGIN CHECK ---
         window.onload = () => {
-            const saved = localStorage.getItem('currentUser');
-            if(saved) db.ref('users/' + saved).once('value', s => showMain(saved, s.val().balance));
+            const savedUser = localStorage.getItem('currentUser');
+            if(savedUser) {
+                db.ref('users/' + savedUser).once('value', s => {
+                    if(s.exists()) showMain(savedUser, s.val().balance);
+                });
+            }
         };
     </script>
 </body>
