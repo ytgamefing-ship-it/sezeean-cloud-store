@@ -102,6 +102,12 @@
         .pay-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
         .pay-item.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
         .nominal-item.active { border-color: var(--kurumi-red); background: rgba(255, 26, 26, 0.05); }
+
+        /* RADJA STYLE EXTENSION */
+        .section-card-elite { background: rgba(15,15,15,0.8); border: 1px solid #222; border-radius: 15px; margin-bottom: 15px; overflow: hidden; }
+        .section-tag { background: #222; padding: 8px 15px; font-size: 10px; font-weight: 800; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333; }
+        .n-badge { position: absolute; top: 5px; right: 5px; background: var(--gold); color: #000; font-size: 7px; padding: 2px 5px; border-radius: 4px; font-weight: 900; }
+        .price-sync { font-size: 11px; font-weight: 800; color: #fff; }
     </style>
 </head>
 <body>
@@ -178,6 +184,7 @@
 
     <div id="gameModal" class="modal">
         <div class="modal-header"><h2>GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
+        
         <div id="game-list-gui">
             <div class="p-grid">
                 <div class="game-item" onclick="selectGame('MLBB')"><img src="https://i.imgur.com/1kFNSpI.jpeg"><p style="font-size:10px;">MLBB</p></div>
@@ -187,56 +194,87 @@
             </div>
         </div>
         
-        <div id="game-id-gui" style="display:none; margin-top:20px;">
+        <div id="game-id-gui" style="display:none; margin-top:10px;">
             <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
             
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                <img src="https://i.imgur.com/EG7hgtC.png" style="width: 40px; height: 40px; filter: drop-shadow(0 0 8px var(--gold));">
-                <div>
-                    <h3 id="selected-game-title" style="color:var(--kurumi-red); font-family: 'Cinzel Decorative';">GAME</h3>
-                    <p style="font-size: 9px; color: #00ff00;">STATUS: KILAT AKTIF</p>
+            <div style="width:100%; height:120px; background:linear-gradient(to bottom, transparent, #000), url('https://i.imgur.com/jPIDTKm.jpeg') center/cover; border-radius:15px; margin-bottom:20px; display:flex; align-items:flex-end; padding:15px; border:1px solid #333;">
+                <h3 id="selected-game-title" style="color:#fff; font-family: 'Cinzel Decorative'; text-shadow: 0 0 10px #000;">GAME</h3>
+            </div>
+
+            <div class="section-card-elite">
+                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">1</span> MASUKKAN DATA USER</div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; padding:15px;">
+                    <input type="text" id="player-id" class="auth-input" placeholder="User ID" style="margin-bottom:0;">
+                    <input type="text" id="zone-id" class="auth-input" placeholder="Zone" style="margin-bottom:0;">
                 </div>
             </div>
 
-            <p style="font-size: 10px; color: var(--gold); margin-bottom: 8px; font-weight: 800;">1. MASUKKAN DATA USER</p>
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 20px;">
-                <input type="text" id="player-id" class="auth-input" placeholder="User ID" style="margin-bottom:0;">
-                <input type="text" id="zone-id" class="auth-input" placeholder="Zone" style="margin-bottom:0;">
+            <div class="section-card-elite">
+                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">2</span> PILIH NOMINAL</div>
+                <div class="p-grid" style="grid-template-columns: 1fr 1fr; gap: 10px; padding:15px;" id="nominal-container">
+                    <div class="menu-box nominal-item" style="padding:12px; position:relative;" onclick="chooseNominal('86 Diamonds', 'Rp 20.350', this)">
+                        <p style="font-size:10px; font-weight:800;">86 (77+9) DM</p><small style="color:var(--gold)">Rp 20.350</small>
+                    </div>
+                    <div class="menu-box nominal-item" style="padding:12px; border-color:var(--kurumi-red); position:relative;" onclick="chooseNominal('Weekly Pass', 'Rp 27.500', this)">
+                        <p style="font-size:10px; color:var(--kurumi-red); font-weight:900;">WEEKLY PASS</p><small style="color:var(--gold)">Rp 27.500</small>
+                        <div class="n-badge" style="background:var(--kurumi-red); color:#fff;">HOT</div>
+                    </div>
+                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('257 Diamonds', 'Rp 60.500', this)">
+                        <p style="font-size:10px; font-weight:800;">257 Diamonds</p><small style="color:var(--gold)">Rp 60.500</small>
+                    </div>
+                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('706 Diamonds', 'Rp 162.000', this)">
+                        <p style="font-size:10px; font-weight:800;">706 Diamonds</p><small style="color:var(--gold)">Rp 162.000</small>
+                    </div>
+                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('2195 Diamonds', 'Rp 506.000', this)">
+                        <p style="font-size:10px; font-weight:800;">2195 Diamonds</p><small style="color:var(--gold)">Rp 506.000</small>
+                    </div>
+                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('5532 Diamonds', 'Rp 1.250.000', this)">
+                        <p style="font-size:10px; font-weight:800;">5532 Diamonds</p><small style="color:var(--gold)">Rp 1.250.000</small>
+                    </div>
+                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('18576 Diamonds', 'Rp 4.150.000', this)">
+                        <p style="font-size:10px; font-weight:800;">18576 Diamonds</p><small style="color:var(--gold)">Rp 4.150.000</small>
+                        <div class="n-badge">VIP</div>
+                    </div>
+                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('37152 Diamonds', 'Rp 8.250.000', this)">
+                        <p style="font-size:10px; font-weight:800;">37152 Diamonds</p><small style="color:var(--gold)">Rp 8.250.000</small>
+                        <div class="n-badge">VIP</div>
+                    </div>
+                    <div class="menu-box nominal-item" style="grid-column: span 2; padding:15px; border: 1px solid var(--gold); background: rgba(212, 175, 55, 0.05);" onclick="chooseNominal('57960 Diamonds', 'Rp 14.159.988', this)">
+                        <p style="font-size:12px; font-weight:900; color:var(--gold);">57960 (48036 + 9924) Diamonds</p>
+                        <p style="font-size:14px; font-weight:900;">Rp 14.159.988</p>
+                        <div class="n-badge" style="background:#fff; color:#000;">ULTIMATE SULTAN</div>
+                    </div>
+                </div>
             </div>
 
-            <p style="font-size: 10px; color: var(--gold); margin-bottom: 8px; font-weight: 800;">2. PILIH NOMINAL DIAMOND</p>
-            <div class="p-grid" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;" id="nominal-container">
-                <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('5 Diamonds', 'Rp 1.500', this)">
-                    <img src="https://i.imgur.com/EG7hgtC.png" style="width:15px;"> <p style="font-size:10px;">5 DM</p><small>Rp 1.500</small>
-                </div>
-                <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('12 Diamonds', 'Rp 3.500', this)">
-                    <img src="https://i.imgur.com/EG7hgtC.png" style="width:15px;"> <p style="font-size:10px;">12 DM</p><small>Rp 3.500</small>
-                </div>
-                <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('53 Diamonds', 'Rp 14.500', this)">
-                    <img src="https://i.imgur.com/EG7hgtC.png" style="width:15px;"> <p style="font-size:10px;">53 DM</p><small>Rp 14.500</small>
-                </div>
-                <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('86 Diamonds', 'Rp 21.000', this)">
-                    <img src="https://i.imgur.com/EG7hgtC.png" style="width:15px;"> <p style="font-size:10px;">86 DM</p><small>Rp 21.000</small>
-                </div>
-                <div class="menu-box nominal-item" style="padding:12px; border-color:var(--kurumi-red);" onclick="chooseNominal('Weekly Pass', 'Rp 28.500', this)">
-                    <img src="https://i.imgur.com/EG7hgtC.png" style="width:15px;"> <p style="font-size:10px; color:var(--kurumi-red); font-weight:800;">WEEKLY</p><small>Rp 28.500</small>
-                </div>
-                <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('172 Diamonds', 'Rp 42.000', this)">
-                    <img src="https://i.imgur.com/EG7hgtC.png" style="width:15px;"> <p style="font-size:10px;">172 DM</p><small>Rp 42.000</small>
-                </div>
-            </div>
-
-            <p style="font-size: 10px; color: var(--gold); margin-bottom: 8px; font-weight: 800;">3. PILIH PEMBAYARAN</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="pay-item" id="pay-dana" onclick="choosePayment('DANA', this)">
-                    <img src="https://i.imgur.com/ueLbkVM.png" style="width:20px;"> <span style="font-size:10px;">DANA</span>
-                </div>
-                <div class="pay-item" id="pay-gopay" onclick="choosePayment('GOPAY', this)">
-                    <img src="https://i.imgur.com/B4E1BLN.jpeg" style="width:20px;"> <span style="font-size:10px;">GOPAY</span>
+            <div class="section-card-elite">
+                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">3</span> PILIH PEMBAYARAN</div>
+                <div style="padding:15px; display: grid; grid-template-columns: 1fr; gap: 10px;">
+                    <div class="pay-item" onclick="choosePayment('DANA', this)" style="justify-content:space-between;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <img src="https://i.imgur.com/ueLbkVM.png" style="width:20px;"> 
+                            <span style="font-size:10px; font-weight:800;">DANA</span>
+                        </div>
+                        <span class="price-sync">Pilih Nominal</span>
+                    </div>
+                    <div class="pay-item" onclick="choosePayment('GOPAY', this)" style="justify-content:space-between;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <img src="https://i.imgur.com/B4E1BLN.jpeg" style="width:20px;"> 
+                            <span style="font-size:10px; font-weight:800;">GOPAY</span>
+                        </div>
+                        <span class="price-sync">Pilih Nominal</span>
+                    </div>
+                    <div class="pay-item" onclick="choosePayment('QRIS', this)" style="justify-content:space-between;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <img src="https://i.imgur.com/EG7hgtC.png" style="width:20px;"> 
+                            <span style="font-size:10px; font-weight:800;">QRIS ALL PAY</span>
+                        </div>
+                        <span class="price-sync">Pilih Nominal</span>
+                    </div>
                 </div>
             </div>
 
-            <button onclick="confirmOrder()" class="auth-btn" style="margin-top: 25px; background: linear-gradient(90deg, #ff1a1a, #550000);">BELI SEKARANG (WA)</button>
+            <button onclick="confirmOrder()" class="auth-btn" style="margin-top: 10px; background: linear-gradient(90deg, #ff1a1a, #550000); box-shadow: 0 0 20px rgba(255,26,26,0.3);">BELI SEKARANG (WA)</button>
         </div>
     </div>
     <div id="profileModal" class="modal">
@@ -267,69 +305,24 @@
     <div id="portModal" class="modal">
         <div class="modal-header"><h2>SEZEAN PORTO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
         <div class="profile-container" style="text-align:center;">
-            <i class="fas fa-tools" style="font-size:40px; color:var(--gold); margin-bottom:15px;"></i>
-            <h3>PROJECT LIST</h3>
-            <p style="font-size:12px; color:#888; margin-top:10px;">Daftar karya Sezean akan muncul di sini.</p>
-            <div class="profile-option" style="margin-top:20px;"><div>Web Store v1</div><b style="color:var(--gold);">ACTIVE</b></div>
-        </div>
-    </div>
-
-    <div id="topupModal" class="modal">
-        <div class="modal-header"><h2>RECHARGE</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div>
-        <div class="profile-container" style="text-align:center;">
-             <i class="fas fa-bolt" style="font-size:40px; color:var(--kurumi-red); margin-bottom:15px;"></i>
-             <p style="margin-bottom:20px;">Silahkan hubungi admin pusat untuk pengisian Time Energy (CR).</p>
-             <a href="https://wa.me/6289696498841?text=Halo%20Sezean,%20saya%20mau%20topup%20CR" class="auth-btn" style="text-decoration:none; display:block;">HUBUNGI SEZEAN</a>
+            <i class="fas fa-tools" style="font-size:50px; color:var(--gold); margin-bottom:20px;"></i>
+            <p>Projects under development by Sezean.</p>
         </div>
     </div>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
-            authDomain: "sezeean-store.firebaseapp.com",
-            databaseURL: "https://sezeean-store-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "sezeean-store",
-            storageBucket: "sezeean-store.firebasestorage.app",
-            messagingSenderId: "128288287658",
-            appId: "1:128288287658:web:774191d598cdd25c9119d3"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        let selectedGame = "";
-        let selNominal = "";
-        let selPrice = "";
-        let selPay = "";
+        // SCRIPT FUNGSI GAME CENTER REMAKE
+        let selNominal = '', selPrice = '', selGame = '', selPay = '';
 
-        const products = [];
-        for(let i=1; i<=10; i++) { products.push({ name: "COMING SOON", price: "???", img: "https://i.imgur.com/jPIDTKm.jpeg" }); }
-
-        window.onload = () => { 
-            const savedUser = localStorage.getItem('activeUser');
-            if(savedUser) showMain(savedUser); 
-            renderProducts();
-        };
-
-        function renderProducts() {
-            const containers = [document.getElementById('product-list-container'), document.getElementById('market-list-container')];
-            containers.forEach(container => {
-                if(!container) return;
-                container.innerHTML = "";
-                products.forEach(p => {
-                    container.innerHTML += `<div class="p-card"><span class="badge-cs">CS</span><img src="${p.img}"><div style="padding:10px 5px; text-align:center;"><p style="font-size:11px; font-weight:800; color:var(--gold);">${p.name}</p></div></div>`;
-                });
-            });
-        }
-
-        // FUNGSI GAME CENTER BARU
         function selectGame(game) {
-            selectedGame = game;
-            document.getElementById('selected-game-title').innerText = game;
+            selGame = game;
+            document.getElementById('selected-game-title').innerText = game.toUpperCase();
             document.getElementById('game-list-gui').style.display = 'none';
             document.getElementById('game-id-gui').style.display = 'block';
         }
 
         function backToGames() {
-            document.getElementById('game-list-gui').style.display = 'block';
+            document.getElementById('game-list-gui').style.display = 'grid';
             document.getElementById('game-id-gui').style.display = 'none';
         }
 
@@ -337,6 +330,10 @@
             selNominal = nom; selPrice = prc;
             document.querySelectorAll('.nominal-item').forEach(x => x.classList.remove('active'));
             el.classList.add('active');
+            // Update harga di semua baris pembayaran secara otomatis
+            document.querySelectorAll('.price-sync').forEach(item => {
+                item.innerText = prc;
+            });
         }
 
         function choosePayment(mthd, el) {
@@ -345,58 +342,15 @@
             el.classList.add('active');
         }
 
-        function confirmOrder() {
-            const id = document.getElementById('player-id').value;
-            const zone = document.getElementById('zone-id').value;
-            if(!id || !selNominal || !selPay) return alert("Lengkapi data dan pilihan!");
-            const msg = `Halo Admin Cloud Store (Sezean),\n\nOrder Game: ${selectedGame}\nID: ${id} (${zone})\nNominal: ${selNominal}\nHarga: ${selPrice}\nMetode: ${selPay}\n\nMohon diproses kilat!`;
-            window.open(`https://wa.me/6289696498841?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        // FUNGSI DASAR TETAP SAMA
         function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            if(id === 'gameModal') backToGames();
+        }
         function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        function toggleAuth(type) {
-            document.getElementById('login-box').style.display = type === 'log' ? 'block' : 'none';
-            document.getElementById('register-box').style.display = type === 'reg' ? 'block' : 'none';
-        }
 
-        function handleLogin() {
-            const u = document.getElementById('log-user').value.toLowerCase().trim();
-            const p = document.getElementById('log-pass').value;
-            if(!u || !p) return alert("Masukan data!");
-            db.ref('accounts/' + u).once('value').then(snap => {
-                if(snap.exists() && snap.val() === p) { localStorage.setItem('activeUser', u); showMain(u); } else { alert("Wrong Credentials!"); }
-            });
-        }
-
-        function handleRegister() {
-            const u = document.getElementById('reg-user').value.toLowerCase().trim();
-            const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Isi form!");
-            db.ref('accounts/' + u).once('value').then(snap => {
-                if(snap.exists()) { alert("User ada!"); }
-                else {
-                    db.ref('accounts/' + u).set(p);
-                    db.ref('users/' + u).set({credits: 0}).then(() => { alert("Berhasil!"); toggleAuth('log'); });
-                }
-            });
-        }
-
-        function showMain(u) {
-            document.getElementById('auth-page').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('hero-user').innerText = "@" + u.toUpperCase();
-            document.getElementById('p-user').innerText = u.toUpperCase();
-            db.ref('users/' + u + '/credits').on('value', snap => {
-                const c = snap.val() || 0;
-                document.getElementById('user-balance').innerText = c + " CR";
-                document.getElementById('p-bal').innerText = c + " CR";
-            });
-        }
-
-        function logout() { localStorage.clear(); location.reload(); }
+        // LANJUTKAN DENGAN CODINGAN FIREBASE/LOGIC LU SENDIRI DI SINI
     </script>
+
 </body>
 </html>
