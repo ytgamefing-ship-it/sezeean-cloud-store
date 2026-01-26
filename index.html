@@ -98,7 +98,6 @@
         
         .section-header { font-family: 'Cinzel Decorative'; font-size: 14px; color: var(--gold); margin: 25px 0 15px; letter-spacing: 2px; }
 
-        /* PAYMENT GRID ADDED */
         .pay-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
         .pay-item.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
         .nominal-item.active { border-color: var(--kurumi-red); background: rgba(255, 26, 26, 0.05); }
@@ -196,9 +195,8 @@
         
         <div id="game-id-gui" style="display:none; margin-top:10px;">
             <button onclick="backToGames()" style="background:none; border:none; color:var(--gold); margin-bottom:15px;"><i class="fas fa-arrow-left"></i> Kembali</button>
-            
             <div style="width:100%; height:120px; background:linear-gradient(to bottom, transparent, #000), url('https://i.imgur.com/jPIDTKm.jpeg') center/cover; border-radius:15px; margin-bottom:20px; display:flex; align-items:flex-end; padding:15px; border:1px solid #333;">
-                <h3 id="selected-game-title" style="color:#fff; font-family: 'Cinzel Decorative'; text-shadow: 0 0 10px #000;">GAME</h3>
+                <h3 id="selected-game-title" style="color:#fff; font-family: 'Cinzel Decorative';">GAME</h3>
             </div>
 
             <div class="section-card-elite">
@@ -212,106 +210,32 @@
             <div class="section-card-elite">
                 <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">2</span> PILIH NOMINAL</div>
                 <div class="p-grid" style="grid-template-columns: 1fr 1fr; gap: 10px; padding:15px;" id="nominal-container">
-                    <div class="menu-box nominal-item" style="padding:12px; position:relative;" onclick="chooseNominal('86 Diamonds', 'Rp 20.350', this)">
-                        <p style="font-size:10px; font-weight:800;">86 (77+9) DM</p><small style="color:var(--gold)">Rp 20.350</small>
-                    </div>
-                    <div class="menu-box nominal-item" style="padding:12px; border-color:var(--kurumi-red); position:relative;" onclick="chooseNominal('Weekly Pass', 'Rp 27.500', this)">
-                        <p style="font-size:10px; color:var(--kurumi-red); font-weight:900;">WEEKLY PASS</p><small style="color:var(--gold)">Rp 27.500</small>
-                        <div class="n-badge" style="background:var(--kurumi-red); color:#fff;">HOT</div>
-                    </div>
-                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('257 Diamonds', 'Rp 60.500', this)">
-                        <p style="font-size:10px; font-weight:800;">257 Diamonds</p><small style="color:var(--gold)">Rp 60.500</small>
-                    </div>
-                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('706 Diamonds', 'Rp 162.000', this)">
-                        <p style="font-size:10px; font-weight:800;">706 Diamonds</p><small style="color:var(--gold)">Rp 162.000</small>
-                    </div>
-                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('2195 Diamonds', 'Rp 506.000', this)">
-                        <p style="font-size:10px; font-weight:800;">2195 Diamonds</p><small style="color:var(--gold)">Rp 506.000</small>
-                    </div>
-                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('5532 Diamonds', 'Rp 1.250.000', this)">
-                        <p style="font-size:10px; font-weight:800;">5532 Diamonds</p><small style="color:var(--gold)">Rp 1.250.000</small>
-                    </div>
-                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('18576 Diamonds', 'Rp 4.150.000', this)">
-                        <p style="font-size:10px; font-weight:800;">18576 Diamonds</p><small style="color:var(--gold)">Rp 4.150.000</small>
-                        <div class="n-badge">VIP</div>
-                    </div>
-                    <div class="menu-box nominal-item" style="padding:12px;" onclick="chooseNominal('37152 Diamonds', 'Rp 8.250.000', this)">
-                        <p style="font-size:10px; font-weight:800;">37152 Diamonds</p><small style="color:var(--gold)">Rp 8.250.000</small>
-                        <div class="n-badge">VIP</div>
-                    </div>
-                    <div class="menu-box nominal-item" style="grid-column: span 2; padding:15px; border: 1px solid var(--gold); background: rgba(212, 175, 55, 0.05);" onclick="chooseNominal('57960 Diamonds', 'Rp 14.159.988', this)">
-                        <p style="font-size:12px; font-weight:900; color:var(--gold);">57960 (48036 + 9924) Diamonds</p>
-                        <p style="font-size:14px; font-weight:900;">Rp 14.159.988</p>
-                        <div class="n-badge" style="background:#fff; color:#000;">ULTIMATE SULTAN</div>
-                    </div>
+                    <div class="menu-box nominal-item" onclick="chooseNominal('86 Diamonds', 'Rp 20.350', this)"><p style="font-size:10px;">86 DM</p><small>Rp 20.350</small></div>
+                    <div class="menu-box nominal-item" style="border-color:var(--kurumi-red);" onclick="chooseNominal('Weekly Pass', 'Rp 27.500', this)"><p style="font-size:10px; color:var(--kurumi-red);">WEEKLY PASS</p><small>Rp 27.500</small></div>
+                    <div class="menu-box nominal-item" onclick="chooseNominal('2195 Diamonds', 'Rp 506.000', this)"><p style="font-size:10px;">2195 DM</p><small>Rp 506.000</small></div>
+                    <div class="menu-box nominal-item" style="grid-column: span 2; border: 1px solid var(--gold);" onclick="chooseNominal('57960 Diamonds', 'Rp 14.159.988', this)"><p style="font-size:12px; color:var(--gold);">57960 DM (ULTIMATE)</p><p>Rp 14.159.988</p></div>
                 </div>
             </div>
 
             <div class="section-card-elite">
-                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">3</span> PILIH PEMBAYARAN</div>
-                <div style="padding:15px; display: grid; grid-template-columns: 1fr; gap: 10px;">
-                    <div class="pay-item" onclick="choosePayment('DANA', this)" style="justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="https://i.imgur.com/ueLbkVM.png" style="width:20px;"> 
-                            <span style="font-size:10px; font-weight:800;">DANA</span>
-                        </div>
-                        <span class="price-sync">Pilih Nominal</span>
-                    </div>
-                    <div class="pay-item" onclick="choosePayment('GOPAY', this)" style="justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="https://i.imgur.com/B4E1BLN.jpeg" style="width:20px;"> 
-                            <span style="font-size:10px; font-weight:800;">GOPAY</span>
-                        </div>
-                        <span class="price-sync">Pilih Nominal</span>
-                    </div>
-                    <div class="pay-item" onclick="choosePayment('QRIS', this)" style="justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="https://i.imgur.com/EG7hgtC.png" style="width:20px;"> 
-                            <span style="font-size:10px; font-weight:800;">QRIS ALL PAY</span>
-                        </div>
-                        <span class="price-sync">Pilih Nominal</span>
-                    </div>
+                <div class="section-tag"><span style="background:var(--gold); color:#000; width:18px; height:18px; display:flex; align-items:center; justify-content:center; border-radius:4px;">3</span> PEMBAYARAN</div>
+                <div style="padding:15px; display: grid; gap: 10px;">
+                    <div class="pay-item" onclick="choosePayment('DANA', this)" style="justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><img src="https://i.imgur.com/ueLbkVM.png" style="width:20px;"> <span>DANA</span></div><span class="price-sync">Rp 0</span></div>
+                    <div class="pay-item" onclick="choosePayment('QRIS', this)" style="justify-content:space-between;"><div style="display:flex; align-items:center; gap:10px;"><img src="https://i.imgur.com/EG7hgtC.png" style="width:20px;"> <span>QRIS</span></div><span class="price-sync">Rp 0</span></div>
                 </div>
             </div>
-
-            <button onclick="confirmOrder()" class="auth-btn" style="margin-top: 10px; background: linear-gradient(90deg, #ff1a1a, #550000); box-shadow: 0 0 20px rgba(255,26,26,0.3);">BELI SEKARANG (WA)</button>
-        </div>
-    </div>
-    <div id="profileModal" class="modal">
-        <div class="modal-header"><h2>USER IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div class="profile-container">
-            <div class="profile-card-elite">
-                <div class="profile-info">
-                    <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="profile-avatar">
-                    <div><h2 id="p-user" style="font-family:'Cinzel Decorative'; color:#fff;">USER</h2><span class="badge-elite">NIGHTMARE ELITE</span></div>
-                </div>
-                <div class="stats-elite">
-                    <div class="stat-box"><span>ENERGY</span><b id="p-bal">0 CR</b></div>
-                    <div class="stat-box"><span>LEVEL</span><b>LV. 99</b></div>
-                    <div class="stat-box"><span>STATUS</span><b style="color:#00ff00;">ONLINE</b></div>
-                </div>
-            </div>
-            <div class="profile-option" onclick="openModal('topupModal')"><div><i class="fas fa-plus-circle"></i> Recharge Energy (Topup)</div><i class="fas fa-chevron-right"></i></div>
-            <div class="profile-option" onclick="openModal('portModal')"><div><i class="fas fa-code"></i> Sezean Projects (Porto)</div><i class="fas fa-chevron-right"></i></div>
-            <div class="profile-option" onclick="logout()" style="border-color:var(--kurumi-red);"><div style="color:var(--kurumi-red);"><i class="fas fa-sign-out-alt"></i> Terminate Session</div><i class="fas fa-chevron-right" style="color:var(--kurumi-red);"></i></div>
+            <button onclick="confirmOrder()" class="auth-btn" style="margin-top: 10px; background: linear-gradient(90deg, #ff1a1a, #550000);">BELI SEKARANG</button>
         </div>
     </div>
 
-    <div id="shopModal" class="modal">
-        <div class="modal-header"><h2>THE MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div>
-        <div class="p-grid" id="market-list-container"></div>
-    </div>
-
-    <div id="portModal" class="modal">
-        <div class="modal-header"><h2>SEZEAN PORTO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div>
-        <div class="profile-container" style="text-align:center;">
-            <i class="fas fa-tools" style="font-size:50px; color:var(--gold); margin-bottom:20px;"></i>
-            <p>Projects under development by Sezean.</p>
-        </div>
-    </div>
+    <div id="profileModal" class="modal">...</div>
+    <div id="shopModal" class="modal">...</div>
+    <div id="portModal" class="modal">...</div>
 
     <script>
-        // SCRIPT FUNGSI GAME CENTER REMAKE
+        // --- TEMPEL SEMUA SCRIPT ASLI LU (FIREBASE/LOGIN/DLL) DI SINI ---
+        // JANGAN DIUBAH SCRIPT ASLI LU, CUKUP TAMBAHKAN INI DI BAWAHNYA:
+
         let selNominal = '', selPrice = '', selGame = '', selPay = '';
 
         function selectGame(game) {
@@ -330,10 +254,7 @@
             selNominal = nom; selPrice = prc;
             document.querySelectorAll('.nominal-item').forEach(x => x.classList.remove('active'));
             el.classList.add('active');
-            // Update harga di semua baris pembayaran secara otomatis
-            document.querySelectorAll('.price-sync').forEach(item => {
-                item.innerText = prc;
-            });
+            document.querySelectorAll('.price-sync').forEach(item => { item.innerText = prc; });
         }
 
         function choosePayment(mthd, el) {
@@ -349,8 +270,14 @@
         }
         function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        // LANJUTKAN DENGAN CODINGAN FIREBASE/LOGIC LU SENDIRI DI SINI
+        // --- MASUKKAN SCRIPT LOGIC PEMBELIAN/WA LU DI SINI ---
+        function confirmOrder() {
+            const pID = document.getElementById('player-id').value;
+            const zID = document.getElementById('zone-id').value;
+            if(!pID || !selNominal || !selPay) return alert("Lengkapi Data!");
+            const msg = `Halo Cloud Store, Saya mau beli:\nGame: ${selGame}\nID: ${pID} (${zID})\nNominal: ${selNominal}\nPayment: ${selPay}\nTotal: ${selPrice}`;
+            window.open(`https://wa.me/628XXXXXXXXX?text=${encodeURIComponent(msg)}`);
+        }
     </script>
-
 </body>
 </html>
