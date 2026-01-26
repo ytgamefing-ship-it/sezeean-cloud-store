@@ -45,11 +45,11 @@
         }
         @keyframes fireFlow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
 
-        /* AUTH UI */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
         .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; }
         .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
-        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
+        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        .auth-btn:active { transform: scale(0.95); background: #550000; }
 
         header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.85); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; backdrop-filter: blur(10px); }
         .logo-area { font-size: 18px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
@@ -61,7 +61,6 @@
         .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; transition: 0.3s; }
         .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
 
-        /* MODAL RAJA STYLE */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(25px); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; background: #000; padding: 10px 0; }
 
@@ -69,12 +68,12 @@
         .game-item { background: var(--glass); border-radius: 15px; padding: 15px; text-align: center; border: 1px solid var(--glass-border); cursor: pointer; }
         .game-item img { width: 50px; height: 50px; border-radius: 12px; margin-bottom: 10px; }
         
-        .nominal-item.active { border-color: var(--kurumi-red); background: rgba(255, 26, 26, 0.1); }
+        .nominal-item.active { border: 1px solid var(--kurumi-red); background: rgba(255, 26, 26, 0.1); }
         .pay-item { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .pay-item.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
+        .pay-item.active { border: 1px solid var(--gold); background: rgba(212, 175, 55, 0.1); }
 
         nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); z-index: 999; }
-        nav i { font-size: 22px; color: #444; }
+        nav i { font-size: 22px; color: #444; cursor: pointer; }
         nav i.active { color: var(--kurumi-red); }
     </style>
 </head>
@@ -88,7 +87,7 @@
             <h2 class="fire-text">Cloud Store</h2>
             <input type="text" id="log-user" class="auth-input" placeholder="Username">
             <input type="password" id="log-pass" class="auth-input" placeholder="Password">
-            <button onclick="handleLogin()" class="auth-btn">ENTER SYSTEM</button>
+            <button onclick="handleLogin()" class="auth-btn" id="login-btn">ENTER SYSTEM</button>
             <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:10px; color:#444; cursor:pointer;">New Soul? Register</p>
         </div>
         <div class="auth-card" id="register-box" style="display:none;">
@@ -159,8 +158,8 @@
             </div>
 
             <div class="p-grid" style="margin-top:20px;">
-                <div class="pay-item" onclick="choosePayment('DANA', this)">DANA</div>
-                <div class="pay-item" onclick="choosePayment('GOPAY', this)">GOPAY</div>
+                <div class="pay-item" id="pay-dana" onclick="choosePayment('DANA', this)">DANA</div>
+                <div class="pay-item" id="pay-gopay" onclick="choosePayment('GOPAY', this)">GOPAY</div>
             </div>
 
             <button onclick="confirmOrder()" class="auth-btn" style="margin-top:30px; background: linear-gradient(to right, var(--kurumi-red), #550000);">PROCESS ORDER (WA)</button>
@@ -168,7 +167,7 @@
     </div>
 
     <script>
-        // --- !!! PASTE CONFIG FIREBASE LU DISINI SEZEAN !!! ---
+        // --- !!! CONFIG FIREBASE SEZEAN !!! ---
         const firebaseConfig = {
             apiKey: "ISI_PUNYA_LU",
             authDomain: "ISI_PUNYA_LU",
@@ -182,7 +181,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // AUTH
+        // AUTH LOGIC (FIXED)
         function toggleAuth(m) {
             document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
             document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
@@ -191,19 +190,34 @@
         function handleLogin() {
             const u = document.getElementById('log-user').value.trim();
             const p = document.getElementById('log-pass').value.trim();
-            db.ref('users/' + u).once('value', s => {
+            const btn = document.getElementById('login-btn');
+
+            if(!u || !p) return alert("LENGKAPI DATA!");
+            
+            btn.innerText = "VERIFYING...";
+            
+            db.ref('users/' + u).once('value').then(s => {
                 if(s.exists() && s.val().pass === p) {
                     localStorage.setItem('currentUser', u);
                     showMain(u, s.val().balance || 0);
-                } else alert("INVALID IDENTITY!");
+                } else {
+                    alert("IDENTITY REJECTED! (User tidak ada atau Password salah)");
+                    btn.innerText = "ENTER SYSTEM";
+                }
+            }).catch(e => {
+                alert("DATABASE ERROR: " + e.message);
+                btn.innerText = "ENTER SYSTEM";
             });
         }
 
         function handleRegister() {
             const u = document.getElementById('reg-user').value.trim();
             const p = document.getElementById('reg-pass').value.trim();
+            if(!u || !p) return alert("LENGKAPI DATA!");
+            
             db.ref('users/' + u).set({ pass: p, balance: 0 }).then(() => {
-                alert("SOUL REGISTERED!"); toggleAuth('log');
+                alert("SOUL REGISTERED! Silakan Login."); 
+                toggleAuth('log');
             });
         }
 
@@ -239,13 +253,14 @@
         function confirmOrder() {
             const id = document.getElementById('player-id').value;
             const zone = document.getElementById('zone-id').value;
-            if(!id || !sNom || !sPay) return alert("COMPLETE THE FORM!");
+            if(!id || !sNom || !sPay) return alert("ISI FORM DENGAN BENAR!");
+            
             const wa = "6285772322582";
-            const msg = `Halo Cloud Store!%0AOrder: ${sGame}%0AID: ${id} (${zone})%0ANominal: ${sNom}%0APayment: ${sPay}`;
+            const msg = `🔥 *CLOUD STORE ORDER* 🔥%0A%0A🎮 Game: *${sGame}*%0A🆔 ID: *${id} (${zone})*%0A💎 Nominal: *${sNom}*%0A💳 Via: *${sPay}*%0A%0AMohon segera diproses admin!`;
             window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
         }
 
-        // ADMIN
+        // UTILS
         let clk = 0;
         function triggerSecret() {
             clk++; if(clk >= 7) document.getElementById('secretPanel').style.display = 'block';
@@ -263,7 +278,9 @@
 
         window.onload = () => {
             const saved = localStorage.getItem('currentUser');
-            if(saved) db.ref('users/' + saved).once('value', s => showMain(saved, s.val().balance));
+            if(saved) db.ref('users/' + saved).once('value', s => {
+                if(s.exists()) showMain(saved, s.val().balance);
+            });
         };
     </script>
 </body>
