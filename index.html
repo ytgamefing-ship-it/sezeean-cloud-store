@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Store | Sezean Elite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Cloud Store | Sezean Sovereign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -12,80 +12,92 @@
     
     <style>
         :root {
-            --kurumi-red: #ff1a1a;
+            --red: #ff1a1a;
             --gold: #d4af37;
-            --bg-dark: #050505;
+            --bg: #050505;
             --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --neon-red: 0 0 15px rgba(255, 26, 26, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg-dark); color: #fff; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: #fff; overflow-x: hidden; height: 100vh; }
 
-        /* BG FIX */
         .clock-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            opacity: 0.2;
+            opacity: 0.3;
             background: url('https://i.imgur.com/VvyVXjX.jpeg') center center/cover no-repeat;
             z-index: -1; pointer-events: none;
         }
 
         .fire-text {
             font-family: 'Cinzel Decorative', serif;
-            font-weight: 900; text-transform: uppercase;
-            background: linear-gradient(to bottom, #fff 20%, #ff8000 40%, #ff1a1a 70%, #550000 95%);
-            background-size: 100% 300%;
+            font-weight: 900;
+            background: linear-gradient(to bottom, #fff, var(--red));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: fireFlow 3s ease-in-out infinite alternate;
             filter: drop-shadow(0 0 5px rgba(255, 26, 26, 0.5));
-            display: inline-block; letter-spacing: 2px;
         }
-        @keyframes fireFlow { 0% { background-position: 0% 0%; } 100% { background-position: 0% 100%; } }
 
-        /* AUTH SEZEAN */
+        /* AUTH PAGE */
         #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
-        .auth-card { background: rgba(10,10,10,0.95); padding: 40px; border-radius: 30px; border: 1px solid var(--kurumi-red); text-align: center; width: 90%; max-width: 380px; }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; }
-        .auth-btn { width: 100%; padding: 15px; background: var(--kurumi-red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; }
+        .auth-card { background: #0a0a0a; padding: 40px; border-radius: 30px; border: 1px solid var(--red); text-align: center; width: 90%; max-width: 380px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); }
+        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: #111; border: 1px solid #222; border-radius: 12px; color: #fff; outline: none; transition: 0.3s; font-family: 'Orbitron'; font-size: 12px; }
+        .auth-input:focus { border-color: var(--gold); }
+        .auth-btn { width: 100%; padding: 15px; background: var(--red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; font-family: 'Orbitron'; }
 
         /* HEADER & NAV */
-        header { padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.85); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; backdrop-filter: blur(10px); }
-        .logo-img { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold); }
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.9); border-radius: 25px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); z-index: 999; }
-        nav i { font-size: 22px; color: #444; }
-        nav i.active { color: var(--kurumi-red); }
+        header { padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 100; }
+        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.95); border-radius: 30px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); z-index: 999; }
+        nav i { font-size: 22px; color: #444; cursor: pointer; transition: 0.3s; }
+        nav i.active { color: var(--red); text-shadow: 0 0 10px var(--red); }
 
-        /* LAYOUT UTAMA */
         .container { padding: 20px 6% 120px; }
-        .balance-card { background: linear-gradient(135deg, #1a0000, #050505); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 20px; }
-        .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 30px; }
-        .menu-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px 2px; border-radius: 15px; text-align: center; font-size: 9px; cursor: pointer; }
-        .menu-box i { font-size: 18px; color: var(--kurumi-red); display: block; margin-bottom: 5px; }
-
-        /* GRID SYSTEM FIX */
-        .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 12px; text-align: center; }
-        .p-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
-
-        /* MODAL FIX */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 30px 6%; overflow-y: auto; backdrop-filter: blur(25px); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-
-        /* GAME CENTER FIX (biar ga rusak kayak sebelumnya) */
-        .game-item-box { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 10px; text-align: center; cursor: pointer; }
-        .game-item-box img { width: 100%; border-radius: 15px; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 8px; }
         
-        .nominal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .nom-card { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 5px; border-radius: 15px; text-align: center; cursor: pointer; }
-        .nom-card.active { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 10px var(--gold); }
-        .nom-card b { font-size: 11px; display: block; }
-        .nom-card span { font-size: 9px; color: var(--gold); }
+        #secretPanel { display: none; background: #0d0000; border: 1px solid var(--red); padding: 15px; border-radius: 20px; margin-bottom: 20px; animation: slideDown 0.3s ease; position: relative; z-index: 10; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .pay-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .pay-btn { background: var(--glass); border: 1px solid var(--glass-border); padding: 12px; border-radius: 10px; text-align: center; font-size: 11px; font-weight: 800; cursor: pointer; }
-        .pay-btn.active { border-color: var(--kurumi-red); background: rgba(255, 26, 26, 0.1); }
+        .log-card { background: var(--glass); border: 1px solid #1a1a1a; border-radius: 20px; padding: 15px; margin-bottom: 20px; }
+        .log-entry { display: flex; justify-content: space-between; font-size: 10px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        .section-header { font-family: 'Cinzel Decorative'; font-size: 14px; color: var(--gold); margin: 25px 0 10px; letter-spacing: 1px; }
+        .balance-card { background: linear-gradient(135deg, #200000, #000); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 25px; }
+        .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+        .menu-box { background: #0f0f0f; border: 1px solid #222; padding: 15px 5px; border-radius: 18px; text-align: center; cursor: pointer; }
+        .menu-box i { font-size: 20px; color: var(--red); margin-bottom: 5px; display: block; }
+
+        /* GAME GRID */
+        .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .game-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 10px; text-align: center; transition: 0.4s; cursor: pointer; overflow: hidden; position: relative; }
+        .game-card:active { transform: scale(0.95); border-color: var(--red); }
+        .game-card img { width: 100%; border-radius: 12px; margin-bottom: 8px; filter: grayscale(30%); transition: 0.4s; }
+        .game-card:hover img { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* MODAL REMAKE */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 20px 6%; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .section-header { font-family: 'Orbitron'; font-size: 11px; color: var(--gold); margin: 25px 0 12px; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; }
+        .section-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, #222, transparent); }
+
+        /* ORDER FORM GAHAR */
+        .input-vault { background: rgba(255,255,255,0.02); border: 1px solid #222; border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; box-shadow: inset 0 0 10px #000; }
+        .input-vault i { color: var(--red); font-size: 14px; }
+        .input-vault input { background: transparent; border: none; color: #fff; outline: none; width: 100%; font-family: 'Orbitron'; font-size: 13px; }
+
+        .energy-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.3s; cursor: pointer; text-align: center; position: relative; }
+        .energy-card.active { border-color: var(--red); background: rgba(255, 26, 26, 0.05); box-shadow: var(--neon-red); }
+        .energy-card img { width: 32px; filter: drop-shadow(0 0 5px var(--red)); }
+        .energy-card b { font-family: 'Orbitron'; font-size: 10px; color: #fff; }
+        .energy-card span { font-size: 9px; color: var(--gold); }
+
+        .pay-vault { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
+        .pay-vault img { height: 25px; filter: brightness(0.8); }
+        .pay-vault.active { border-color: #00ff00; background: rgba(0, 255, 0, 0.05); box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
+        .pay-vault.active img { filter: brightness(1); }
+
+        .execute-btn { width: 100%; padding: 22px; background: linear-gradient(45deg, #8b0000, #ff1a1a); border: none; border-radius: 18px; color: #fff; font-family: 'Orbitron'; font-weight: 900; letter-spacing: 3px; margin-top: 25px; cursor: pointer; box-shadow: 0 5px 20px rgba(255, 26, 26, 0.3); transition: 0.3s; }
+        .execute-btn:active { transform: translateY(3px); filter: brightness(1.2); }
+
+        .particle { position: absolute; background: var(--red); border-radius: 50%; filter: blur(2px); opacity: 0.6; animation: flyUp var(--d) linear infinite; }
+        @keyframes flyUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -94,117 +106,446 @@
 
     <div id="auth-page">
         <div class="auth-card" id="login-box">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:60px; border-radius:50%; border:2px solid var(--kurumi-red); margin-bottom:15px;">
-            <h2 class="fire-text">Cloud Store</h2>
-            <input type="text" id="log-user" class="auth-input" placeholder="Username">
-            <input type="password" id="log-pass" class="auth-input" placeholder="Password">
-            <button onclick="handleLogin()" class="auth-btn">ENTER SYSTEM</button>
-            <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:10px; color:#444; cursor:pointer;">New Soul? Register</p>
+            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:70px; border-radius:50%; border:2px solid var(--red); margin-bottom:15px;">
+            <h2 class="fire-text" style="font-size: 26px;">CLOUD STORE</h2>
+            <div style="margin-top: 20px;">
+                <input type="text" id="log-user" class="auth-input" placeholder="Username">
+                <input type="password" id="log-pass" class="auth-input" placeholder="Password">
+                <button onclick="handleLogin()" class="auth-btn">ACCESS SYSTEM</button>
+                <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:11px; color:#666; cursor:pointer;">No identity? <span style="color:var(--gold)">Register</span></p>
+            </div>
         </div>
         <div class="auth-card" id="register-box" style="display:none;">
-            <h2 class="fire-text">Identity</h2>
-            <input type="text" id="reg-user" class="auth-input" placeholder="Username">
-            <input type="password" id="reg-pass" class="auth-input" placeholder="Password">
-            <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE</button>
-            <p onclick="toggleAuth('log')" style="margin-top:20px; font-size:10px; color:var(--kurumi-red); cursor:pointer;">Back to Login</p>
+            <h2 class="fire-text">NEW SOUL</h2>
+            <div style="margin-top: 20px;">
+                <input type="text" id="reg-user" class="auth-input" placeholder="Set Username">
+                <input type="password" id="reg-pass" class="auth-input" placeholder="Set Password">
+                <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE IDENTITY</button>
+                <p onclick="toggleAuth('log')" style="margin-top:20px; font-size:11px; color:var(--red); cursor:pointer;">Return</p>
+            </div>
         </div>
     </div>
 
     <div id="main-content" style="display:none;">
         <header>
-            <div class="logo-area"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" class="logo-img"> <span class="fire-text">Cloud Store</span></div>
-            <i class="fas fa-power-off" onclick="logout()" style="color:var(--kurumi-red);"></i>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:35px; border-radius:50%; border:1px solid var(--gold);">
+                <span class="fire-text" style="font-size:18px;">CLOUD STORE</span>
+            </div>
+            <i class="fas fa-fingerprint" onclick="triggerSecret()" style="color:var(--gold); font-size:20px; cursor:pointer;"></i>
         </header>
 
         <div class="container">
-            <div class="balance-card">
-                <p style="font-size:10px; color:var(--gold);">TIME ENERGY</p>
-                <h1 id="user-balance" style="font-family:'Cinzel Decorative'; font-size:32px; margin:5px 0;">0 CR</h1>
-                <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:800;">
-                    <span id="hero-user" style="color:var(--kurumi-red);">@USER</span>
-                    <span style="color:#fff;">RANK: NIGHTMARE</span>
-                </div>
-            </div>
+<div id="secretPanel">
+    <p style="font-size:10px; color:var(--gold); font-family:'Orbitron';">ADMIN OVERRIDE</p>
+    <input type="text" id="s-target" class="auth-input" placeholder="Target User">
+    <input type="number" id="s-amount" class="auth-input" placeholder="Amount">
+    
+    <div style="display: flex; gap: 10px;">
+        <button onclick="manageUser('add')" class="auth-btn" style="background:#006600; flex: 1;">INJECT (+)</button>
+        <button onclick="manageUser('sub')" class="auth-btn" style="background:#8b0000; flex: 1;">DRAIN (-)</button>
+    </div>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Orbitron:wght@400;900&display=swap');
+
+    .energy-transparent-ui {
+        width: 380px;
+        padding: 20px;
+        /* Background total dihapus agar web asli terlihat */
+        background: transparent;
+        font-family: 'Orbitron', sans-serif;
+        position: relative;
+    }
+
+    /* Aksen Siku Mewah di Pojok */
+    .energy-transparent-ui::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 40px; height: 40px;
+        border-top: 2px solid #ff0000;
+        border-left: 2px solid #ff0000;
+    }
+
+    .energy-transparent-ui::after {
+        content: "";
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 40px; height: 40px;
+        border-bottom: 2px solid #ff0000;
+        border-right: 2px solid #ff0000;
+    }
+
+    .status-header {
+        font-size: 10px;
+        color: #ff0000;
+        letter-spacing: 5px;
+        font-weight: 900;
+        margin-bottom: -10px;
+        display: block;
+        opacity: 0.8;
+    }
+
+    .balance-wrapper {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+        margin-bottom: 15px;
+    }
+
+    #user-balance {
+        font-family: 'Cinzel Decorative', cursive;
+        font-size: 56px;
+        margin: 10px 0;
+        /* Gradasi Emas */
+        background: linear-gradient(180deg, #fff5ad 0%, #ffca28 50%, #b8860b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 10px rgba(255, 202, 40, 0.3));
+    }
+
+    .unit {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 400;
+        opacity: 0.6;
+    }
+
+    .footer-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .user-info {
+        border-left: 3px solid #ff0000;
+        padding-left: 12px;
+    }
+
+    #hero-user {
+        display: block;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 900;
+        letter-spacing: 2px;
+    }
+
+    .tagline {
+        font-size: 8px;
+        color: #ff0000;
+        text-transform: uppercase;
+    }
+
+    .status-badge-new {
+        border: 1px solid #ff0000;
+        padding: 4px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 0, 0, 0.1);
+    }
+
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background: #ff0000;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #ff0000;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+</style>
+
+<div class="energy-transparent-ui">
+    <span class="status-header">ENERGY STATUS</span>
+    
+    <div class="balance-wrapper">
+        <h1 id="user-balance">0</h1>
+        <span class="unit">CR</span>
+    </div>
+
+    <div class="footer-info">
+        <div class="user-info">
+            <span class="tagline">Cloud Store Resident</span>
+            <span id="hero-user">SEZEAN</span>
+        </div>
+
+        <div class="status-badge-new">
+            <div class="pulse-dot"></div>
+            <span style="color:#fff; font-size:10px; font-weight:900;">ONLINE</span>
+        </div>
+    </div>
+</div>
+
 
             <div class="quick-grid">
-                <div class="menu-box" onclick="openModal('shopModal')"><i class="fas fa-shopping-cart"></i>Shop</div>
-                <div class="menu-box" onclick="openModal('portModal')"><i class="fas fa-briefcase"></i>Porto</div>
-                <div class="menu-box" onclick="openModal('gameModal')"><i class="fas fa-gamepad"></i>Games</div>
-                <div class="menu-box" onclick="openModal('topupModal')"><i class="fas fa-wallet"></i>Topup</div>
-                <div class="menu-box" onclick="location.reload()"><i class="fas fa-sync"></i>Sync</div>
+                <div class="menu-box" onclick="showPage('gameModal')"><i class="fas fa-gamepad"></i><span style="font-size:9px;">Games</span></div>
+                <div class="menu-box" onclick="window.open('https://wa.me/6289696498841')"><i class="fas fa-headset"></i><span style="font-size:9px;">Support</span></div>
+                <div class="menu-box" onclick="alert('Coming Soon')"><i class="fas fa-bolt"></i><span style="font-size:9px;">Flash</span></div>
+                <div class="menu-box" onclick="logout()"><i class="fas fa-power-off"></i><span style="font-size:9px;">Logout</span></div>
             </div>
 
-            <div class="section-header">LATEST PRODUCTS</div>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+    :root {
+        /* Gradasi merah mewah: Crimson ke Dark Blood */
+        --lux-red: linear-gradient(90deg, #ff0000, #8b0000);
+        --lux-gold: linear-gradient(135deg, #ffdf00, #b8860b);
+        --lux-cyan: linear-gradient(135deg, #00f2ff, #0066ff);
+        /* Border halus supaya tetap kelihatan batasnya di web terang/gelap */
+        --border-light: rgba(255, 255, 255, 0.1);
+    }
+
+    .terminal-frame {
+        /* Background dihapus agar transparan */
+        background: transparent; 
+        border: 1px solid var(--border-light);
+        padding: 20px;
+        font-family: 'Space Mono', monospace;
+        max-width: 450px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Garis merah vertikal di sisi kiri tetap dipertahankan */
+    .terminal-frame::before {
+        content: "";
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 4px;
+        background: var(--lux-red);
+        box-shadow: 2px 0 10px rgba(255, 0, 0, 0.3);
+    }
+
+    .header-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 8px;
+    }
+
+    .section-header {
+        font-weight: 700;
+        letter-spacing: 3px;
+        background: var(--lux-red);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        /* Efek glow pada teks merah */
+        filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.4));
+    }
+
+    .log-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .log-item {
+        /* Background item dibuat sangat tipis agar tidak menutupi bg web utama */
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .log-label {
+        color: rgba(255, 255, 255, 0.7); /* Putih transparan agar adaptif */
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .status-val {
+        font-weight: bold;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    /* Gradasi pada teks status */
+    .grad-red { background: var(--lux-red); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 5px rgba(255,0,0,0.5)); }
+    .grad-gold { background: var(--lux-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .grad-cyan { background: var(--lux-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .timestamp {
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 0.6rem;
+        margin-top: 3px;
+    }
+</style>
+
+<div class="terminal-frame">
+    <div class="header-group">
+        <div class="section-header">System Authentication</div>
+        <div style="color:rgba(255,255,255,0.2); font-size: 0.7rem;">ID: SZ-2026</div>
+    </div>
+
+    <div class="log-stack">
+        <div class="log-item">
+            <div>
+                <div class="log-label">Kernel Session</div>
+                <div class="timestamp">STAMP: 27.01.2026_14:47</div>
+            </div>
+            <span class="status-val grad-gold">STABLE</span>
+        </div>
+
+        <div class="log-item">
+            <div>
+                <div class="log-label">V-Secure Protocol</div>
+                <div class="timestamp">ENCRYPTION: AES-256</div>
+            </div>
+            <span class="status-val grad-cyan">PROTECTED</span>
+        </div>
+
+        <div class="log-item">
+            <div>
+                <div class="log-label">Cloud Store Uplink</div>
+                <div class="timestamp">NODE: SEZEAN_SERVER</div>
+            </div>
+            <span class="status-val grad-red">ENCRYPTED</span>
+        </div>
+
+        <div class="log-item">
+            <div>
+                <div class="log-label">Firewall Status</div>
+                <div class="timestamp">THREAT_LVL: NULL</div>
+            </div>
+            <span class="status-val grad-red">ACTIVE</span>
+        </div>
+    </div>
+</div>
+
+            <div class="section-header">ELITE ACCESS</div>
             <div class="p-grid">
-                <div class="p-card"><img src="https://i.imgur.com/jPIDTKm.jpeg"><p style="font-size:11px;">Product Elit Segera Datang</p></div>
+                <div class="game-card" onclick="showPage('gameModal')">
+                    <img src="https://i.imgur.com/1kFNSpI.jpeg">
+                    <b style="font-size:11px; font-family:'Orbitron';">DIRECT RECHARGE</b>
+                </div>
+                <div class="game-card" onclick="alert('SOON')">
+                    <img src="https://i.imgur.com/T8pyHgg.png">
+                    <b style="font-size:11px; font-family:'Orbitron';">SHADOW SV</b>
+                </div>
             </div>
         </div>
 
         <nav>
-            <i class="fas fa-home active" onclick="closeAllModals()"></i>
-            <i class="fas fa-store" onclick="openModal('shopModal')"></i>
-            <i class="fas fa-user" onclick="openModal('profileModal')"></i>
+            <i id="nav-home" class="fas fa-home active" onclick="closeAllModals()"></i>
+            <i id="nav-game" class="fas fa-gamepad" onclick="showPage('gameModal', this)"></i>
+            <i id="nav-profile" class="fas fa-user-shield" onclick="showPage('profileModal', this)"></i>
         </nav>
     </div>
 
-    <div id="gameModal" class="modal">
-        <div class="modal-header"><h2 class="fire-text">GAME CENTER</h2><i class="fas fa-times" onclick="closeModal('gameModal')"></i></div>
+    <div id="gameModal" class="modal" style="background: radial-gradient(circle at top, #1a0000 0%, #000 100%);">
+        <div id="game-particles" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;"></div>
         
-        <div id="game-list-gui">
-            <div class="section-header">SELECT REALM</div>
-            <div class="p-grid">
-                <div class="game-item-box" onclick="selectGame('MLBB')"><img src="https://i.imgur.com/1kFNSpI.jpeg"><p style="font-size:10px;">MLBB</p></div>
-                <div class="game-item-box" onclick="selectGame('HOK')"><img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg"><p style="font-size:10px;">HOK</p></div>
+        <div class="modal-header" style="position: relative; z-index: 10;">
+            <div>
+                <h2 class="fire-text" style="letter-spacing: 5px; font-size: 26px;">GAME VAULT</h2>
+                <span style="font-size: 9px; color: var(--gold); font-family: 'Orbitron';">SECURE TRANSACTION PORTAL</span>
             </div>
+            <i class="fas fa-times-circle" onclick="closeAllModals()" style="color: #fff; font-size: 28px; cursor: pointer; opacity: 0.7;"></i>
         </div>
 
-        <div id="game-id-gui" style="display:none;">
-            <p onclick="backToGames()" style="color:var(--gold); font-size:12px; margin-bottom:15px; cursor:pointer;"><i class="fas fa-arrow-left"></i> KEMBALI</p>
-            <h3 id="selected-game-title" class="fire-text">GAME</h3>
-            
-            <div class="section-header">1. IDENTITY</div>
-            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
-                <input type="text" id="player-id" class="auth-input" placeholder="User ID">
-                <input type="text" id="zone-id" class="auth-input" placeholder="Zone">
+        <div class="game-wrapper" style="position: relative; z-index: 10; max-width: 500px; margin: 0 auto;">
+            <div id="game-selection" class="p-grid">
+                <div class="game-card" onclick="openOrder('MOBILE LEGENDS')">
+                    <img src="https://i.imgur.com/1kFNSpI.jpeg">
+                    <b style="font-family:'Orbitron'; font-size:10px; color:var(--gold);">MLBB RECHARGE</b>
+                </div>
+                <div class="game-card" onclick="openOrder('HONOR OF KINGS')">
+                    <img src="https://i.imgur.com/Al6R1jO.jpeg">
+                    <b style="font-family:'Orbitron'; font-size:10px; color:var(--gold);">HOK GLOBAL</b>
+                </div>
             </div>
 
-            <div class="section-header">2. NOMINAL SULTAN</div>
-            <div class="nominal-row">
-                <div class="nom-card" onclick="chooseNom('86 DM', 'Rp 21rb', this)"><b>86 DM</b><span>Rp 21rb</span></div>
-                <div class="nom-card" onclick="chooseNom('Weekly', 'Rp 29rb', this)"><b>WEEKLY</b><span>Rp 29rb</span></div>
-                <div class="nom-card" onclick="chooseNom('706 DM', 'Rp 170rb', this)"><b>706 DM</b><span>Rp 170rb</span></div>
-                <div class="nom-card" onclick="chooseNom('SULTAN A', 'Rp 1.2jt', this)"><b>SULTAN A</b><span>Rp 1.2jt</span></div>
-            </div>
+            <div id="order-form" style="display:none; animation: slideDown 0.4s ease;">
+                <div onclick="backToGames()" style="display:inline-block; background:rgba(255,255,255,0.05); padding:8px 15px; border-radius:10px; color: var(--gold); font-family: 'Orbitron'; font-size: 10px; margin-bottom: 25px; cursor: pointer; border: 1px solid #222;">
+                    <i class="fas fa-chevron-left"></i> BACK TO VAULT
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3 id="target-game" class="fire-text" style="font-size: 24px;">GAME</h3>
+                    <div style="width: 50px; height: 2px; background: var(--red); margin: 10px auto;"></div>
+                </div>
 
-            <div class="section-header">3. PAYMENT</div>
-            <div class="pay-row">
-                <div class="pay-btn" onclick="choosePay('DANA', this)">DANA</div>
-                <div class="pay-btn" onclick="choosePay('GOPAY', this)">GOPAY</div>
-                <div class="pay-btn" onclick="choosePay('QRIS', this)">QRIS</div>
-            </div>
+                <div class="section-header">USER CREDENTIALS</div>
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px;">
+                    <div class="input-vault"><i class="fas fa-user-tag"></i><input type="number" id="p-id" placeholder="USER ID"></div>
+                    <div class="input-vault"><i class="fas fa-globe"></i><input type="number" id="p-zone" placeholder="ZONE"></div>
+                </div>
 
-            <button onclick="confirmOrder()" class="auth-btn" style="margin-top:25px; background: linear-gradient(to right, #ff1a1a, #550000); border: 1px solid var(--gold);">ORDER VIA WHATSAPP</button>
+                <div class="section-header">SELECT ENERGY PACKAGE</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="energy-card" onclick="setNom('86 Diamonds', 'Rp 21.000', this)">
+                        <img src="https://i.imgur.com/EG7hgtC.png">
+                        <b>86 DIAMONDS</b>
+                        <span>Rp 21.000</span>
+                    </div>
+                    <div class="energy-card" onclick="setNom('Weekly Pass', 'Rp 29.000', this)">
+                        <img src="https://i.imgur.com/EG7hgtC.png">
+                        <b>WEEKLY PASS</b>
+                        <span>Rp 29.000</span>
+                    </div>
+                    <div class="energy-card" onclick="setNom('257 Diamonds', 'Rp 62.000', this)">
+                        <img src="https://i.imgur.com/EG7hgtC.png">
+                        <b>257 DIAMONDS</b>
+                        <span>Rp 62.000</span>
+                    </div>
+                    <div class="energy-card" onclick="setNom('Twilight Pass', 'Rp 145.000', this)">
+                        <img src="https://i.imgur.com/EG7hgtC.png">
+                        <b>TWILIGHT PASS</b>
+                        <span>Rp 145.000</span>
+                    </div>
+                </div>
+
+                <div class="section-header">GATEWAY PROTOCOL</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="pay-vault" onclick="setPay('DANA', this)"><img src="https://i.imgur.com/ueLbkVM.png"></div>
+                    <div class="pay-vault" onclick="setPay('GOPAY', this)"><img src="https://i.imgur.com/JFiu72F.jpeg" style="border-radius:5px;"></div>
+                </div>
+
+                <button onclick="sendOrder()" class="execute-btn">EXECUTE TRANSACTION</button>
+            </div>
         </div>
     </div>
 
-    <div id="profileModal" class="modal">
-        <div class="modal-header"><h2>USER IDENTITY</h2><i class="fas fa-times" onclick="closeModal('profileModal')"></i></div>
-        <div style="text-align:center;">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:100px; border-radius:20px; border:2px solid var(--gold); margin-bottom:15px;">
-            <h2 id="p-user" class="fire-text">SEZEAN</h2>
-            <p style="color:var(--gold); font-size:12px;">NIGHTMARE ELITE</p>
-            <div style="margin-top:20px; text-align:left;">
-                <p>ENERGY: <b id="p-bal" style="color:var(--gold);">0 CR</b></p>
-                <p>LEVEL: <b>LV. 99</b></p>
-                <p>STATUS: <b style="color:#00ff00;">ONLINE</b></p>
+    <div id="profileModal" class="modal" style="background: #000;">
+        <div id="fire-particles" style="position: absolute; inset: 0; pointer-events: none;"></div>
+        <div class="modal-header">
+            <h2 class="fire-text">SYSTEM CORE</h2>
+            <i class="fas fa-times-circle" onclick="closeAllModals()" style="font-size: 28px; cursor: pointer; color:var(--red)"></i>
+        </div>
+        <div class="profile-wrapper" style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <div style="padding: 40px 20px; background: var(--glass); border-radius: 30px; border: 1px solid var(--gold);">
+                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:120px; border-radius:50%; border:3px solid #000; margin-bottom:15px;">
+                <h2 id="prof-user" class="fire-text">SEZEAN</h2>
+                <p style="font-family:'Orbitron'; font-size:10px; color:var(--gold)">SUPREME OVERLORD</p>
+                <div style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div style="background:#111; padding:15px; border-radius:15px;">
+                        <span style="font-size:10px; color:#555;">CREDITS</span>
+                        <b id="prof-bal" style="display:block; color:var(--gold)">0 CR</b>
+                    </div>
+                    <div style="background:#111; padding:15px; border-radius:15px;">
+                        <span style="font-size:10px; color:#555;">RANK</span>
+                        <b style="display:block; color:var(--red)">MYTHIC</b>
+                    </div>
+                </div>
             </div>
-            <button onclick="logout()" class="auth-btn" style="margin-top:30px;">LOGOUT</button>
+            <button onclick="logout()" class="execute-btn" style="background:#111; border:1px solid var(--red); margin-top:30px;">TERMINATE SESSION</button>
         </div>
     </div>
-
-    <div id="shopModal" class="modal"><div class="modal-header"><h2>MARKET</h2><i class="fas fa-times" onclick="closeModal('shopModal')"></i></div><p>Segera Hadir.</p></div>
-    <div id="portModal" class="modal"><div class="modal-header"><h2>PORTO</h2><i class="fas fa-times" onclick="closeModal('portModal')"></i></div><p>Project List Sezean.</p></div>
-    <div id="topupModal" class="modal"><div class="modal-header"><h2>TOPUP</h2><i class="fas fa-times" onclick="closeModal('topupModal')"></i></div><p>Hubungi Admin.</p></div>
 
     <script>
         const firebaseConfig = {
@@ -220,76 +561,137 @@
         const db = firebase.database();
 
         window.onload = () => {
-            const user = localStorage.getItem('activeUser');
-            if(user) showMain(user);
+            const saved = localStorage.getItem('sezean_user');
+            if(saved) startApp(saved);
+            createParticles();
         };
 
-        function toggleAuth(m) {
-            document.getElementById('login-box').style.display = m === 'reg' ? 'none' : 'block';
-            document.getElementById('register-box').style.display = m === 'reg' ? 'block' : 'none';
+        // AUTH & DATABASE
+        function toggleAuth(type) {
+            document.getElementById('login-box').style.display = type === 'reg' ? 'none' : 'block';
+            document.getElementById('register-box').style.display = type === 'reg' ? 'block' : 'none';
         }
 
         function handleLogin() {
             const u = document.getElementById('log-user').value.toLowerCase().trim();
             const p = document.getElementById('log-pass').value;
-            if(!u || !p) return alert("Isi data!");
             db.ref('accounts/' + u).once('value').then(s => {
-                if(s.exists() && s.val() === p) { localStorage.setItem('activeUser', u); showMain(u); }
-                else alert("Data Salah!");
+                if(s.exists() && s.val() === p) {
+                    localStorage.setItem('sezean_user', u);
+                    startApp(u);
+                } else alert("DENIED");
             });
         }
 
         function handleRegister() {
             const u = document.getElementById('reg-user').value.toLowerCase().trim();
             const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Lengkapi data!");
+            if(!u || !p) return alert("Fill all!");
             db.ref('accounts/' + u).set(p);
-            db.ref('users/' + u).set({credits: 0}).then(() => { alert("Sukses!"); toggleAuth('log'); });
+            db.ref('users/' + u).set({ credits: 0 }).then(() => { toggleAuth('log'); });
         }
 
-        function showMain(u) {
+        function startApp(u) {
             document.getElementById('auth-page').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
             document.getElementById('hero-user').innerText = '@' + u.toUpperCase();
-            document.getElementById('p-user').innerText = u.toUpperCase();
+            document.getElementById('prof-user').innerText = u.toUpperCase();
             db.ref('users/' + u + '/credits').on('value', s => {
-                const b = s.val() || 0;
-                document.getElementById('user-balance').innerText = b + ' CR';
-                document.getElementById('p-bal').innerText = b + ' CR';
+                const v = s.val() || 0;
+                document.getElementById('user-balance').innerText = v + ' CR';
+                document.getElementById('prof-bal').innerText = v + ' CR';
             });
         }
 
-        let sGame='', sNom='', sPr='', sPay='';
-        function selectGame(g) {
-            sGame = g; document.getElementById('selected-game-title').innerText = g;
-            document.getElementById('game-list-gui').style.display = 'none';
-            document.getElementById('game-id-gui').style.display = 'block';
-        }
-        function backToGames() {
-            document.getElementById('game-list-gui').style.display = 'block';
-            document.getElementById('game-id-gui').style.display = 'none';
-        }
-        function chooseNom(n, p, el) {
-            sNom=n; sPr=p; document.querySelectorAll('.nom-card').forEach(x=>x.classList.remove('active'));
-            el.classList.add('active');
-        }
-        function choosePay(p, el) {
-            sPay=p; document.querySelectorAll('.pay-btn').forEach(x=>x.classList.remove('active'));
-            el.classList.add('active');
-        }
-        function confirmOrder() {
-            const id = document.getElementById('player-id').value;
-            const zone = document.getElementById('zone-id').value;
-            if(!id || !sNom || !sPay) return alert("Lengkapi Data Order!");
-            const wa = "6289696498841";
-            const msg = `🔥 *NEW ORDER CLOUD STORE* 🔥%0A%0A🎮 Game: *${sGame}*%0A🆔 ID: *${id} (${zone || '-'})*%0A💎 Nominal: *${sNom}*%0A💰 Harga: *${sPr}*%0A💳 Via: *${sPay}*`;
-            window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
+        // NAVIGATION
+        function showPage(id, el) {
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            if(el) {
+                document.querySelectorAll('nav i').forEach(i => i.classList.remove('active'));
+                el.classList.add('active');
+            }
         }
 
-        function openModal(id) { document.getElementById(id).style.display = 'block'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            document.querySelectorAll('nav i').forEach(i => i.classList.remove('active'));
+            document.getElementById('nav-home').classList.add('active');
+        }
+
+        // GAME CENTER LOGIC
+        let sGame='', sNom='', sPr='', sPay='';
+
+        function openOrder(game) {
+            sGame = game;
+            document.getElementById('target-game').innerText = game;
+            document.getElementById('game-selection').style.display = 'none';
+            document.getElementById('order-form').style.display = 'block';
+        }
+
+        function backToGames() {
+            document.getElementById('game-selection').style.display = 'grid';
+            document.getElementById('order-form').style.display = 'none';
+        }
+
+        function setNom(nom, pr, el) {
+            sNom = nom; sPr = pr;
+            document.querySelectorAll('.energy-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function setPay(p, el) {
+            sPay = p;
+            document.querySelectorAll('.pay-vault').forEach(v => v.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function sendOrder() {
+            const id = document.getElementById('p-id').value;
+            const zone = document.getElementById('p-zone').value;
+            if(!id || !sNom || !sPay) return alert("PROTOCOLS INCOMPLETE!");
+            const u = localStorage.getItem('sezean_user');
+            const msg = `⚡ *ORDER INCOMING* ⚡%0A%0A🎮 Realm: *${sGame}*%0A🆔 ID: *${id} (${zone})*%0A💎 Package: *${sNom}*%0A💰 Price: *${sPr}*%0A💳 Method: *${sPay}*%0A👤 Signature: *${u}*`;
+            window.open(`https://wa.me/6289696498841?text=${msg}`, '_blank');
+        }
+
+        // ADMIN TOOLS
+        function triggerSecret() {
+            const activeUser = localStorage.getItem('sezean_user');
+            if (activeUser !== 'sezean') return; 
+            window.clicks = (window.clicks || 0) + 1;
+            if(window.clicks === 5) {
+                document.getElementById('secretPanel').style.display = 'block';
+                window.clicks = 0;
+            }
+            setTimeout(() => window.clicks = 0, 2000);
+        }
+
+        function manageUser() {
+            const t = document.getElementById('s-target').value.toLowerCase().trim();
+            const a = parseInt(document.getElementById('s-amount').value);
+            if(!t || isNaN(a)) return;
+            db.ref('users/' + t + '/credits').transaction(c => (c || 0) + a);
+            alert("CREDITS INJECTED!");
+        }
+
         function logout() { localStorage.clear(); location.reload(); }
+
+        function createParticles() {
+            const containers = [document.getElementById('fire-particles'), document.getElementById('game-particles')];
+            containers.forEach(c => {
+                if(!c) return;
+                for(let i=0; i<30; i++) {
+                    let p = document.createElement('div');
+                    p.className = 'particle';
+                    let size = Math.random() * 3 + 2;
+                    p.style.width = size + 'px'; p.style.height = size + 'px';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.setProperty('--d', (Math.random() * 4 + 2) + 's');
+                    c.appendChild(p);
+                }
+            });
+        }
     </script>
 </body>
 </html>
