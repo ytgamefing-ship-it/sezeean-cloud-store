@@ -863,7 +863,6 @@
 
         // Fungsi narik data novel dari Cloud
         function listenCloudNovels() {
-            // Gue pake ID 'mainNovelGrid' sesuai kodingan awal lu
             const grid = document.getElementById('mainNovelGrid'); 
             if(!grid) return;
             
@@ -871,23 +870,15 @@
                 grid.innerHTML = ""; 
                 snapshot.forEach((doc) => {
                     const data = doc.data();
+                    // --- BAGIAN YANG GUE RAPIHIN DI BAWAH INI ---
                     grid.innerHTML += `
                         <div class="novel-card">
-                            <img src="${data.cover}" class="cover-art-img">
+                            <img src="${data.cover}" class="cover-art-img" onerror="this.src='https://via.placeholder.com/70x90?text=No+Cover'">
                             <div style="position:relative; z-index:2;">
-                                <h4 style="color:var(--primary)">${data.judul}</h4>
-                                <p style="font-size:10px; color:var(--text-dim)">${data.genre}</p>
+                                <h4 style="color:var(--primary); font-size:14px; margin-bottom:4px;">${data.judul}</h4>
+                                <p style="font-size:10px; color:var(--text-dim)">0 Chapters • ${data.genre}</p>
                             </div>
                         </div>`;
                 });
             });
         }
-
-        // Jalankan pas halaman kebuka
-        window.addEventListener('DOMContentLoaded', () => {
-            listenCloudNovels();
-        });
-        // --- END DATABASE CLOUD ---
-    </script>
-</body>
-</html>
