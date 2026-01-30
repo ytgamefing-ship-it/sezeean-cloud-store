@@ -3,695 +3,842 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Store | Sezean Sovereign</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    
+    <title>Cloud Store | Sezean Elite</title>
     <style>
         :root {
-            --red: #ff1a1a;
-            --gold: #d4af37;
-            --bg: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
-            --neon-red: 0 0 15px rgba(255, 26, 26, 0.4);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #090b10;
+            --card: rgba(21, 25, 33, 0.85);
+            --primary: #38bdf8;
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+            --danger: #ff4757;
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; height: 100vh; }
-
-        .clock-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            opacity: 0.3;
-            background: url('https://i.imgur.com/VvyVXjX.jpeg') center center/cover no-repeat;
-            z-index: -1; pointer-events: none;
-        }
-
-        .fire-text {
-            font-family: 'Cinzel Decorative', serif;
-            font-weight: 900;
-            background: linear-gradient(to bottom, #fff, var(--red));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 5px rgba(255, 26, 26, 0.5));
-        }
-
-        /* AUTH PAGE */
-        #auth-page { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: #000; }
-        .auth-card { background: #0a0a0a; padding: 40px; border-radius: 30px; border: 1px solid var(--red); text-align: center; width: 90%; max-width: 380px; box-shadow: 0 0 30px rgba(255, 0, 0, 0.2); }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 12px; background: #111; border: 1px solid #222; border-radius: 12px; color: #fff; outline: none; transition: 0.3s; font-family: 'Orbitron'; font-size: 12px; }
-        .auth-input:focus { border-color: var(--gold); }
-        .auth-btn { width: 100%; padding: 15px; background: var(--red); border: none; color: #fff; font-weight: 800; border-radius: 12px; cursor: pointer; font-family: 'Orbitron'; }
-
-        /* HEADER & NAV */
-        header { padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); border-bottom: 3px solid var(--red); position: sticky; top: 0; z-index: 100; }
-        nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; background: rgba(10,10,10,0.95); border-radius: 30px; border: 1px solid #222; display: flex; justify-content: space-around; padding: 15px; backdrop-filter: blur(10px); z-index: 999; }
-        nav i { font-size: 22px; color: #444; cursor: pointer; transition: 0.3s; }
-        nav i.active { color: var(--red); text-shadow: 0 0 10px var(--red); }
-
-        .container { padding: 20px 6% 120px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        #secretPanel { display: none; background: #0d0000; border: 1px solid var(--red); padding: 15px; border-radius: 20px; margin-bottom: 20px; animation: slideDown 0.3s ease; position: relative; z-index: 10; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        body { 
+            background: url('https://i.pinimg.com/736x/de/b5/13/deb513f325d81e493ee6936fea555228.jpg') no-repeat center center fixed; 
+            background-size: cover; 
+            color: var(--text); 
+            overflow-x: hidden; 
+            padding-bottom: 90px;
+            min-height: 100vh;
+        }
 
-        .log-card { background: var(--glass); border: 1px solid #1a1a1a; border-radius: 20px; padding: 15px; margin-bottom: 20px; }
-        .log-entry { display: flex; justify-content: space-between; font-size: 10px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        body::after {
+            content: ''; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.75); z-index: -2;
+        }
 
-        .balance-card { background: linear-gradient(135deg, #200000, #000); padding: 25px; border-radius: 25px; border: 1px solid var(--gold); margin-bottom: 25px; }
-        .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
-        .menu-box { background: #0f0f0f; border: 1px solid #222; padding: 15px 5px; border-radius: 18px; text-align: center; cursor: pointer; }
-        .menu-box i { font-size: 20px; color: var(--red); margin-bottom: 5px; display: block; }
+        /* --- UI UTILS --- */
+        .page { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: none; flex-direction: column; overflow-y: auto; }
+        .page-nav { padding: 20px; display: flex; align-items: center; gap: 15px; background: rgba(9, 11, 16, 0.9); backdrop-filter: blur(10px); position: sticky; top:0; z-index: 1100; border-bottom: 1px solid var(--glass); }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 25px; margin: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        
+        /* --- LOGIN & MODAL --- */
+        #loginOverlay { position: fixed; inset: 0; background: linear-gradient(-45deg, #090b10, #1e293b, #0f172a, #020617); background-size: 400% 400%; animation: meshGradient 10s ease infinite; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        @keyframes meshGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .login-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px 30px; border-radius: 30px; width: 100%; max-width: 380px; text-align: center; backdrop-filter: blur(25px); }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-box { background: #151921; border: 1px solid var(--danger); padding: 25px; border-radius: 20px; width: 85%; max-width: 300px; text-align: center; }
 
-        /* GAME GRID */
-        .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .game-card { background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 20px; padding: 10px; text-align: center; transition: 0.4s; cursor: pointer; overflow: hidden; position: relative; }
-        .game-card:active { transform: scale(0.95); border-color: var(--red); }
-        .game-card img { width: 100%; border-radius: 12px; margin-bottom: 8px; filter: grayscale(30%); transition: 0.4s; }
-        .game-card:hover img { filter: grayscale(0%); transform: scale(1.05); }
+        /* --- ADMIN LOGIC --- */
+        .admin-only { display: none !important; }
+        body.is-admin .admin-only { display: flex !important; }
+        .admin-only-inline { display: none; }
+        body.is-admin .admin-only-inline { display: inline-block; }
 
-        /* MODAL REMAKE */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; padding: 20px 6%; overflow-y: auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-        .section-header { font-family: 'Orbitron'; font-size: 11px; color: var(--gold); margin: 25px 0 12px; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; }
-        .section-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, #222, transparent); }
+        /* --- GRID & CARDS --- */
+        .header-container { padding: 30px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .brand-text { font-size: 20px; font-weight: 900; letter-spacing: 3px; color: var(--primary); }
+        .novel-grid { display: grid; gap: 15px; padding: 0 20px; }
+        .novel-card { position: relative; border-radius: 20px; padding: 18px; display: flex; gap: 15px; align-items: center; cursor: pointer; background: #111; border: 1px solid var(--glass); overflow: hidden; }
+        .novel-card::before { content: ''; position: absolute; inset: 0; background: rgba(5, 7, 10, 0.6); backdrop-filter: blur(2px); z-index: 1; }
+        .cover-art-img { width: 70px; height: 90px; border-radius: 10px; object-fit: cover; position: relative; z-index: 2; }
+        
+        /* --- INPUTS --- */
+        input, textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 15px; color: white; margin-bottom: 15px; outline: none; }
+        .btn-action { width: 100%; padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; background: var(--primary); color: #000; transition: 0.3s; }
+        .btn-action:active { transform: scale(0.95); }
 
-        /* ORDER FORM GAHAR */
-        .input-vault { background: rgba(255,255,255,0.02); border: 1px solid #222; border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; box-shadow: inset 0 0 10px #000; }
-        .input-vault i { color: var(--red); font-size: 14px; }
-        .input-vault input { background: transparent; border: none; color: #fff; outline: none; width: 100%; font-family: 'Orbitron'; font-size: 13px; }
+        /* --- CHAPTER CARD (FIXED) --- */
+        .ch-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            padding: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-radius: 15px; 
+            margin: 0 20px 12px; 
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .ch-card:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--primary); }
+        .ch-card:active { transform: scale(0.98); background: rgba(56, 189, 248, 0.1); }
+        
+        .ch-info { flex: 1; } /* Biar text ambil sisa ruang */
 
-        .energy-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.3s; cursor: pointer; text-align: center; position: relative; }
-        .energy-card.active { border-color: var(--red); background: rgba(255, 26, 26, 0.05); box-shadow: var(--neon-red); }
-        .energy-card img { width: 32px; filter: drop-shadow(0 0 5px var(--red)); }
-        .energy-card b { font-family: 'Orbitron'; font-size: 10px; color: #fff; }
-        .energy-card span { font-size: 9px; color: var(--gold); }
+        /* --- BOTTOM NAV --- */
+        .nav-bar-bottom { position: fixed; bottom: 15px; left: 15px; right: 15px; height: 70px; background: rgba(21, 25, 33, 0.95); backdrop-filter: blur(15px); border-radius: 30px; display: flex; justify-content: space-around; align-items: center; border: 1px solid var(--glass); z-index: 900; }
+        .add-btn { width: 55px; height: 55px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #000; margin-top: -50px; border: 6px solid #090b10; box-shadow: 0 8px 20px rgba(56,189,248,0.3); }
+        
+        .filter-chip { padding: 6px 15px; background: rgba(255,255,255,0.05); border-radius: 20px; font-size: 12px; white-space: nowrap; cursor: pointer; border: 1px solid var(--glass); }
+        .filter-chip.active { background: var(--primary); color: #000; font-weight: 700; }
+        .genre-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 20px 15px; }
 
-        .pay-vault { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; }
-        .pay-vault img { height: 25px; filter: brightness(0.8); }
-        .pay-vault.active { border-color: #00ff00; background: rgba(0, 255, 0, 0.05); box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
-        .pay-vault.active img { filter: brightness(1); }
-
-        .execute-btn { width: 100%; padding: 22px; background: linear-gradient(45deg, #8b0000, #ff1a1a); border: none; border-radius: 18px; color: #fff; font-family: 'Orbitron'; font-weight: 900; letter-spacing: 3px; margin-top: 25px; cursor: pointer; box-shadow: 0 5px 20px rgba(255, 26, 26, 0.3); transition: 0.3s; }
-        .execute-btn:active { transform: translateY(3px); filter: brightness(1.2); }
-
-        .particle { position: absolute; background: var(--red); border-radius: 50%; filter: blur(2px); opacity: 0.6; animation: flyUp var(--d) linear infinite; }
-        @keyframes flyUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        .genre-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .genre-cb { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; font-size: 13px; cursor: pointer; }
     </style>
 </head>
-<body>
+<body onload="checkSession()">
 
-    <div class="clock-bg"></div>
-
-    <div id="auth-page">
-        <div class="auth-card" id="login-box">
-            <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:70px; border-radius:50%; border:2px solid var(--red); margin-bottom:15px;">
-            <h2 class="fire-text" style="font-size: 26px;">CLOUD STORE</h2>
-            <div style="margin-top: 20px;">
-                <input type="text" id="log-user" class="auth-input" placeholder="Username">
-                <input type="password" id="log-pass" class="auth-input" placeholder="Password">
-                <button onclick="handleLogin()" class="auth-btn">ACCESS SYSTEM</button>
-                <p onclick="toggleAuth('reg')" style="margin-top:20px; font-size:11px; color:#666; cursor:pointer;">No identity? <span style="color:var(--gold)">Register</span></p>
-            </div>
-        </div>
-        <div class="auth-card" id="register-box" style="display:none;">
-            <h2 class="fire-text">NEW SOUL</h2>
-            <div style="margin-top: 20px;">
-                <input type="text" id="reg-user" class="auth-input" placeholder="Set Username">
-                <input type="password" id="reg-pass" class="auth-input" placeholder="Set Password">
-                <button onclick="handleRegister()" class="auth-btn" style="background:var(--gold); color:#000;">CREATE IDENTITY</button>
-                <p onclick="toggleAuth('log')" style="margin-top:20px; font-size:11px; color:var(--red); cursor:pointer;">Return</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="main-content" style="display:none;">
-        <header>
-            <div style="display:flex; align-items:center; gap:10px;">
-                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:35px; border-radius:50%; border:1px solid var(--gold);">
-                <span class="fire-text" style="font-size:18px;">CLOUD STORE</span>
-            </div>
-            <i class="fas fa-fingerprint" onclick="triggerSecret()" style="color:var(--gold); font-size:20px; cursor:pointer;"></i>
-        </header>
-
-        <div class="container">
-<div id="secretPanel">
-    <p style="font-size:10px; color:var(--gold); font-family:'Orbitron';">ADMIN OVERRIDE</p>
-    <input type="text" id="s-target" class="auth-input" placeholder="Target User">
-    <input type="number" id="s-amount" class="auth-input" placeholder="Amount">
-    
-    <div style="display: flex; gap: 10px;">
-        <button onclick="manageUser('add')" class="auth-btn" style="background:#006600; flex: 1;">INJECT (+)</button>
-        <button onclick="manageUser('sub')" class="auth-btn" style="background:#8b0000; flex: 1;">DRAIN (-)</button>
-    </div>
-</div>
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Orbitron:wght@400;900&display=swap');
-
-    .energy-transparent-ui {
-        width: 380px;
-        padding: 20px;
-        /* Background total dihapus agar web asli terlihat */
-        background: transparent;
-        font-family: 'Orbitron', sans-serif;
-        position: relative;
-    }
-
-    /* Aksen Siku Mewah di Pojok */
-    .energy-transparent-ui::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0;
-        width: 40px; height: 40px;
-        border-top: 2px solid #ff0000;
-        border-left: 2px solid #ff0000;
-    }
-
-    .energy-transparent-ui::after {
-        content: "";
-        position: absolute;
-        bottom: 0; right: 0;
-        width: 40px; height: 40px;
-        border-bottom: 2px solid #ff0000;
-        border-right: 2px solid #ff0000;
-    }
-
-    .status-header {
-        font-size: 10px;
-        color: #ff0000;
-        letter-spacing: 5px;
-        font-weight: 900;
-        margin-bottom: -10px;
-        display: block;
-        opacity: 0.8;
-    }
-
-    .balance-wrapper {
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-        border-bottom: 1px solid rgba(255, 0, 0, 0.3);
-        margin-bottom: 15px;
-    }
-
-    #user-balance {
-        font-family: 'Cinzel Decorative', cursive;
-        font-size: 56px;
-        margin: 10px 0;
-        /* Gradasi Emas */
-        background: linear-gradient(180deg, #fff5ad 0%, #ffca28 50%, #b8860b 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 0 10px rgba(255, 202, 40, 0.3));
-    }
-
-    .unit {
-        color: #fff;
-        font-size: 18px;
-        font-weight: 400;
-        opacity: 0.6;
-    }
-
-    .footer-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .user-info {
-        border-left: 3px solid #ff0000;
-        padding-left: 12px;
-    }
-
-    #hero-user {
-        display: block;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 900;
-        letter-spacing: 2px;
-    }
-
-    .tagline {
-        font-size: 8px;
-        color: #ff0000;
-        text-transform: uppercase;
-    }
-
-    .status-badge-new {
-        border: 1px solid #ff0000;
-        padding: 4px 12px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(255, 0, 0, 0.1);
-    }
-
-    .pulse-dot {
-        width: 6px;
-        height: 6px;
-        background: #ff0000;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #ff0000;
-        animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-        50% { opacity: 0; }
-    }
-</style>
-
-<div class="energy-transparent-ui">
-    <span class="status-header">ENERGY STATUS</span>
-    
-    <div class="balance-wrapper">
-        <h1 id="user-balance">0</h1>
-        <span class="unit">CR</span>
-    </div>
-
-    <div class="footer-info">
-        <div class="user-info">
-            <span class="tagline">Cloud Store Resident</span>
-            <span id="hero-user">SEZEAN</span>
-        </div>
-
-        <div class="status-badge-new">
-            <div class="pulse-dot"></div>
-            <span style="color:#fff; font-size:10px; font-weight:900;">ONLINE</span>
-        </div>
-    </div>
-</div>
-
-
-            <div class="quick-grid">
-                <div class="menu-box" onclick="showPage('gameModal')"><i class="fas fa-gamepad"></i><span style="font-size:9px;">Games</span></div>
-                <div class="menu-box" onclick="window.open('https://wa.me/6289696498841')"><i class="fas fa-headset"></i><span style="font-size:9px;">Support</span></div>
-                <div class="menu-box" onclick="alert('Coming Soon')"><i class="fas fa-bolt"></i><span style="font-size:9px;">Flash</span></div>
-                <div class="menu-box" onclick="logout()"><i class="fas fa-power-off"></i><span style="font-size:9px;">Logout</span></div>
-            </div>
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-
-    :root {
-        /* Gradasi merah mewah: Crimson ke Dark Blood */
-        --lux-red: linear-gradient(90deg, #ff0000, #8b0000);
-        --lux-gold: linear-gradient(135deg, #ffdf00, #b8860b);
-        --lux-cyan: linear-gradient(135deg, #00f2ff, #0066ff);
-        /* Border halus supaya tetap kelihatan batasnya di web terang/gelap */
-        --border-light: rgba(255, 255, 255, 0.1);
-    }
-
-    .terminal-frame {
-        /* Background dihapus agar transparan */
-        background: transparent; 
-        border: 1px solid var(--border-light);
-        padding: 20px;
-        font-family: 'Space Mono', monospace;
-        max-width: 450px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Garis merah vertikal di sisi kiri tetap dipertahankan */
-    .terminal-frame::before {
-        content: "";
-        position: absolute;
-        left: 0; top: 0; bottom: 0;
-        width: 4px;
-        background: var(--lux-red);
-        box-shadow: 2px 0 10px rgba(255, 0, 0, 0.3);
-    }
-
-    .header-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding-bottom: 8px;
-    }
-
-    .section-header {
-        font-weight: 700;
-        letter-spacing: 3px;
-        background: var(--lux-red);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-transform: uppercase;
-        font-size: 0.9rem;
-        /* Efek glow pada teks merah */
-        filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.4));
-    }
-
-    .log-stack {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .log-item {
-        /* Background item dibuat sangat tipis agar tidak menutupi bg web utama */
-        background: rgba(255, 255, 255, 0.03);
-        padding: 12px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .log-label {
-        color: rgba(255, 255, 255, 0.7); /* Putih transparan agar adaptif */
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .status-val {
-        font-weight: bold;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-    }
-
-    /* Gradasi pada teks status */
-    .grad-red { background: var(--lux-red); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 5px rgba(255,0,0,0.5)); }
-    .grad-gold { background: var(--lux-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .grad-cyan { background: var(--lux-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    .timestamp {
-        color: rgba(255, 255, 255, 0.3);
-        font-size: 0.6rem;
-        margin-top: 3px;
-    }
-</style>
-
-<div class="terminal-frame">
-    <div class="header-group">
-        <div class="section-header">System Authentication</div>
-        <div style="color:rgba(255,255,255,0.2); font-size: 0.7rem;">ID: SZ-2026</div>
-    </div>
-
-    <div class="log-stack">
-        <div class="log-item">
-            <div>
-                <div class="log-label">Kernel Session</div>
-                <div class="timestamp">STAMP: 27.01.2026_14:47</div>
-            </div>
-            <span class="status-val grad-gold">STABLE</span>
-        </div>
-
-        <div class="log-item">
-            <div>
-                <div class="log-label">V-Secure Protocol</div>
-                <div class="timestamp">ENCRYPTION: AES-256</div>
-            </div>
-            <span class="status-val grad-cyan">PROTECTED</span>
-        </div>
-
-        <div class="log-item">
-            <div>
-                <div class="log-label">Cloud Store Uplink</div>
-                <div class="timestamp">NODE: SEZEAN_SERVER</div>
-            </div>
-            <span class="status-val grad-red">ENCRYPTED</span>
-        </div>
-
-        <div class="log-item">
-            <div>
-                <div class="log-label">Firewall Status</div>
-                <div class="timestamp">THREAT_LVL: NULL</div>
-            </div>
-            <span class="status-val grad-red">ACTIVE</span>
-        </div>
-    </div>
-</div>
-
-            <div class="section-header">ELITE ACCESS</div>
-            <div class="p-grid">
-                <div class="game-card" onclick="showPage('gameModal')">
-                    <img src="https://i.imgur.com/1kFNSpI.jpeg">
-                    <b style="font-size:11px; font-family:'Orbitron';">DIRECT RECHARGE</b>
-                </div>
-                <div class="game-card" onclick="alert('SOON')">
-                    <img src="https://i.imgur.com/T8pyHgg.png">
-                    <b style="font-size:11px; font-family:'Orbitron';">SHADOW SV</b>
-                </div>
-            </div>
-        </div>
-
-        <nav>
-            <i id="nav-home" class="fas fa-home active" onclick="closeAllModals()"></i>
-            <i id="nav-game" class="fas fa-gamepad" onclick="showPage('gameModal', this)"></i>
-            <i id="nav-profile" class="fas fa-user-shield" onclick="showPage('profileModal', this)"></i>
-        </nav>
-    </div>
-
-    <div id="gameModal" class="modal" style="background: radial-gradient(circle at top, #1a0000 0%, #000 100%);">
-        <div id="game-particles" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;"></div>
+    <div id="loginOverlay" style="background: #020617; position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+        <div style="position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%); filter: blur(50px); animation: orbit 15s linear infinite;"></div>
         
-        <div class="modal-header" style="position: relative; z-index: 10;">
-            <div>
-                <h2 class="fire-text" style="letter-spacing: 5px; font-size: 26px;">GAME VAULT</h2>
-                <span style="font-size: 9px; color: var(--gold); font-family: 'Orbitron';">SECURE TRANSACTION PORTAL</span>
-            </div>
-            <i class="fas fa-times-circle" onclick="closeAllModals()" style="color: #fff; font-size: 28px; cursor: pointer; opacity: 0.7;"></i>
-        </div>
-
-        <div class="game-wrapper" style="position: relative; z-index: 10; max-width: 500px; margin: 0 auto;">
-            <div id="game-selection" class="p-grid">
-                <div class="game-card" onclick="openOrder('MOBILE LEGENDS')">
-                    <img src="https://i.imgur.com/1kFNSpI.jpeg">
-                    <b style="font-family:'Orbitron'; font-size:10px; color:var(--gold);">MLBB RECHARGE</b>
-                </div>
-                <div class="game-card" onclick="openOrder('HONOR OF KINGS')">
-                    <img src="https://i.imgur.com/Al6R1jO.jpeg">
-                    <b style="font-family:'Orbitron'; font-size:10px; color:var(--gold);">HOK GLOBAL</b>
-                </div>
-            </div>
-
-            <div id="order-form" style="display:none; animation: slideDown 0.4s ease;">
-                <div onclick="backToGames()" style="display:inline-block; background:rgba(255,255,255,0.05); padding:8px 15px; border-radius:10px; color: var(--gold); font-family: 'Orbitron'; font-size: 10px; margin-bottom: 25px; cursor: pointer; border: 1px solid #222;">
-                    <i class="fas fa-chevron-left"></i> BACK TO VAULT
-                </div>
+        <div class="login-box-pro">
+            <div class="login-content">
+                <h2 class="glitch-text" style="letter-spacing: 5px; color: white; font-weight: 900; margin-bottom: 5px;">MASUKAN USER</h2>
+                <div style="height: 2px; width: 50px; background: var(--primary); margin: 0 auto 20px; border-radius: 10px; box-shadow: 0 0 10px var(--primary);"></div>
                 
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <h3 id="target-game" class="fire-text" style="font-size: 24px;">GAME</h3>
-                    <div style="width: 50px; height: 2px; background: var(--red); margin: 10px auto;"></div>
+                <p style="color: var(--text-dim); font-size: 10px; letter-spacing: 2px; margin-bottom: 30px; font-weight: 700;">buat user apapun sesukamu</p>
+                
+                <div class="input-group">
+                    <input type="text" id="userNameInput" placeholder="Enter Username..." autocomplete="off">
+                    <div class="input-line"></div>
                 </div>
 
-                <div class="section-header">USER CREDENTIALS</div>
-                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px;">
-                    <div class="input-vault"><i class="fas fa-user-tag"></i><input type="number" id="p-id" placeholder="USER ID"></div>
-                    <div class="input-vault"><i class="fas fa-globe"></i><input type="number" id="p-zone" placeholder="ZONE"></div>
-                </div>
-
-                <div class="section-header">SELECT ENERGY PACKAGE</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="energy-card" onclick="setNom('86 Diamonds', 'Rp 21.000', this)">
-                        <img src="https://i.imgur.com/EG7hgtC.png">
-                        <b>86 DIAMONDS</b>
-                        <span>Rp 21.000</span>
-                    </div>
-                    <div class="energy-card" onclick="setNom('Weekly Pass', 'Rp 29.000', this)">
-                        <img src="https://i.imgur.com/EG7hgtC.png">
-                        <b>WEEKLY PASS</b>
-                        <span>Rp 29.000</span>
-                    </div>
-                    <div class="energy-card" onclick="setNom('257 Diamonds', 'Rp 62.000', this)">
-                        <img src="https://i.imgur.com/EG7hgtC.png">
-                        <b>257 DIAMONDS</b>
-                        <span>Rp 62.000</span>
-                    </div>
-                    <div class="energy-card" onclick="setNom('Twilight Pass', 'Rp 145.000', this)">
-                        <img src="https://i.imgur.com/EG7hgtC.png">
-                        <b>TWILIGHT PASS</b>
-                        <span>Rp 145.000</span>
+                <div id="passArea" style="display: none; margin-top: 15px;">
+                    <div class="input-group admin-glow">
+                        <input type="password" id="passInput" placeholder="Admin Secret Key">
+                        <div class="input-line" style="background: var(--danger);"></div>
                     </div>
                 </div>
 
-                <div class="section-header">GATEWAY PROTOCOL</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="pay-vault" onclick="setPay('DANA', this)"><img src="https://i.imgur.com/ueLbkVM.png"></div>
-                    <div class="pay-vault" onclick="setPay('GOPAY', this)"><img src="https://i.imgur.com/JFiu72F.jpeg" style="border-radius:5px;"></div>
-                </div>
+                <button class="btn-login-elite" onclick="handleLogin()">
+                    <span>MASUK KE MENU NOVEL</span>
+                </button>
 
-                <button onclick="sendOrder()" class="execute-btn">EXECUTE TRANSACTION</button>
+                <p id="loginToggle" class="admin-toggle-link" onclick="toggleAdminLogin()">
+                    <span>SWITCH TO ADMIN ACCOUNT</span>
+                </p>
             </div>
         </div>
     </div>
 
-    <div id="profileModal" class="modal" style="background: #000;">
-        <div id="fire-particles" style="position: absolute; inset: 0; pointer-events: none;"></div>
-        <div class="modal-header">
-            <h2 class="fire-text">SYSTEM CORE</h2>
-            <i class="fas fa-times-circle" onclick="closeAllModals()" style="font-size: 28px; cursor: pointer; color:var(--red)"></i>
-        </div>
-        <div class="profile-wrapper" style="max-width: 500px; margin: 0 auto; text-align: center;">
-            <div style="padding: 40px 20px; background: var(--glass); border-radius: 30px; border: 1px solid var(--gold);">
-                <img src="https://i.ibb.co.com/zY6H8Tq/1000969560.jpg" style="width:120px; border-radius:50%; border:3px solid #000; margin-bottom:15px;">
-                <h2 id="prof-user" class="fire-text">SEZEAN</h2>
-                <p style="font-family:'Orbitron'; font-size:10px; color:var(--gold)">SUPREME OVERLORD</p>
-                <div style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                    <div style="background:#111; padding:15px; border-radius:15px;">
-                        <span style="font-size:10px; color:#555;">CREDITS</span>
-                        <b id="prof-bal" style="display:block; color:var(--gold)">0 CR</b>
-                    </div>
-                    <div style="background:#111; padding:15px; border-radius:15px;">
-                        <span style="font-size:10px; color:#555;">RANK</span>
-                        <b style="display:block; color:var(--red)">MYTHIC</b>
-                    </div>
-                </div>
+    <style>
+        .login-box-pro {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            padding: 2px; /* Ruang untuk outline glow */
+            background: linear-gradient(135deg, var(--primary), transparent, var(--primary));
+            background-size: 200% 200%;
+            border-radius: 30px;
+            animation: borderRotate 4s linear infinite;
+        }
+
+        .login-content {
+            background: #090b10;
+            border-radius: 28px;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-radius: 12px !important;
+            padding: 18px !important;
+            color: white !important;
+            font-size: 14px;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .input-line {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.4s ease;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .input-group input:focus + .input-line {
+            width: 80%;
+        }
+
+        .btn-login-elite {
+            width: 100%;
+            margin-top: 30px;
+            padding: 18px;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-weight: 900;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .btn-login-elite:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+        }
+
+        .admin-toggle-link {
+            margin-top: 25px;
+            color: var(--text-dim);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .admin-toggle-link:hover {
+            color: white;
+            text-shadow: 0 0 10px white;
+        }
+
+        /* Animations */
+        @keyframes borderRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        .login-box-pro {
+            animation: fadeInScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+
+    <div id="deleteModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 style="color:var(--danger)">Hapus Data?</h3>
+            <p id="modalMsg" style="font-size:13px; color:var(--text-dim); margin-top:10px;">Yakin hapus permanen?</p>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button style="flex:1; padding:12px; border-radius:10px; border:none; background:#2d333b; color:white;" onclick="closeDeleteModal()">BATAL</button>
+                <button id="confirmDelBtn" style="flex:1; padding:12px; border-radius:10px; border:none; background:var(--danger); color:white;">HAPUS</button>
             </div>
-            <button onclick="logout()" class="execute-btn" style="background:#111; border:1px solid var(--red); margin-top:30px;">TERMINATE SESSION</button>
         </div>
     </div>
+
+<header class="header-container">
+    <div class="brand-box">
+        <div class="brand-text">Sezean Novel</div>
+        <div class="brand-sub">BACA NOVEL INDONESIA DISINI</div>
+    </div>
+    
+    <div id="userInitial" onclick="openProfileModal()"></div>
+</header>
+
+<div id="profileModal" class="p-modal-overlay">
+    <div class="p-modal-content">
+        <div class="p-modal-header">
+            <h3>Update Profile</h3>
+            <span class="p-close" onclick="closeProfileModal()">&times;</span>
+        </div>
+        <div class="p-modal-body">
+            <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Masukkan link URL foto profil (Direct Link)</p>
+            <input type="text" id="imgUrlInput" placeholder="https://link-gambar.com/foto.jpg" oninput="previewImage(this.value)">
+            
+            <div id="previewContainer" style="margin: 15px 0;">
+                <img id="imgPreview" src="" style="display:none; width:70px; height:70px; border-radius:12px; margin: 0 auto; border: 2px solid var(--primary); object-fit: cover;">
+            </div>
+
+            <div class="p-modal-btns">
+                <button class="btn-cancel" onclick="closeProfileModal()">Batal</button>
+                <button class="btn-save" onclick="applyProfile()">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* --- 1. BALIKIN ANIMASI BRAND (ROTATE GLOW) --- */
+    .brand-box {
+        position: relative; padding: 10px 20px; border-radius: 12px;
+        overflow: hidden; display: flex; flex-direction: column; align-items: center;
+        z-index: 1; background: #090b10;
+    }
+    .brand-box::before {
+        content: ''; position: absolute; width: 180%; height: 180%;
+        background: conic-gradient(transparent, transparent, var(--primary), transparent);
+        animation: rotateGlow 4s linear infinite; z-index: -1;
+    }
+    .brand-box::after {
+        content: ''; position: absolute; inset: 2px;
+        background: #090b10; border-radius: 10px; z-index: -1;
+    }
+    @keyframes rotateGlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    
+    .brand-text { font-size: 1.3rem; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: 1px; }
+    .brand-sub { font-size: 0.6rem; color: var(--primary); letter-spacing: 1px; font-weight: bold; }
+
+    /* --- 2. HEADER & PROFILE FIX --- */
+    .header-container {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 15px 25px; background: rgba(9, 11, 16, 0.95);
+        backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    #userInitial {
+        width: 45px; height: 45px; 
+        background: linear-gradient(135deg, var(--primary), #ff8800);
+        border-radius: 12px; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.2);
+        background-size: cover; background-position: center; background-repeat: no-repeat;
+        /* KILLER: Buang semua kemungkinan teks SE muncul */
+        font-size: 0 !important; color: transparent !important;
+    }
+
+    /* --- 3. MODAL STYLE FIX (BIAR TENGAH & RAPI) --- */
+    .p-modal-overlay {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+        backdrop-filter: blur(8px); z-index: 9999;
+        display: none; align-items: center; justify-content: center;
+    }
+    .p-modal-overlay.show { display: flex; }
+    .p-modal-content {
+        background: #151921; width: 85%; max-width: 380px; padding: 25px;
+        border-radius: 25px; border: 1px solid rgba(56, 189, 248, 0.2);
+        text-align: center; position: relative;
+    }
+    .p-modal-header h3 { color: var(--primary); margin-bottom: 10px; }
+    .p-close { position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: #666; }
+    
+    .p-modal-body input {
+        width: 100%; padding: 12px; background: #000; border: 1px solid #333;
+        border-radius: 10px; color: #fff; outline: none; text-align: center;
+    }
+    .p-modal-btns { display: flex; gap: 10px; margin-top: 15px; }
+    .btn-save { background: var(--primary); color: #000; flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
+    .btn-cancel { background: #2d333b; color: #fff; flex: 1; padding: 12px; border-radius: 10px; border: none; cursor: pointer; }
+</style>
+
+<script>
+    // FUNGSI UTAMA
+    function openProfileModal() { document.getElementById('profileModal').classList.add('show'); }
+    function closeProfileModal() { document.getElementById('profileModal').classList.remove('show'); }
+
+    function previewImage(url) {
+        const pre = document.getElementById('imgPreview');
+        if(url.trim() !== "") { pre.src = url; pre.style.display = 'block'; }
+        else { pre.style.display = 'none'; }
+    }
+
+    function applyProfile() {
+        const url = document.getElementById('imgUrlInput').value.trim();
+        const box = document.getElementById('userInitial');
+        if (url !== "") {
+            const temp = new Image();
+            temp.src = url;
+            temp.onload = () => {
+                box.style.backgroundImage = `url('${url}')`;
+                localStorage.setItem('user_profile_link', url);
+                closeProfileModal();
+            };
+            temp.onerror = () => { alert("Link gambar rusak!"); };
+        } else {
+            box.style.backgroundImage = "linear-gradient(135deg, var(--primary), #ff8800)";
+            localStorage.removeItem('user_profile_link');
+            closeProfileModal();
+        }
+    }
+
+    window.addEventListener('load', () => {
+        const saved = localStorage.getItem('user_profile_link');
+        if(saved) document.getElementById('userInitial').style.backgroundImage = `url('${saved}')`;
+    });
+</script>
+
+<style>
+    :root {
+        --primary: #ffcc00;
+        --text-dim: #aaa;
+    }
+
+    .welcome-container {
+        margin: 20px;
+        padding: 30px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        /* Efek melayang halus pada seluruh container */
+        animation: floatingCard 6s ease-in-out infinite;
+    }
+
+    /* --- Keyframes Animasi --- */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
+
+    @keyframes floatingCard {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    /* --- Sisi Kiri: User Info --- */
+    .user-info {
+        z-index: 1;
+        animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .status-badge {
+        display: inline-block;
+        margin-bottom: 8px;
+        padding: 4px 12px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 8px;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        /* Animasi muncul setelah delay */
+        animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+
+    .user-info h2 {
+        font-size: 32px;
+        font-weight: 800;
+        margin: 0;
+        color: #fff;
+    }
+
+    #displayName {
+        background: linear-gradient(90deg, var(--primary), #fff, var(--primary));
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+        /* Animasi kilauan teks */
+        animation: shimmer 4s linear infinite;
+    }
+
+    /* --- Sisi Kanan: Stats --- */
+    .user-stats {
+        display: flex;
+        gap: 15px;
+        z-index: 1;
+        animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    }
+
+    .stat-item {
+        padding: 12px 18px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 18px;
+        min-width: 70px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-5px);
+        border-color: var(--primary);
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--primary);
+    }
+
+    .stat-label {
+        font-size: 9px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* --- Hiasan Background --- */
+    .bg-glow {
+        position: absolute;
+        right: -30px;
+        bottom: -30px;
+        width: 150px;
+        height: 150px;
+        background: var(--primary);
+        filter: blur(90px);
+        opacity: 0.12;
+        z-index: 0;
+    }
+</style>
+
+<div class="welcome-container">
+    <div class="bg-glow"></div>
+    
+    <div class="user-info">
+        <div class="status-badge" id="adminStatus">Reader Mode</div>
+        <h2>Hi, <span id="displayName">Sezean</span></h2>
+    </div>
+
+    <div class="user-stats">
+        <div class="stat-item">
+            <span class="stat-value" id="libCount">12</span>
+            <span class="stat-label">Library</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value">4</span>
+            <span class="stat-label">Recent</span>
+        </div>
+    </div>
+</div>
+
+    <div style="margin: 0 20px 15px;"><input type="text" id="searchInput" placeholder="Cari judul..." oninput="renderLib()" style="margin-bottom:0"></div>
+
+    <div class="genre-scroll">
+        <div class="filter-chip active" onclick="filterByGenre('All', this)">All</div>
+        <div class="filter-chip" onclick="filterByGenre('Action', this)">Action</div>
+        <div class="filter-chip" onclick="filterByGenre('Romance', this)">Romance</div>
+        <div class="filter-chip" onclick="filterByGenre('Fantasy', this)">Fantasy</div>
+        <div class="filter-chip" onclick="filterByGenre('Echi', this)">Echi</div>
+        <div class="filter-chip" onclick="filterByGenre('Isekai', this)">Isekai</div>
+        <div class="filter-chip" onclick="filterByGenre('Horror', this)">Horror</div>
+    </div>
+
+    <div id="novelGrid" class="novel-grid"></div>
+
+    <div id="detailPage" class="page">
+        <div class="page-nav"><span onclick="closePage('detailPage')">✕</span><span id="detTitle">Detail</span></div>
+        <div style="text-align:center; padding:40px 20px; background:radial-gradient(circle at top, #001a33 0%, #090b10 80%);">
+            <img id="detailCover" src="" style="width:140px; height:200px; border-radius:12px; object-fit:cover;">
+            <h1 id="novelDisplayTitle" style="margin-top:20px; font-size: 26px;"></h1>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px; font-size: 13px;">
+                <div onclick="handleLike()" style="cursor:pointer; background:rgba(255,255,255,0.05); padding:8px 15px; border-radius:20px;"><span id="detLikes">❤️ 0</span></div>
+                <div style="background:rgba(255,255,255,0.05); padding:8px 15px; border-radius:20px;">⭐ <span id="detRating">0.0</span></div>
+            </div>
+            <div id="detGenreContainer" style="margin-top:20px; display:flex; flex-wrap:wrap; justify-content:center; gap:8px;"></div>
+        </div>
+
+        <div style="padding: 25px; border-bottom: 1px solid var(--glass);">
+            <p id="detDescription" style="color: var(--text-dim); font-size: 14px; line-height: 1.7;"></p>
+        </div>
+
+        <div id="chapterList" style="padding-bottom:100px; margin-top: 10px;"></div>
+
+        <div class="nav-bar-bottom admin-only">
+             <button class="btn-action" style="width: auto; padding: 10px 25px;" onclick="openPage('editorPage')">+ CHAPTER</button>
+             <button class="btn-action" style="width: auto; background: var(--danger); color: white; padding: 10px 25px;" onclick="triggerDeleteNovel()">HAPUS</button>
+        </div>
+    </div>
+
+    <div id="newNovelPage" class="page" style="background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), #090b10);">
+        <div class="page-nav" style="border-bottom: 1px solid rgba(56, 189, 248, 0.2); background: rgba(9, 11, 16, 0.95);">
+            <span onclick="closePage('newNovelPage')" style="font-size: 24px; color: var(--primary); cursor: pointer;">✕</span>
+            <span style="font-weight: 900; letter-spacing: 3px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">UPLOAD NEW NOVEL</span>
+        </div>
+
+        <div style="padding: 20px 20px 100px;">
+            <div class="glass-card" style="border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); border-radius: 30px; padding: 30px;">
+                
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; font-size: 10px; font-weight: 900; color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; margin-left: 5px;">NOVEL TITLE</label>
+                    <input type="text" id="newNovelName" placeholder="Tulis judul yang epic..." 
+                        style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--primary); border-radius: 12px; padding: 18px; font-weight: 600; transition: 0.3s; margin-bottom: 0;">
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; font-size: 10px; font-weight: 900; color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; margin-left: 5px;">COVER IMAGE URL</label>
+                    <input type="text" id="newNovelCover" placeholder="https://imgur.com/your-art.jpg" 
+                        style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--primary); border-radius: 12px; padding: 18px; font-weight: 600; transition: 0.3s; margin-bottom: 0;">
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; font-size: 10px; font-weight: 900; color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; margin-left: 5px;">STORY SYNOPSIS</label>
+                    <textarea id="newNovelDesc" rows="5" placeholder="Gambarkan duniamu dalam beberapa kalimat..." 
+                        style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--primary); border-radius: 12px; padding: 18px; font-weight: 500; line-height: 1.6; resize: none; transition: 0.3s; margin-bottom: 0;"></textarea>
+                </div>
+
+                <label style="display: block; font-size: 10px; font-weight: 900; color: var(--primary); letter-spacing: 2px; margin-bottom: 15px; margin-left: 5px;">SELECT GENRES</label>
+                <div id="multiGenreContainer" class="genre-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 35px;">
+                    <label class="genre-cb-pro">
+                        <input type="checkbox" value="Action" style="display:none">
+                        <span>Action</span>
+                    </label>
+                    <label class="genre-cb-pro">
+                        <input type="checkbox" value="Romance" style="display:none">
+                        <span>Romance</span>
+                    </label>
+                    <label class="genre-cb-pro">
+                        <input type="checkbox" value="Fantasy" style="display:none">
+                        <span>Fantasy</span>
+                    </label>
+                    <label class="genre-cb-pro">
+                        <input type="checkbox" value="Isekai" style="display:none">
+                        <span>Isekai</span>
+                    </label>
+                    <label class="genre-cb-pro">
+                        <input type="checkbox" value="Echi" style="display:none">
+                        <span>Echi</span>
+                    </label>
+                    <label class="genre-cb-pro">
+                        <input type="checkbox" value="Horror" style="display:none">
+                        <span>Horror</span>
+                    </label>
+                </div>
+
+                <button class="btn-action" onclick="createNewNovel()" 
+                    style="background: linear-gradient(45deg, var(--primary), #0ea5e9); color: #000; padding: 20px; border-radius: 15px; font-size: 14px; letter-spacing: 2px; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3); border: none;">
+                    🚀 PUBLISH NOW
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .genre-cb-pro {
+            cursor: pointer;
+            text-align: center;
+        }
+        .genre-cb-pro span {
+            display: block;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-dim);
+            transition: 0.3s;
+        }
+        .genre-cb-pro input:checked + span {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+            transform: translateY(-2px);
+        }
+        input:focus, textarea:focus {
+            border-color: var(--primary) !important;
+            background: rgba(0,0,0,0.6) !important;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+        }
+    </style>
+
+    <div id="editorPage" class="page">
+        <div class="page-nav"><span onclick="closePage('editorPage')">✕</span><span>Tulis Chapter</span></div>
+        <div style="padding: 20px;">
+            <input type="text" id="chapTitle" placeholder="Judul Chapter">
+            <textarea id="chapContent" rows="15" placeholder="Isi cerita..."></textarea>
+            <button class="btn-action" onclick="addChapter()">SIMPAN CHAPTER</button>
+        </div>
+    </div>
+
+    <div id="readerPage" class="page">
+        <div class="page-nav"><span onclick="closePage('readerPage')">←</span><span id="readTitle">Baca</span></div>
+        <div id="readerContent" style="padding:30px; line-height:2; color:#cbd5e1; font-size:17px; white-space:pre-wrap;"></div>
+    </div>
+
+    <nav class="nav-bar-bottom">
+        <span onclick="location.reload()" style="font-size:22px; cursor:pointer;">🏠</span>
+        <div class="add-btn admin-only" onclick="openPage('newNovelPage')">+</div>
+        <span onclick="logout()" style="font-size:22px; cursor:pointer;">🚪</span>
+    </nav>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyAN5RziIPoQVXP0Ykn8GoLodgc4eeDDJdk",
-            authDomain: "sezeean-store.firebaseapp.com",
-            databaseURL: "https://sezeean-store-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "sezeean-store",
-            storageBucket: "sezeean-store.firebasestorage.app",
-            messagingSenderId: "128288287658",
-            appId: "1:128288287658:web:774191d598cdd25c9119d3"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        let lib = JSON.parse(localStorage.getItem('cs_v5_db')) || [];
+        let curNovIdx = null;
+        let selectedFilterGenre = 'All';
+        const ADMIN_PASS = "AdminBahagiaBangetJanganLupaBuatKissYaww";
+        let isAdminLogin = false;
 
-        window.onload = () => {
-            const saved = localStorage.getItem('sezean_user');
-            if(saved) startApp(saved);
-            createParticles();
-        };
-
-        // AUTH & DATABASE
-        function toggleAuth(type) {
-            document.getElementById('login-box').style.display = type === 'reg' ? 'none' : 'block';
-            document.getElementById('register-box').style.display = type === 'reg' ? 'block' : 'none';
+        function toggleAdminLogin() {
+            isAdminLogin = !isAdminLogin;
+            document.getElementById('passArea').style.display = isAdminLogin ? 'block' : 'none';
         }
 
         function handleLogin() {
-            const u = document.getElementById('log-user').value.toLowerCase().trim();
-            const p = document.getElementById('log-pass').value;
-            db.ref('accounts/' + u).once('value').then(s => {
-                if(s.exists() && s.val() === p) {
-                    localStorage.setItem('sezean_user', u);
-                    startApp(u);
-                } else alert("DENIED");
-            });
+            const user = document.getElementById('userNameInput').value.trim();
+            const pass = document.getElementById('passInput').value;
+            if(!user) return alert("Nama wajib diisi!");
+            if(isAdminLogin) {
+                if(user.toLowerCase() === 'sezean' && pass === ADMIN_PASS) { setSession(user, true); }
+                else { alert("Password Admin Salah!"); }
+            } else { setSession(user, false); }
         }
 
-        function handleRegister() {
-            const u = document.getElementById('reg-user').value.toLowerCase().trim();
-            const p = document.getElementById('reg-pass').value;
-            if(!u || !p) return alert("Fill all!");
-            db.ref('accounts/' + u).set(p);
-            db.ref('users/' + u).set({ credits: 0 }).then(() => { toggleAuth('log'); });
+        function setSession(name, admin) {
+            sessionStorage.setItem('cloud_session', JSON.stringify({ name, isAdmin: admin }));
+            location.reload();
         }
 
-        function startApp(u) {
-            document.getElementById('auth-page').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('hero-user').innerText = '@' + u.toUpperCase();
-            document.getElementById('prof-user').innerText = u.toUpperCase();
-            db.ref('users/' + u + '/credits').on('value', s => {
-                const v = s.val() || 0;
-                document.getElementById('user-balance').innerText = v + ' CR';
-                document.getElementById('prof-bal').innerText = v + ' CR';
-            });
-        }
-
-        // NAVIGATION
-        function showPage(id, el) {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-            if(el) {
-                document.querySelectorAll('nav i').forEach(i => i.classList.remove('active'));
-                el.classList.add('active');
-            }
-        }
-
-        function closeAllModals() {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-            document.querySelectorAll('nav i').forEach(i => i.classList.remove('active'));
-            document.getElementById('nav-home').classList.add('active');
-        }
-
-        // GAME CENTER LOGIC
-        let sGame='', sNom='', sPr='', sPay='';
-
-        function openOrder(game) {
-            sGame = game;
-            document.getElementById('target-game').innerText = game;
-            document.getElementById('game-selection').style.display = 'none';
-            document.getElementById('order-form').style.display = 'block';
-        }
-
-        function backToGames() {
-            document.getElementById('game-selection').style.display = 'grid';
-            document.getElementById('order-form').style.display = 'none';
-        }
-
-        function setNom(nom, pr, el) {
-            sNom = nom; sPr = pr;
-            document.querySelectorAll('.energy-card').forEach(c => c.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        function setPay(p, el) {
-            sPay = p;
-            document.querySelectorAll('.pay-vault').forEach(v => v.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        function sendOrder() {
-            const id = document.getElementById('p-id').value;
-            const zone = document.getElementById('p-zone').value;
-            if(!id || !sNom || !sPay) return alert("PROTOCOLS INCOMPLETE!");
-            const u = localStorage.getItem('sezean_user');
-            const msg = `⚡ *ORDER INCOMING* ⚡%0A%0A🎮 Realm: *${sGame}*%0A🆔 ID: *${id} (${zone})*%0A💎 Package: *${sNom}*%0A💰 Price: *${sPr}*%0A💳 Method: *${sPay}*%0A👤 Signature: *${u}*`;
-            window.open(`https://wa.me/6289696498841?text=${msg}`, '_blank');
-        }
-
-        // ADMIN TOOLS
-        function triggerSecret() {
-            const activeUser = localStorage.getItem('sezean_user');
-            if (activeUser !== 'sezean') return; 
-            window.clicks = (window.clicks || 0) + 1;
-            if(window.clicks === 5) {
-                document.getElementById('secretPanel').style.display = 'block';
-                window.clicks = 0;
-            }
-            setTimeout(() => window.clicks = 0, 2000);
-        }
-
-        function manageUser() {
-            const t = document.getElementById('s-target').value.toLowerCase().trim();
-            const a = parseInt(document.getElementById('s-amount').value);
-            if(!t || isNaN(a)) return;
-            db.ref('users/' + t + '/credits').transaction(c => (c || 0) + a);
-            alert("CREDITS INJECTED!");
-        }
-
-        function logout() { localStorage.clear(); location.reload(); }
-
-        function createParticles() {
-            const containers = [document.getElementById('fire-particles'), document.getElementById('game-particles')];
-            containers.forEach(c => {
-                if(!c) return;
-                for(let i=0; i<30; i++) {
-                    let p = document.createElement('div');
-                    p.className = 'particle';
-                    let size = Math.random() * 3 + 2;
-                    p.style.width = size + 'px'; p.style.height = size + 'px';
-                    p.style.left = Math.random() * 100 + '%';
-                    p.style.setProperty('--d', (Math.random() * 4 + 2) + 's');
-                    c.appendChild(p);
+        function checkSession() {
+            const saved = sessionStorage.getItem('cloud_session');
+            if(saved) {
+                const session = JSON.parse(saved);
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('displayName').innerText = session.name;
+                document.getElementById('userInitial').innerText = session.name.substring(0,2).toUpperCase();
+                if(session.isAdmin) {
+                    document.body.classList.add('is-admin');
+                    document.getElementById('adminStatus').innerText = "Admin Elite Mode";
+                    document.getElementById('adminStatus').style.color = "var(--primary)";
                 }
+                renderLib();
+            }
+        }
+
+        function logout() { sessionStorage.clear(); location.reload(); }
+
+        function renderLib() {
+            const grid = document.getElementById('novelGrid');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            grid.innerHTML = '';
+            const filtered = lib.filter(n => {
+                const ms = n.name.toLowerCase().includes(search);
+                const mg = selectedFilterGenre === 'All' || (n.genres && n.genres.includes(selectedFilterGenre));
+                return ms && mg;
+            });
+            filtered.forEach(n => {
+                const realIdx = lib.indexOf(n);
+                const card = document.createElement('div');
+                card.className = 'novel-card';
+                card.onclick = () => openDetail(realIdx);
+                card.innerHTML = `<img src="${n.cover || ''}" class="cover-art-img"><div style="position:relative;z-index:2"><h3 style="color:var(--primary)">${n.name}</h3><p style="font-size:11px;color:var(--text-dim)">${n.chaps.length} Chapters</p></div>`;
+                grid.appendChild(card);
             });
         }
+
+        function openDetail(i) {
+            curNovIdx = i;
+            const n = lib[i];
+            document.getElementById('detTitle').innerText = n.name;
+            document.getElementById('novelDisplayTitle').innerText = n.name;
+            document.getElementById('detailCover').src = n.cover || '';
+            document.getElementById('detDescription').innerText = n.desc || "No synopsis.";
+            document.getElementById('detLikes').innerText = `❤️ ${n.likes || 0}`;
+            document.getElementById('detRating').innerText = n.rating || "5.0";
+            const genContainer = document.getElementById('detGenreContainer');
+            genContainer.innerHTML = '';
+            if(n.genres) n.genres.forEach(g => genContainer.innerHTML += `<span style="font-size:10px;background:var(--primary);color:black;padding:4px 10px;border-radius:5px;font-weight:bold;">${g}</span>`);
+            renderChapters();
+            openPage('detailPage');
+        }
+
+        function renderChapters() {
+            const list = document.getElementById('chapterList');
+            list.innerHTML = '';
+            lib[curNovIdx].chaps.forEach((ch, ci) => {
+                const div = document.createElement('div');
+                div.className = 'ch-card';
+                // EVENT CLICK DIPINDAH KE KOTAK (DIV UTAMA)
+                div.onclick = (e) => {
+                    // Cek biar kalau admin klik 'HAPUS', gak malah ngebuka chapter
+                    if(e.target.innerText !== 'HAPUS') readChapter(ci);
+                };
+                div.innerHTML = `
+                    <div class="ch-info"><b>${ci+1}.</b> ${ch.title}</div>
+                    <span class="admin-only-inline" style="color:var(--danger); font-size:10px; font-weight:bold;" onclick="triggerDeleteChapter(${ci})">HAPUS</span>`;
+                list.appendChild(div);
+            });
+        }
+
+        function readChapter(ci) {
+            const ch = lib[curNovIdx].chaps[ci];
+            document.getElementById('readTitle').innerText = ch.title;
+            document.getElementById('readerContent').innerText = ch.content;
+            openPage('readerPage');
+        }
+
+        function createNewNovel() {
+            const name = document.getElementById('newNovelName').value;
+            const cover = document.getElementById('newNovelCover').value;
+            const desc = document.getElementById('newNovelDesc').value;
+            const gs = Array.from(document.querySelectorAll('#multiGenreContainer input:checked')).map(cb => cb.value);
+            if(!name) return;
+            lib.push({ name, cover, desc, genres: gs, chaps: [], likes: 0, rating: "5.0" });
+            saveAndRefresh();
+            closePage('newNovelPage');
+            renderLib();
+        }
+
+        function addChapter() {
+            const t = document.getElementById('chapTitle').value;
+            const c = document.getElementById('chapContent').value;
+            if(!t || !c) return;
+            lib[curNovIdx].chaps.push({ title: t, content: c });
+            saveAndRefresh();
+            renderChapters();
+            closePage('editorPage');
+        }
+
+        function triggerDeleteNovel() {
+            document.getElementById('modalMsg').innerText = "Hapus novel ini?";
+            document.getElementById('deleteModal').style.display = 'flex';
+            document.getElementById('confirmDelBtn').onclick = () => {
+                lib.splice(curNovIdx, 1);
+                saveAndRefresh();
+                closePage('detailPage');
+                renderLib();
+                closeDeleteModal();
+            };
+        }
+
+        function triggerDeleteChapter(ci) {
+            lib[curNovIdx].chaps.splice(ci, 1);
+            saveAndRefresh();
+            renderChapters();
+        }
+
+        function handleLike() {
+            lib[curNovIdx].likes = (lib[curNovIdx].likes || 0) + 1;
+            document.getElementById('detLikes').innerText = `❤️ ${lib[curNovIdx].likes}`;
+            saveAndRefresh();
+        }
+
+        function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
+        function filterByGenre(g, el) { 
+            selectedFilterGenre = g; 
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active')); 
+            el.classList.add('active'); 
+            renderLib(); 
+        }
+        function saveAndRefresh() { localStorage.setItem('cs_v5_db', JSON.stringify(lib)); }
+        function openPage(id) { document.getElementById(id).style.display = 'flex'; }
+        function closePage(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
 </html>
