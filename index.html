@@ -518,7 +518,7 @@
 
     <div class="user-stats">
         <div class="stat-item">
-            <span class="stat-value" id="libCount">12</span>
+            <span class="stat-value" id="libCount">0</span>
             <span class="stat-label">Library</span>
         </div>
         <div class="stat-item">
@@ -681,11 +681,48 @@
     </nav>
 
     <script>
-        let lib = JSON.parse(localStorage.getItem('cs_v5_db')) || [];
+        // --- CONFIG FIREBASE ASLI LU ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBL-8VTD3kg3O-tM2d6enNpkY-iY5r8Vw", 
+            authDomain: "sezeean-novel-db.firebaseapp.com",
+            projectId: "sezeean-novel-db",
+            storageBucket: "sezeean-novel-db.firebasestorage.app",
+            messagingSenderId: "80220624997",
+            appId: "1:80220624997:web:e927c348a1b26c348a1b2",
+            measurementId: "G-VT7BQ8BJSW"
+        };
+
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const db = firebase.firestore();
+
+        // Database lokal biar UI lu tetep jalan
+        let lib = [];
         let curNovIdx = null;
         let selectedFilterGenre = 'All';
         const ADMIN_PASS = "AdminBahagiaBangetJanganLupaBuatKissYaww";
         let isAdminLogin = false;
+
+        // --- REALTIME SYNC DARI FIREBASE ---
+        function listenCloudNovels() {
+            db.collection("novels").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+                lib = []; // Reset lokal database setiap ada perubahan di cloud
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    lib.push({
+                        id: doc.id,
+                        name: data.judul,
+                        cover: data.cover,
+                        desc: data.deskripsi,
+                        genres: data.genres || [],
+                        chaps: data.chapters || [],
+                        likes: data.likes || 0,
+                        rating: data.rating || "5.0"
+                    });
+                });
+                document.getElementById('libCount').innerText = lib.length;
+                renderLib(); // Render ulang UI
+            });
+        }
 
         function toggleAdminLogin() {
             isAdminLogin = !isAdminLogin;
@@ -719,7 +756,7 @@
                     document.getElementById('adminStatus').innerText = "Admin Elite Mode";
                     document.getElementById('adminStatus').style.color = "var(--primary)";
                 }
-                renderLib();
+                listenCloudNovels(); // Mulai sync cloud novel
             }
         }
 
@@ -766,14 +803,8 @@
             lib[curNovIdx].chaps.forEach((ch, ci) => {
                 const div = document.createElement('div');
                 div.className = 'ch-card';
-                // EVENT CLICK DIPINDAH KE KOTAK (DIV UTAMA)
-                div.onclick = (e) => {
-                    // Cek biar kalau admin klik 'HAPUS', gak malah ngebuka chapter
-                    if(e.target.innerText !== 'HAPUS') readChapter(ci);
-                };
-                div.innerHTML = `
-                    <div class="ch-info"><b>${ci+1}.</b> ${ch.title}</div>
-                    <span class="admin-only-inline" style="color:var(--danger); font-size:10px; font-weight:bold;" onclick="triggerDeleteChapter(${ci})">HAPUS</span>`;
+                div.onclick = (e) => { if(e.target.innerText !== 'HAPUS') readChapter(ci); };
+                div.innerHTML = `<div class="ch-info"><b>${ci+1}.</b> ${ch.title}</div><span class="admin-only-inline" style="color:var(--danger); font-size:10px; font-weight:bold;" onclick="triggerDeleteChapter(${ci})">HAPUS</span>`;
                 list.appendChild(div);
             });
         }
@@ -785,50 +816,64 @@
             openPage('readerPage');
         }
 
+        // --- CREATE CLOUD NOVEL ---
         function createNewNovel() {
             const name = document.getElementById('newNovelName').value;
             const cover = document.getElementById('newNovelCover').value;
             const desc = document.getElementById('newNovelDesc').value;
             const gs = Array.from(document.querySelectorAll('#multiGenreContainer input:checked')).map(cb => cb.value);
             if(!name) return;
-            lib.push({ name, cover, desc, genres: gs, chaps: [], likes: 0, rating: "5.0" });
-            saveAndRefresh();
-            closePage('newNovelPage');
-            renderLib();
+
+            db.collection("novels").add({
+                judul: name,
+                cover: cover,
+                deskripsi: desc,
+                genres: gs,
+                chapters: [],
+                likes: 0,
+                rating: "5.0",
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                closePage('newNovelPage');
+            }).catch(err => alert("Gagal upload ke cloud!"));
         }
 
+        // --- ADD CLOUD CHAPTER ---
         function addChapter() {
             const t = document.getElementById('chapTitle').value;
             const c = document.getElementById('chapContent').value;
             if(!t || !c) return;
-            lib[curNovIdx].chaps.push({ title: t, content: c });
-            saveAndRefresh();
-            renderChapters();
-            closePage('editorPage');
+
+            const n = lib[curNovIdx];
+            const updatedChaps = [...n.chaps, { title: t, content: c }];
+
+            db.collection("novels").doc(n.id).update({
+                chapters: updatedChaps
+            }).then(() => {
+                closePage('editorPage');
+            });
         }
 
         function triggerDeleteNovel() {
             document.getElementById('modalMsg').innerText = "Hapus novel ini?";
             document.getElementById('deleteModal').style.display = 'flex';
             document.getElementById('confirmDelBtn').onclick = () => {
-                lib.splice(curNovIdx, 1);
-                saveAndRefresh();
-                closePage('detailPage');
-                renderLib();
-                closeDeleteModal();
+                db.collection("novels").doc(lib[curNovIdx].id).delete().then(() => {
+                    closePage('detailPage');
+                    closeDeleteModal();
+                });
             };
         }
 
         function triggerDeleteChapter(ci) {
-            lib[curNovIdx].chaps.splice(ci, 1);
-            saveAndRefresh();
-            renderChapters();
+            const n = lib[curNovIdx];
+            const updatedChaps = n.chaps.filter((_, idx) => idx !== ci);
+            db.collection("novels").doc(n.id).update({ chapters: updatedChaps });
         }
 
         function handleLike() {
-            lib[curNovIdx].likes = (lib[curNovIdx].likes || 0) + 1;
-            document.getElementById('detLikes').innerText = `❤️ ${lib[curNovIdx].likes}`;
-            saveAndRefresh();
+            const n = lib[curNovIdx];
+            db.collection("novels").doc(n.id).update({ likes: (n.likes || 0) + 1 });
         }
 
         function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
@@ -840,45 +885,8 @@
             renderLib(); 
         }
         
-        function saveAndRefresh() { localStorage.setItem('cs_v5_db', JSON.stringify(lib)); }
         function openPage(id) { document.getElementById(id).style.display = 'flex'; }
         function closePage(id) { document.getElementById(id).style.display = 'none'; }
-
-        // --- TAMBAHAN DATABASE CLOUD (GUE UDAH ISIIN DATA LU) ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyBL-8VTD3kg3O-tM2d6enNpkY-iY5r8Vw", 
-            authDomain: "sezeean-novel-db.firebaseapp.com",
-            projectId: "sezeean-novel-db",
-            storageBucket: "sezeean-novel-db.firebasestorage.app",
-            messagingSenderId: "80220624997",
-            appId: "1:80220624997:web:e927c348a1b26c348a1b2",
-            measurementId: "G-VT7BQ8BJSW"
-        };
-
-        // Biar nggak error kalau di-refresh
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const db = firebase.firestore();
-
-        // Fungsi narik data novel dari Cloud
-        function listenCloudNovels() {
-            const grid = document.getElementById('mainNovelGrid'); 
-            if(!grid) return;
-            
-            db.collection("novels").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
-                grid.innerHTML = ""; 
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    // --- BAGIAN YANG GUE RAPIHIN DI BAWAH INI ---
-                    grid.innerHTML += `
-                        <div class="novel-card">
-                            <img src="${data.cover}" class="cover-art-img" onerror="this.src='https://via.placeholder.com/70x90?text=No+Cover'">
-                            <div style="position:relative; z-index:2;">
-                                <h4 style="color:var(--primary); font-size:14px; margin-bottom:4px;">${data.judul}</h4>
-                                <p style="font-size:10px; color:var(--text-dim)">0 Chapters • ${data.genre}</p>
-                            </div>
-                        </div>`;
-                });
-            });
-        }
+    </script>
+</body>
+</html>
