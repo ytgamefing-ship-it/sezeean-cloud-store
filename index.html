@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore-compat.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Store | Sezean Elite</title>
@@ -830,15 +832,62 @@
         }
 
         function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
+        
         function filterByGenre(g, el) { 
             selectedFilterGenre = g; 
             document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active')); 
             el.classList.add('active'); 
             renderLib(); 
         }
+        
         function saveAndRefresh() { localStorage.setItem('cs_v5_db', JSON.stringify(lib)); }
         function openPage(id) { document.getElementById(id).style.display = 'flex'; }
         function closePage(id) { document.getElementById(id).style.display = 'none'; }
+
+        // --- TAMBAHAN DATABASE CLOUD (GUE UDAH ISIIN DATA LU) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBL-8VTD3kg3O-tM2d6enNpkY-iY5r8Vw", 
+            authDomain: "sezeean-novel-db.firebaseapp.com",
+            projectId: "sezeean-novel-db",
+            storageBucket: "sezeean-novel-db.firebasestorage.app",
+            messagingSenderId: "80220624997",
+            appId: "1:80220624997:web:e927c348a1b26c348a1b2",
+            measurementId: "G-VT7BQ8BJSW"
+        };
+
+        // Biar nggak error kalau di-refresh
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        // Fungsi narik data novel dari Cloud
+        function listenCloudNovels() {
+            // Gue pake ID 'mainNovelGrid' sesuai kodingan awal lu
+            const grid = document.getElementById('mainNovelGrid'); 
+            if(!grid) return;
+            
+            db.collection("novels").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+                grid.innerHTML = ""; 
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    grid.innerHTML += `
+                        <div class="novel-card">
+                            <img src="${data.cover}" class="cover-art-img">
+                            <div style="position:relative; z-index:2;">
+                                <h4 style="color:var(--primary)">${data.judul}</h4>
+                                <p style="font-size:10px; color:var(--text-dim)">${data.genre}</p>
+                            </div>
+                        </div>`;
+                });
+            });
+        }
+
+        // Jalankan pas halaman kebuka
+        window.addEventListener('DOMContentLoaded', () => {
+            listenCloudNovels();
+        });
+        // --- END DATABASE CLOUD ---
     </script>
 </body>
 </html>
